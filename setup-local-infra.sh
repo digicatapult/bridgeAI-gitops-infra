@@ -10,7 +10,7 @@
 
 # Usage:
 # ./setup-local-infra.sh
-# Once configured, try localhost:8443 in a browser or use the argocd CLI.
+# Once configured, try localhost:8080 in a browser or use the argocd CLI.
 
 # Initialise
 . common/init.sh

@@ -40,4 +40,7 @@ check_dependencies() {
     if [ -n "$dependencies" ]; then
         err "these dependencies are missing: $dependencies"
     fi
+
+    docker info &>/dev/null || \
+        err "Docker is not running, but its daemon is required for kind"
 }
