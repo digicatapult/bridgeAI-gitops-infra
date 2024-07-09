@@ -10,10 +10,38 @@
 
 # Usage:
 # ./setup-local-infra.sh
-# Once configured, try localhost:8080 in a browser or use the argocd CLI.
+# Once configured, try localhost:8443 in a browser or use the argocd CLI.
 
 # Initialise
 . common/init.sh
+
+# Parse options
+while getopts ":n:p:lf:h" opt; do
+  case ${opt} in
+    h )
+      print_local_options
+      exit 0
+      ;;
+    n )
+      ARGO_NAME=${OPTARG}
+      ;;
+    p )
+      ARGO_PORT=${OPTARG}
+      ;;
+    f )
+      LOG_FILE=${OPTARG}
+      ;;
+    l )
+      ENABLE_LOGS=1
+      ;;
+   \? )
+     echo "Invalid option: -$OPTARG" 1>&2
+     echo "\n"
+     print_local_options
+     exit 1
+     ;;
+  esac
+done
 
 # Check for any prerequisites
 check_dependencies
@@ -32,9 +60,9 @@ if [ "$(check_cluster_status kind-kind)" ]; then
     info "attempting to create an ArgoCD cluster"
     create_argocd_cluster || err "failed to create the cluster"
 
-    info "waiting for pods to be ready" && sleep 60
+    info "waiting for services to be ready"
     map_argocd_server && info "localhost for ArgoCD configured successfully"
 
-    info "waiting on port configuration" && sleep 2
+    info "waiting on port configuration"
     test_argocd_login && info "tests finished; the ArgoCD interface is ready"
 fi

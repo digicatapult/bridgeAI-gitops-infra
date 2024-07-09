@@ -2,10 +2,15 @@
 
 # Define logging patterns
 log() {
-    if [ -z "$LOG_FILE" ]; then
-        LOG_FILE="$PWD/gitops-infra.log"
+    if [ "$ENABLE_LOGS" -eq 1 ]; then
+        if [ -n "$LOG_FILE" ]; then
+            echo "$(date -R) ### $@" | tee -a "$LOG_FILE"
+        else
+            warn "logging has been enabled, but no path was found"
+        fi
+    else
+        echo "$(date -R) ### $@"
     fi
-    echo "$(date -R) ### $@" | tee -a "$LOG_FILE"
 }
 
 err() {

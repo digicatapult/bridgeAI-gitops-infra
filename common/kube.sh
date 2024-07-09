@@ -9,6 +9,11 @@ check_node_count() {
     kubectl get nodes | grep -ci ready
 }
 
+check_namespace() {
+    kubectl get ns | grep "$@" &>/dev/null || \
+        info "namespace $@ does not exist"
+}
+
 # Create a new cluster
 create_argocd_cluster() {
     if [ "$(check_node_count)" -eq 0 ]; then
@@ -18,7 +23,7 @@ create_argocd_cluster() {
     kind create cluster --name "$ARGO_NAME"
 
     kubectl create namespace "$ARGO_NAME" || \
-        err "failed to create ArgoCD namespace"
+        err "failed to create a new ArgoCD namespace"
 
     kubectl apply -n "$ARGO_NAME" \
         -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
@@ -26,23 +31,38 @@ create_argocd_cluster() {
 
 # Map services to localhost
 map_argocd_server() {
-    if [ -n "$ARGO_PORT" ]; then
-        kubectl port-forward svc/argocd-server \
-            -n "$ARGO_NAME" "$ARGO_PORT:443" &>/dev/null &
+    if [ "$(check_namespace) $ARGO_NAME" ]; then
+        until kubectl wait --for=condition=ready pods --all -n "$ARGO_NAME" \
+            --timeout=10m &>/dev/null; do
+            :
+        done
+
+        if [ -n "$ARGO_PORT" ]; then
+            until kubectl get svc -n "$ARGO_NAME" | grep "$ARGO_PORT"; do
+                :
+            done
+            kubectl port-forward svc/argocd-server \
+                -n "$ARGO_NAME" "$ARGO_PORT:443" &>/dev/null &
+        else
+            warn "missing variables to configure ports for ArgoCD"
+        fi
     else
-        warn "missing variables to configure ports for ArgoCD"
+        err "no ArgoCD namespace found; cannot map ports without ArgoCD properly configured"
     fi
 }
 
 # Destroy clusters and namespaces
 delete_argocd_cluster() {
-    kubectl delete namespace "$ARGO_NAME" || \
-        warn "failed to delete the $ARGO_NAME namespace"
+    if [ "$(check_namespace) $ARGO_NAME" ]; then
+        kubectl delete namespace "$ARGO_NAME"
+        kubectl wait --for=delete ns "$ARGO_NAME" --timeout=60s || \
+            warn "failed to delete the $ARGO_NAME namespace"
+    fi
 
     if [ "$(check_cluster_status $ARGO_NAME)" ]; then
-        for context in "$ARGO_NAME" kind kind-kind; do
-            kind delete cluster --name "$context" || \
-                warn "failed to delete $context"
+        for target in "$ARGO_NAME" kind; do
+            kind delete cluster --name "$target" || \
+                warn "failed to delete the $target cluster"
         done
     fi
 }
