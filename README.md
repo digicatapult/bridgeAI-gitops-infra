@@ -22,10 +22,20 @@ cd bridgeai-gitops-infra
 ```
 
 There are several options to help configure and monitor local infrastructure:
-- `-n`: The Kubernetes namespace to use for ArgoCD
+- `-n`: The ArgoCD namespace
+- `-c`: The Kind context to use for MLOps
+- `-a`: The ArgoCD cluster name
+- `-k`: The Kind cluster name
 - `-p`: The port number for accessing the ArgoCD GUI over HTTP
 - `-f`: The file path for logging messages from the various clusters
 - `-l`: A flag to toggle logging on or off; if logging is toggled on without a given path, then a default location will be used instead: `$PWD/gitops-infra.log`
+
+Taken altogether, this might be a typical setup:
+```bash
+./setup-local-infra.sh -c mlops -n argocd -p 8080 -f ./gitops-infra.log -l
+```
+
+Do note that Kind will insert the string "kind-" into certain names it generates behind the scenes, so that the context name "mlops" will become "kind-mlops".
 
 Once access to the ArgoCD GUI has been verified, the panel will be available on [localhost:8080][localhost].
 

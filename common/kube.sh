@@ -14,13 +14,23 @@ check_namespace() {
         info "namespace $@ does not exist"
 }
 
+use_kind_context() {
+    context=$(kubectl config get-contexts | \
+    grep -Eo "(kind-){1,}$KIND_CONTEXT" | head -n 1)
+    if [ "$context" ]; then
+        kubectl config use-context "$context" && \
+            info "context is currently $context"
+    fi
+}
+
 # Create a new cluster
 create_argocd_cluster() {
     if [ "$(check_node_count)" -eq 0 ]; then
         err "no ready nodes were found; ArgoCD needs one"
     fi
 
-    kind create cluster --name "$ARGO_NAME"
+    kind create cluster --name "$ARGO_CLUSTER" 2>/dev/null || \
+        info "the $ARGO_CLUSTER context already exists; skipping"
 
     kubectl create namespace "$ARGO_NAME" || \
         err "failed to create a new ArgoCD namespace"
@@ -59,20 +69,22 @@ delete_argocd_cluster() {
             warn "failed to delete the $ARGO_NAME namespace"
     fi
 
-    if [ "$(check_cluster_status $ARGO_NAME)" ]; then
-        for target in "$ARGO_NAME" kind; do
-            kind delete cluster --name "$target" || \
-                warn "failed to delete the $target cluster"
-        done
+    if [ "$(check_cluster_status $ARGO_CLUSTER)" ]; then
+        kind delete cluster --name "$ARGO_CLUSTER" || \
+            warn "failed to delete the "$ARGO_CLUSTER" cluster"
+    else
+        info "no cluster matching '$ARGO_CLUSTER' was found"
     fi
 }
 
 # Test insecure log-in credentials
 test_argocd_login() {
     if [ -z "$ARGO_SECRET" ]; then
-        ARGO_SECRET=`kubectl get secret \
+        ARGO_SECRET=$(kubectl get secret \
             -n "$ARGO_NAME" argocd-initial-admin-secret \
-            -o jsonpath="{.data.password}" | base64 -d && echo`
+            -o jsonpath="{.data.password}" | base64 -d)
+        echo "The ArgoCD admin password is $ARGO_SECRET."
+        echo "It can be changed with 'argocd account update-password'."
     fi
 
     if [ -n "$ARGO_PORT" ]; then
