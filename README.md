@@ -13,6 +13,8 @@ Additional components will be added in due course, `helm` for example.
 
 ## Local deployments
 
+### GitOps configuration
+
 To initialise ArgoCD locally, run the following:
 
 ```bash
@@ -48,6 +50,30 @@ kubectl get secret -n argocd \
     argocd-initial-admin-secret -o jsonpath="{.data.password}" | \
     base64 -d && echo
 ```
+
+### Application configuration
+
+After the GitOps infrastructure itself has been configured, additional components can be synchronise with ArgoCD either with the `argocd` subcommands or managed via the `./add-local-app.sh` script.
+
+Several arguments are needed for deploying applications:
+- `-a`: The application name
+- `-r`: The Git repository containing charts and manifests
+- `-d`: The appropriate path within that repository
+- `-p`: The project name to group applications
+
+All other settings are considered optional:
+- `-R`: The release name, for example 'airflow-test'; this defaults to the application name
+- `-s`: The destination server for the application; the default is 'https://kubernetes.default.svc'
+- `-t`: The target namespace; this is ordinarily 'default'
+
+This example deployment will synchronise Apache Airflow with ArgoCD:
+
+```bash
+./add-local-app.sh -a "airflow" -p "mlops" -d "charts/airflow" \
+    -r "https://github.com/airflow-helm/charts.git"
+```
+
+Customised Helm charts and values can be used in place of any official company or community offerings. When adding new applications to ArgoCD, the path must resolve to wherever the charts are located.
 
 <!-- Links -->
 [kind]: https://kind.sigs.k8s.io/

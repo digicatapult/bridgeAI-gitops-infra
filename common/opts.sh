@@ -30,3 +30,34 @@ Flags:
 
 -h    Print this help message."
 }
+
+print_app_options() {
+	echo "
+This will create applications within the target namespace and project, pull
+charts and manifests, and then synchronise with ArgoCD to facilitate GitOps
+across the various project repositories.
+
+Usage:
+
+./add-local-app.sh [ -h ] [ -aRrdsnp ]
+
+Options:
+
+-a    The application name; this is required and there is no default.
+
+-R    The release environment; this is optional.
+
+-r    The Git repository containing the application's Helm chart and values.
+
+-d    The path within that repository to find the above files.
+
+-s    The target server for the application; the default is 'https://kubernetes.default.svc'.
+
+-n    The target namespace; the default is 'default'.
+
+-p    The name of the overarching project for the application; the default is 'mlops'.
+
+Flags:
+
+-h    Print this help message."
+}
