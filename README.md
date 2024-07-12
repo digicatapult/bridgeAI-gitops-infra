@@ -53,7 +53,7 @@ kubectl get secret -n argocd \
 
 ### Application configuration
 
-After the GitOps infrastructure itself has been configured, additional components can be synchronise with ArgoCD either with the `argocd` subcommands or managed via the `./add-local-app.sh` script.
+After the GitOps infrastructure itself has been configured, additional components can be synchronised with ArgoCD either with the `argocd` subcommands or managed via the `./add-local-app.sh` script.
 
 Several arguments are needed for deploying applications:
 - `-a`: The application name
