@@ -66,14 +66,15 @@ All other settings are considered optional:
 - `-s`: The destination server for the application; the default is 'https://kubernetes.default.svc'
 - `-t`: The target namespace; this is ordinarily 'default'
 
-This example deployment will synchronise Apache Airflow with ArgoCD:
+This example deployment will synchronise pipeline applications from "apps", such as Apache Airflow, with ArgoCD:
 
 ```bash
-./add-local-app.sh -a "airflow" -p "mlops" -d "charts/airflow" \
-    -r "https://github.com/airflow-helm/charts.git"
+./setup-local-apps.sh -a "apps" -d "apps" -p "mlops" \
+    -s "https://kubernetes.default.svc" -n argocd \
+    -r "https://github.com/digicatapult/bridgeai-gitops-infra.git"
 ```
 
-Customised Helm charts and values can be used in place of any official company or community offerings. When adding new applications to ArgoCD, the path must resolve to wherever the charts are located.
+Customised Helm charts and values can be used in place of any official company or community offerings. When adding new applications to ArgoCD, the path must resolve to wherever the charts are located. In this instance, there is a meta-application, "apps", containing multiple child applications that form the MLOps pipeline.
 
 <!-- Links -->
 [kind]: https://kind.sigs.k8s.io/

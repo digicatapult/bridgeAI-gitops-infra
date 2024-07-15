@@ -1,0 +1,7 @@
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/digicatapult/bridgeai-gitops-infra
+    targetRevision: HEAD
