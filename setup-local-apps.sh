@@ -16,7 +16,7 @@
 . common/init.sh
 
 # Parse options
-while getopts ":a:R:r:d:s:n:p:h" opt; do
+while getopts ":a:R:r:d:s:n:p:P:h" opt; do
     case ${opt} in
         h )
             print_app_options
@@ -43,6 +43,9 @@ while getopts ":a:R:r:d:s:n:p:h" opt; do
         p )
             APP_PROJECT=${OPTARG}
             ;;
+        P )
+            APP_PORT=${OPTARG}
+            ;;
         \? )
             echo "Invalid option: -$OPTARG" 1>&2
             echo "\n"
@@ -52,14 +55,36 @@ while getopts ":a:R:r:d:s:n:p:h" opt; do
     esac
 done
 
-if [ "$(check_cluster_status $KIND_CLUSTER)" ]; then
-    if [ "$(check_namespace) $ARGO_NAME" ]; then
-        info "attempting to add $APP_NAME and sync with ArgoCD"
+if [ -n "$APP_NAME" ]; then
+    if [ ! "$(argocd app list | grep $APP_NAME)" ]; then
+        if [ "$(check_cluster_status $KIND_CLUSTER)" ]; then
+            info "attempting to add $APP_NAME and sync with ArgoCD"
 
-        create_argocd_app || \
-            err "failed to create and retrieve the $APP_NAME application"
+            create_argocd_app || \
+                err "failed to create and retrieve the $APP_NAME application"
 
-        sync_agrocd_app || \
-            err "failed to deploy $APP_NAME"
+            sync_agrocd_app || \
+                err "failed to deploy $APP_NAME"
+        fi
+    else
+        info "existing application entry found for $APP_NAME"
+    fi
+fi
+
+if [ "$(kubectl get svc -n $ARGO_NAME | grep $APP_PORT)" ]; then
+    until kubectl wait --for=condition=ready pods --all -n "$ARGO_NAME" \
+        --timeout=10m &>/dev/null; do
+        :
+    done
+
+    if [ "$APP_PORT" -ne "$ARGO_PORT" ]; then
+        until lsof -i:"$APP_PORT" | grep LISTEN; do
+            kubectl port-forward svc/airflow-web \
+                -n "$ARGO_NAME" "$APP_PORT:8080" &>/dev/null &
+        done
+
+        info "tests finished; the Airflow interface is ready on $APP_PORT"
+    else
+        err "the Airflow GUI port is identical to ArgoCD's own"
     fi
 fi

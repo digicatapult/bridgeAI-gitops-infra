@@ -60,6 +60,7 @@ Several arguments are needed for deploying applications:
 - `-r`: The Git repository containing charts and manifests
 - `-d`: The appropriate path within that repository
 - `-p`: The project name to group applications
+- `-P`: The application port
 
 All other settings are considered optional:
 - `-R`: The release name, for example 'airflow-test'; this defaults to the application name
@@ -69,12 +70,20 @@ All other settings are considered optional:
 This example deployment will synchronise pipeline applications from "apps", such as Apache Airflow, with ArgoCD:
 
 ```bash
-./setup-local-apps.sh -a "apps" -d "apps" -p "mlops" \
+./setup-local-apps.sh -a "apps" -d "argo/apps" -p "default" \
     -s "https://kubernetes.default.svc" -n argocd \
     -r "https://github.com/digicatapult/bridgeai-gitops-infra.git"
 ```
 
 Customised Helm charts and values can be used in place of any official company or community offerings. When adding new applications to ArgoCD, the path must resolve to wherever the charts are located. In this instance, there is a meta-application, "apps", containing multiple child applications that form the MLOps pipeline.
+
+This wrapper script can also be used to stand up individual applications when logged into ArgoCD:
+
+```bash
+./setup-local-apps.sh -a "airflow" -d "charts/airflow" \
+    -s "https://kubernetes.default.svc" -n argocd -P 8745 \
+    -r "https://github.com/airflow-helm/charts.git"
+```
 
 <!-- Links -->
 [kind]: https://kind.sigs.k8s.io/

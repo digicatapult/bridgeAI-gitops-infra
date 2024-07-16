@@ -14,12 +14,7 @@ check_argocd_project() {
 create_argocd_app() {
     check_argocd_project
 
-    if [ -n "$APP_REPO" ]; then
-        echo "$APP_REPO" | grep -Ei "^(https?:\/\/" &>/dev/null || \
-            err "expected a repository URL with correct http(s) schema"
-    fi
-
-    if [ -n "$APP_NAME" ]; then
+    if [ -n "$APP_REPO" ] && [ -n "$APP_NAME" ]; then
         argocd app create "$APP_NAME" \
             --repo "$APP_REPO" \
             --path "$APP_PATH" \
@@ -27,7 +22,7 @@ create_argocd_app() {
             --dest-namespace "$APP_DEST_NAMESPACE" \
             --release-name "$APP_RELEASE_NAME" \
             --project "$APP_PROJECT" \
-            --upsert "$APP_EXTRA_OPTS"
+            --upsert
 
         argocd app get "$APP_NAME"
     else

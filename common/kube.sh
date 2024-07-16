@@ -2,7 +2,7 @@
 
 # Perform checks
 check_cluster_status() {
-    kubectl config get-contexts | grep "$@"
+    kind get clusters | grep "$@"
 }
 
 check_node_count() {
@@ -10,7 +10,7 @@ check_node_count() {
 }
 
 check_namespace() {
-    kubectl get ns | grep "$@" &>/dev/null || \
+    kubectl get ns | grep "$@" || \
         info "namespace $@ does not exist"
 }
 
@@ -41,7 +41,7 @@ create_argocd_cluster() {
 
 # Map services to localhost
 map_argocd_server() {
-    if [ "$(check_namespace) $ARGO_NAME" ]; then
+    if [ "$(check_namespace $ARGO_NAME)" ]; then
         until kubectl wait --for=condition=ready pods --all -n "$ARGO_NAME" \
             --timeout=10m &>/dev/null; do
             :
@@ -63,7 +63,7 @@ map_argocd_server() {
 
 # Destroy clusters and namespaces
 delete_argocd_cluster() {
-    if [ "$(check_namespace) $ARGO_NAME" ]; then
+    if [ "$(check_namespace $ARGO_NAME)" ]; then
         kubectl delete namespace "$ARGO_NAME"
         kubectl wait --for=delete ns "$ARGO_NAME" --timeout=60s || \
             warn "failed to delete the $ARGO_NAME namespace"

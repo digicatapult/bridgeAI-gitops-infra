@@ -39,7 +39,7 @@ across the various project repositories.
 
 Usage:
 
-./add-local-app.sh [ -h ] [ -aRrdsnp ]
+./add-local-app.sh [ -h ] [ -aRrdsnpP ]
 
 Options:
 
@@ -56,6 +56,8 @@ Options:
 -n    The target namespace; the default is 'default'.
 
 -p    The name of the overarching project for the application; the default is 'mlops'.
+
+-P    The console port for the application; there is no default.
 
 Flags:
 
