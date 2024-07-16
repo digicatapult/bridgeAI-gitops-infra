@@ -12,6 +12,6 @@ configMapGenerator:
       - airflow-values.yaml=airflow/values.yaml
       - nginx-values.yaml=nginx/values.yaml
 configurations:
-  - kustomiz-config.yaml
+  - kustomize-config.yaml
 generatorOptions:
   disableNameSuffixHash: true
