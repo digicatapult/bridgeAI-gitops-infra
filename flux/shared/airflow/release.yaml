@@ -22,7 +22,7 @@ spec:
   valuesFrom:
     - kind: ConfigMap
       name: shared-values
-      valuesKey: values-airflow.yaml
+      valuesKey: airflow-values.yaml
     - kind: ConfigMap
       name: shared-env-values
-      valuesKey: values-airflow.yaml
+      valuesKey: airflow-values.yaml
