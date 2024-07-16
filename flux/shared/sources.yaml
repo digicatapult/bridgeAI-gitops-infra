@@ -15,4 +15,4 @@ metadata:
   namespace: default
 spec:
   interval: 10m0s
-  url: https://airflow.apache.org
+  url: https://airflow-helm.github.io/charts
