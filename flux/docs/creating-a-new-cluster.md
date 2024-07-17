@@ -169,31 +169,6 @@ Now delete the tmp dir we used to create the key
 rm -rf .sqnc-cluster-gpg
 ```
 
-#### Creating the genesis
-
-To bootstrap the cluster we need to create a chain genesis file along with the associated node key secrets and account secrets. This can be done using the [`make-new-cluster-genesis.sh`](../scripts/make-new-cluster-genesis.sh) script. Note this script will not overwrite pre-existing node keys or account keys so before running ensure that none already exist (encrypted on otherwise) in the `/clusters/<cluster_name>/secrets` folder. This folder must exist.
-
-The described script allows for generating a new cluster with any number of desired validator nodes and additional nodes for instantiation as required. For example:
-
-```
-./scripts/make-new-cluster-genesis.sh \
-    -o alice:ns1
-    -o bob:ns2
-    -o charlie:ns3
-    -v red:ns1:alice \
-    -v green:ns2:bob \
-    -v blue:ns3:charlie \
-    -a bootnode:ns1:alice \
-    -a api-light:ns1:alice \
-    -a api-light:ns2:bob \
-    -a api-light:ns3:charlie \
-    new-cluster > new-cluster.json
-```
-
-would create a genesis for a new cluster called `new-cluster`. Three accounts `alice`, `bob` and `charlie` would be created in the namespaces `ns1`, `ns2` and `ns3` respectively. Three validator nodes called `red`, `green` and `blue` would be created in namespaces `ns1`, `ns2` and `ns3` and with owners `alice`, `bob` and `charlie` respectively. Two additional nodes (`bootnode` and `api-light`) would be created in `ns1` and owned by `alice`. Finally namespaces `ns2` and `ns3` would both contain an additional node called `api-light` owned by `bob` and `charlie` respectively.
-
-Additional options may be specified to configure the docker image used to generate the genesis (defaults to `digicatapult/sqnc-node:latest`) and the kubernetes namespace secrets should be created in (defaults to `sqnc`). The script writes the final raw genesis file to stdout so can be safely redirected. This should then either be hosted publicly or built into the node to be deployed so that the chain can be referenced.
-
 #### Creating additional secrets
 
 Work in progress
