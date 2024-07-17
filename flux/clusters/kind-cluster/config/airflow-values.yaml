@@ -16,4 +16,4 @@ ingress:
     ingressClassName: nginx
 airflow:
   config:
-    IRFLOW__WEBSERVER__BASE_URL: "http://localhost/airflow/"
+    AIRFLOW__WEBSERVER__BASE_URL: "http://localhost/airflow/"
