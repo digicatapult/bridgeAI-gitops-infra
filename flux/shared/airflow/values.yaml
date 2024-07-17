@@ -113,7 +113,7 @@ scheduler:
   ## configs for the log-cleanup sidecar of the scheduler
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/monitoring/log-cleanup.md
   logCleanup:
-    enabled: true
+    enabled: false
     retentionMinutes: 21600
 
   ## configs for the scheduler Pods' liveness probe
