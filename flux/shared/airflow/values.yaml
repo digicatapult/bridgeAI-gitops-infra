@@ -113,7 +113,7 @@ scheduler:
   ## configs for the log-cleanup sidecar of the scheduler
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/monitoring/log-cleanup.md
   logCleanup:
-    enabled: false
+    enabled: true
     retentionMinutes: 21600
 
   ## configs for the scheduler Pods' liveness probe
@@ -202,7 +202,7 @@ logs:
   ## configs for the logs PVC
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/monitoring/log-persistence.md
   persistence:
-    enabled: true
+    enabled: false
 
 ###################################
 ## CONFIG | Airflow DAGs
@@ -214,7 +214,7 @@ dags:
   ## configs for the dags PVC
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/load-dag-definitions.md
   persistence:
-    enabled: true
+    enabled: false
 
   ## configs for the git-sync sidecar
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/load-dag-definitions.md
@@ -227,7 +227,7 @@ dags:
 ingress:
   ## if we should deploy Ingress resources
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/kubernetes/ingress.md
-  enabled: true
+  enabled: false
 
 ###################################
 ## CONFIG | Kubernetes ServiceAccount
