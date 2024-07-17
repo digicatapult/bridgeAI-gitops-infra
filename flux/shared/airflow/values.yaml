@@ -219,7 +219,14 @@ dags:
   ## configs for the git-sync sidecar
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/load-dag-definitions.md
   gitSync:
-    enabled: false
+    enabled: true
+    repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
+    repoSubPath: "dags/"
+    branch: main
+    httpSecret: "github-auth"
+    httpSecretUsernameKey: "username"
+    httpSecretPasswordKey: "password"
+
 
 ###################################
 ## CONFIG | Kubernetes Ingress

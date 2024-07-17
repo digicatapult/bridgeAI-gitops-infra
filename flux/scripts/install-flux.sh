@@ -142,6 +142,15 @@ install_github_secret() {
         printf "ERROR\nSecret \"flux-system\" failed to install in $context\n"
         exit 1
     fi
+    printf "Installing the Github Secret on the cluster in default namespace...\n"
+    kubectl create secret generic github-auth --namespace default --context $context --from-literal=username=git --from-literal=password=$secret #&> /dev/null
+    local ret=$?
+    if [ "$ret" -eq 0 ]; then
+      printf "OK\nSecret \"github-auth\" successfully installed in $context\n"
+    elif [ "$ret" -ne 0 ]; then
+        printf "ERROR\nSecret \"github-auth\" failed to install in $context\n"
+        exit 1
+    fi
 }
 
 setup_flux_git_source() {
