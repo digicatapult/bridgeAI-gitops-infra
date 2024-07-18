@@ -45,7 +45,7 @@ airflow:
   connections:
     - id: local-k8s
       type: kubernetes
-      extra: {"in_cluster": "true"}
+      inCluster: true
   connectionsUpdate: true
 
   ## a list airflow variables to create
