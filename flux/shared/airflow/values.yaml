@@ -130,7 +130,7 @@ scheduler:
   ## configs for the log-cleanup sidecar of the scheduler
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/monitoring/log-cleanup.md
   logCleanup:
-    enabled: true
+    enabled: false
     retentionMinutes: 21600
 
   ## configs for the scheduler Pods' liveness probe
@@ -219,7 +219,10 @@ logs:
   ## configs for the logs PVC
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/monitoring/log-persistence.md
   persistence:
-    enabled: false
+    enabled: true
+    storageClass: "nfs"
+    size: 5Gi
+    accessMode: ReadWriteMany
 
 ###################################
 ## CONFIG | Airflow DAGs
