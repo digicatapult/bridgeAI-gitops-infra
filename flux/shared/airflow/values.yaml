@@ -42,7 +42,11 @@ airflow:
 
   ## a list airflow connections to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-connections.md
-  connections: []
+  connections:
+    - id: local-k8s
+      type: kubernetes
+      extra: {"in_cluster": "true"}
+  connectionsUpdate: true
 
   ## a list airflow variables to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-variables.md
