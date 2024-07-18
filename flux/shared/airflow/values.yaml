@@ -46,7 +46,24 @@ airflow:
 
   ## a list airflow variables to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-variables.md
-  variables: []
+  variables:
+    - key: "DATA_PATH"
+      value: "/data"
+    - key: "NAMESPACE"
+      value: "default"
+    - key: "BASE_IMAGE"
+      value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
+    - key: "DOCKER_REG_SECRET"
+      #value: "${DOCKER_REG_SECRET}"
+      value: "ghcr-io"
+    - key: MLFLOW_TRACKING_URI
+      value: "http://mlflow:5000"
+  # variablesTemplates:
+  #   DOCKER_REG_SECRET:
+  #     kind: secret
+  #     name: ghcr-io
+  #     key: .dockerconfigjson
+  variablesUpdate: true
 
   ## a list airflow pools to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-pools.md
