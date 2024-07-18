@@ -1,0 +1,9 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: nfs-ganesha
+  namespace: default
+spec:
+  interval: 10m0s
+  url: https://kubernetes-sigs.github.io/nfs-ganesha-server-and-external-provisioner/
