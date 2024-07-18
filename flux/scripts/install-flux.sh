@@ -200,6 +200,7 @@ setup_flux_kustomization() {
 assert_command kubectl
 assert_command flux
 assert_command gh
+assert_command jq
 assert_env $CONTEXT_NAME
 assert_flux_env $CONTEXT_NAME
 install_flux $CONTEXT_NAME

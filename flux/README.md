@@ -7,6 +7,7 @@ Ensure you have the following installed:
 * kubectl
 * flux
 * gnupg
+* [jq](https://jqlang.github.io/jq/) this one or the brew formula
 * github cli
 
 ## Getting started
