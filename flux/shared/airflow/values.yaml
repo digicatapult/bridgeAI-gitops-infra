@@ -45,7 +45,7 @@ airflow:
   connections:
     - id: local-k8s
       type: kubernetes
-      extra: {"in_cluster": "true", "namespace": "default", "disable_verify_ssl": "true"}
+      extra: { "in_cluster": true, "namespace": "default", "disable_verify_ssl": true }
   connectionsUpdate: true
 
   ## a list airflow variables to create
