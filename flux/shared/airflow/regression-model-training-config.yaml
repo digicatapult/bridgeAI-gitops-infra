@@ -4,7 +4,7 @@ metadata:
   name: regression-model-training
   namespace: default
 data:
-  config.yaml: |
+  config.yaml: |-
     data:  # data related config
       raw_data: "./artefacts/HousingData.csv"  # path to the input raw data used for the training process
       train_data_save_path: "./artefacts/train_data.csv"  # save path of the train split of the data - used for training the model
