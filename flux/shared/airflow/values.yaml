@@ -74,7 +74,7 @@ airflow:
       value: "local-k8s"
     - key: "IN_CLUSTER"
       value: true
-    - key: CONFIGMAP
+    - key: "CONFIG_MAP"
       value: regression-model-training
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
