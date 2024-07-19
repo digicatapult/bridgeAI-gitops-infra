@@ -82,14 +82,8 @@ assert_env() {
   # check that GITHUB_TOKEN env variable is set
   printf "Checking for presence of GITHUB_TOKEN environment variable..."
   if [[ -z "$GITHUB_TOKEN" ]]; then
-    printf "NOT OK\nGithub token env variable is empty or not set. Trying to get one using gh auth token...\n"
-    GITHUB_TOKEN=$(gh auth token)
-    if [[ -z "$GITHUB_TOKEN" ]]; then
-      printf "NOT OK\nFailed to get Github token using gh auth token. Please login to the gh cli using 'gh auth login' and try again.\n"
-      exit 1
-    else
-      printf "OK\nGithub token successfully obtained using gh auth token.\n"
-    fi
+    printf "NOT OK\nGithub token env variable is empty or not set. Set a PAT in your shell environment...\n"
+    exit 1
   else
     printf "OK\n"
   fi
@@ -199,8 +193,6 @@ setup_flux_kustomization() {
 
 assert_command kubectl
 assert_command flux
-assert_command gh
-assert_command jq
 assert_env $CONTEXT_NAME
 assert_flux_env $CONTEXT_NAME
 install_flux $CONTEXT_NAME

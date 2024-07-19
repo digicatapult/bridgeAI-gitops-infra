@@ -14,6 +14,8 @@ Ensure you have the following installed:
 
 Run the `./flux/scripts/add-kind-cluster.sh` script.
 
+You will need to setup a CLASSIC github personal access token that has `repo` and `package:read` permissions.
+
 Select the GitOps branch you wish to track and run `./flux/scripts/install-flux.sh -b <branch>`
 
 This will bring up a kind cluster with flux installed and will automatically install nginx and airflow
