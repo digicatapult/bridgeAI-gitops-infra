@@ -45,6 +45,9 @@ airflow:
   connections:
     - id: local-k8s
       type: kubernetes
+      ## Configuring this using the documentation is annoying, its easier to create it manually in the GUI then export the connection and JSONify it.
+      ## kubectl exec --stdin --tty airflow-scheduler-995f84869-7dlsw -- /bin/bash
+      ## airflow connections export --conn_id local-k8s --output /dev/stdout
       extra: |
         {
           "in_cluster": true,
