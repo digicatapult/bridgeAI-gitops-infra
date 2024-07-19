@@ -59,22 +59,22 @@ airflow:
   ## a list airflow variables to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-variables.md
   variables:
-    - key: "DATA_PATH"
+    - key: "data_path"
       value: "/data"
-    - key: "NAMESPACE"
+    - key: "namespace"
       value: "default"
-    - key: "BASE_IMAGE"
+    - key: "base_image"
       value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
-    - key: "DOCKER_REG_SECRET"
+    - key: "docker_reg_secret"
       #value: "${DOCKER_REG_SECRET}"
       value: "ghcr-io"
-    - key: "MLFLOW_TRACKING_URI"
+    - key: "mlflow_tracking_uri"
       value: "http://mlflow:5000"
-    - key: "CONNECTION_ID"
+    - key: "connection_id"
       value: "local-k8s"
-    - key: "IN_CLUSTER"
+    - key: "in_cluster"
       value: true
-    - key: "CONFIG_MAP"
+    - key: "config_map"
       value: regression-model-training
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
