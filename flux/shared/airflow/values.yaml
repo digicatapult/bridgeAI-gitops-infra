@@ -68,8 +68,14 @@ airflow:
     - key: "DOCKER_REG_SECRET"
       #value: "${DOCKER_REG_SECRET}"
       value: "ghcr-io"
-    - key: MLFLOW_TRACKING_URI
+    - key: "MLFLOW_TRACKING_URI"
       value: "http://mlflow:5000"
+    - key: "CONNECTION_ID"
+      value: "local-k8s"
+    - key: "IN_CLUSTER"
+      value: true
+    - key: CONFIGMAP
+      value: regression-model-training
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
