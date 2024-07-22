@@ -1,0 +1,28 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: airflow
+  namespace: default
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: airflow
+  chart:
+    spec:
+      chart: airflow
+      sourceRef:
+        kind: HelmRepository
+        name: apache-airflow
+      version: "${airflow_version}"
+  interval: 10m0s
+  # Default values
+  # https://github.com/airflow-helm/charts/blob/main/charts/airflow/values.yaml
+  valuesFrom:
+    - kind: ConfigMap
+      name: shared-values
+      valuesKey: airflow-values.yaml
+    - kind: ConfigMap
+      name: shared-env-values
+      valuesKey: airflow-values.yaml

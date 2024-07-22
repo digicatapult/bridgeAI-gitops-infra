@@ -1,0 +1,19 @@
+dags:
+  gitSync:
+    enabled: true
+    repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
+    repoSubPath: "dags/"
+    branch: main
+    httpSecret: "github-auth"
+    httpSecretUsernameKey: "username"
+    httpSecretPasswordKey: "password"
+ingress:
+  enabled: true
+  apiVersion: networking.k8s.io/v1
+  web:
+    host: localhost
+    path: /airflow
+    ingressClassName: nginx
+airflow:
+  config:
+    AIRFLOW__WEBSERVER__BASE_URL: "http://localhost/airflow"

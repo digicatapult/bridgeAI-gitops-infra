@@ -1,0 +1,21 @@
+watchIngressWithoutClass: true
+resourcesPreset: micro
+ingressClassResource:
+  default: true
+hostNetwork: true
+dnsPolicy: ClusterFirstWithHostNet
+service:
+  type: NodePort
+nodeSelector:
+  ingress-ready: "true"
+  kubernetes.io/os: linux
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Equal
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Equal
+containerPorts:
+  http: 80
+  https: 443

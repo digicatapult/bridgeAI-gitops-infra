@@ -1,0 +1,18 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: bitnami
+  namespace: default
+spec:
+  interval: 10m0s
+  url: https://charts.bitnami.com/bitnami
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: apache-airflow
+  namespace: default
+spec:
+  interval: 10m0s
+  url: https://airflow-helm.github.io/charts

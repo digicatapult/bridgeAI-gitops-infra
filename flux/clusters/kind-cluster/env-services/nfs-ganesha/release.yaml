@@ -1,0 +1,25 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: nfs
+  namespace: default
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: nfs
+  chart:
+    spec:
+      chart: nfs-server-provisioner
+      sourceRef:
+        kind: HelmRepository
+        name: nfs-ganesha
+      version: 1.8.0
+  interval: 10m0s
+  # Default values
+  # https://github.com/kubernetes-sigs/nfs-ganesha-server-and-external-provisioner/blob/master/charts/nfs-server-provisioner/values.yaml
+  valuesFrom:
+    - kind: ConfigMap
+      name: env-values
+      valuesKey: nfs-values.yaml

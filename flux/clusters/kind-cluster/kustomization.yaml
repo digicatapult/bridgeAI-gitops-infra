@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: default
+resources:
+  - shared-sync.yaml
+  - env-services
+
+configMapGenerator:
+  - name: shared-env-values
+    files:
+      - airflow-values.yaml=config/airflow-values.yaml
+      - nginx-values.yaml=config/nginx-values.yaml
+configurations:
+  - kustomize-config.yaml
+generatorOptions:
+  disableNameSuffixHash: true
