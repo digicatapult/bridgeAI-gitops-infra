@@ -1,22 +1,22 @@
 tracking:
-  extraArgs:
-    - --static-prefix=/mlflow
-  customReadinessProbe:
-    failureThreshold: 5
-    httpGet:
-      path: /mlflow
-      port: http
-      scheme: HTTP
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 5
+  # extraArgs:
+  #   - --static-prefix=/mlflow
+  # customReadinessProbe:
+  #   failureThreshold: 5
+  #   httpGet:
+  #     path: /mlflow
+  #     port: http
+  #     scheme: HTTP
+  #   initialDelaySeconds: 5
+  #   periodSeconds: 10
+  #   successThreshold: 1
+  #   timeoutSeconds: 5
   auth:
     enabled: false
   ingress:
     enabled: true
     hostname: localhost
-    path: /mlflow
+    # path: /mlflow
     ingressClassName: nginx
   service:
     type: ClusterIP
