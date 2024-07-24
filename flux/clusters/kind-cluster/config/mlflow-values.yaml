@@ -6,3 +6,5 @@ tracking:
     hostname: localhost
     path: /mlflow
     ingressClassName: nginx
+  service:
+    type: ClusterIP
