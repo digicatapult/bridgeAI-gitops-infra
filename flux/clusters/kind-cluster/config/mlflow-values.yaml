@@ -1,6 +1,6 @@
 tracking:
-  auth:
-    enabled: false
+#   auth:
+#     enabled: false
   ingress:
     enabled: true
     hostname: localhost
