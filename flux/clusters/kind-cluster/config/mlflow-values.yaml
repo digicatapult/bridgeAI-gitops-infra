@@ -4,7 +4,7 @@ tracking:
   ingress:
     enabled: true
     hostname: localhost
-    path: /mlflow
+    path: /
     ingressClassName: nginx
   service:
     type: ClusterIP
