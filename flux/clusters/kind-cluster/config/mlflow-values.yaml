@@ -1,10 +1,12 @@
 tracking:
+  extraArgs:
+    - --static-prefix /mlflow
   auth:
     enabled: false
   ingress:
     enabled: true
     hostname: localhost
-    path: /
+    path: /mlflow
     ingressClassName: nginx
   service:
     type: ClusterIP
