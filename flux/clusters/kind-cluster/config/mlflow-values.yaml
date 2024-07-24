@@ -1,6 +1,6 @@
 tracking:
   extraArgs:
-    - --static-prefix /mlflow
+    - --static-prefix=/mlflow
   auth:
     enabled: false
   ingress:
