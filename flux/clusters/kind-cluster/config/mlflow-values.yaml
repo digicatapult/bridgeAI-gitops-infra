@@ -21,5 +21,10 @@ tracking:
     extraPaths:
       - path: /api
         pathType: Prefix
+        backend:
+          service:
+            name: mlflow-tracking
+            port:
+              name: http
   service:
     type: ClusterIP
