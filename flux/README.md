@@ -20,6 +20,14 @@ Select the GitOps branch you wish to track and run `./flux/scripts/install-flux.
 
 This will bring up a kind cluster with flux installed and will automatically install nginx and airflow
 
+### Airflow
+
 You can access the airflow UI on http://localhost:3080/airflow
 Username: admin
 Password: admin
+
+### MLFlow
+
+You can access the MLFlow UI on http://localhost:3080/mlflow
+No authentication required.
+You can set the MLFLOW_TRACKING_URI clientside as http://localhost:3080/ Airflow has a variable set to locate the mlflow_tracking_uri
