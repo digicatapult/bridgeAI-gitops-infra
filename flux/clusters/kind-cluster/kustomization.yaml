@@ -9,6 +9,7 @@ configMapGenerator:
   - name: shared-env-values
     files:
       - airflow-values.yaml=config/airflow-values.yaml
+      - mlflow-values.yaml=config/mlflow-values.yaml
       - nginx-values.yaml=config/nginx-values.yaml
 configurations:
   - kustomize-config.yaml

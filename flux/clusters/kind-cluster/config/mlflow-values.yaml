@@ -1,0 +1,7 @@
+auth:
+  enabled: false
+ingress:
+  enabled: true
+  hostname: localhost
+  path: /mlflow
+  ingressClassName: nginx

@@ -4,6 +4,7 @@ namespace: default
 
 resources:
   - airflow
+  - mlflow
   - nginx
   - sources.yaml
 
@@ -11,6 +12,7 @@ configMapGenerator:
   - name: shared-values
     files:
       - airflow-values.yaml=airflow/values.yaml
+      - mlflow-values.yaml=mlflow/values.yaml
       - nginx-values.yaml=nginx/values.yaml
 configurations:
   - kustomize-config.yaml
