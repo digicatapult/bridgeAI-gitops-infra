@@ -20,7 +20,7 @@ tracking:
     ingressClassName: nginx
     extraPaths:
       - path: /api
-        type: Prefix
+        pathType: Prefix
         backend:
           serviceName: mlflow-tracking
           servicePort: http
