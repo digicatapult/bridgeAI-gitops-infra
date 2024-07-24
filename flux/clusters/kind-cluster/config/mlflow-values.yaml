@@ -1,8 +1,12 @@
 tracking:
-#   auth:
-#     enabled: false
+  auth:
+    enabled: false
+    password: password
   ingress:
     enabled: true
     hostname: localhost
     path: /mlflow
     ingressClassName: nginx
+postgresql:
+  auth:
+    password: password
