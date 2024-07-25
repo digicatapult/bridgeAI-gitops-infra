@@ -69,7 +69,7 @@ airflow:
       #value: "${DOCKER_REG_SECRET}"
       value: "ghcr-io"
     - key: "mlflow_tracking_uri"
-      value: "http://mlflow:5000"
+      value: "http://mlflow-tracking:80"
     - key: "connection_id"
       value: "local-k8s"
     - key: "in_cluster"
