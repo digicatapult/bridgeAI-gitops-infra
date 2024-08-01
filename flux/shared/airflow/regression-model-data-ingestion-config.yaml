@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: regression-model-data-ingestion
+  name: data-ingest-config-volume
   namespace: default
 data:
   config.yaml: |-
