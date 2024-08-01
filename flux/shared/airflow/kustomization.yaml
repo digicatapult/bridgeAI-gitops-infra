@@ -5,3 +5,4 @@ namespace: default
 resources:
   - release.yaml
   - regression-model-training-config.yaml
+  - regression-model-data-ingestion-config.yaml
