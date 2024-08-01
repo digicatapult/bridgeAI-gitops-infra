@@ -74,8 +74,10 @@ airflow:
       value: "local-k8s"
     - key: "in_cluster"
       value: true
-    - key: "config_map"
+    - key: "regression_model_training_configmap"
       value: regression-model-training
+    - key: "regression_model_data_ingestion_configmap"
+      value: data-ingest-config-volume
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
