@@ -66,7 +66,7 @@ airflow:
     - key: "base_image_model_training"
       value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
     - key: "base_image_data_ingestion"
-      value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
+      value: "ghcr.io/digicatapult/bridgeAI-regression-model-data-ingestion:latest"
     - key: "docker_reg_secret"
       #value: "${DOCKER_REG_SECRET}"
       value: "ghcr-io"
