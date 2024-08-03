@@ -61,6 +61,8 @@ airflow:
   variables:
     - key: "data_path"
       value: "/data"
+    - key: "data_url"
+      value: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"
     - key: "namespace"
       value: "default"
     - key: "base_image_model_training"
