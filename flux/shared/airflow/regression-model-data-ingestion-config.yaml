@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: data-ingest-config-volume
+  name: data-ingest-configmap
   namespace: default
 data:
   config.yaml: |-

@@ -79,9 +79,9 @@ airflow:
     - key: "in_cluster"
       value: true
     - key: "model_training_configmap"
-      value: "regression-model-training"
+      value: "model-training-configmap"
     - key: "data_ingestion_configmap"
-      value: "data-ingest-config-volume"
+      value: "data-ingest-configmap"
     - key: "github_secret"
       value: "github-auth"
     - key: "github_secret_username_key"
