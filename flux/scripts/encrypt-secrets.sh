@@ -44,7 +44,7 @@ assert_cluster() {
   local cluster=$1
 
   printf "Checking cluster $cluster is configured correctly..."
-  if [ ! -d "./clusters/$cluster" ]; then
+  if [ ! -d "./flux/clusters/$cluster" ]; then
     echo -e "Cannot update secrets for cluster $cluster which does not exist"
     exit 1
   fi
@@ -73,7 +73,7 @@ assert_command sops
 
 # check we can decrypt secrets if we need to
 if [ ! -z "$REENCRYPT_ALL" ]; then
-  for filename in ./clusters/$CLUSTER/secrets/*.yaml; do
+  for filename in ./flux/clusters/$CLUSTER/secrets/*.yaml; do
     printf "Checking if $filename is encrypted..."
     is_encrypted=$(cat $filename | egrep "^sops:$")
 
@@ -98,7 +98,7 @@ fi
 # setup a temp directory for importing these keys into
 IMPORT_DIR=$(mktemp -d -t gnugp.XXXXXXXXXX)
 chmod 700 $IMPORT_DIR
-for filename in ./certs/$CLUSTER/*.asc; do
+for filename in ./flux/certs/$CLUSTER/*.asc; do
   GNUPGHOME=$IMPORT_DIR gpg --import $filename &> /dev/null
 done
 
@@ -108,7 +108,7 @@ PGP_KEYS=$(GNUPGHOME=$IMPORT_DIR gpg --list-keys | awk '{$1=$1};1' | egrep '^[0-
 # Check if we should be re-encryping everything or not
 if [ -z "$REENCRYPT_ALL" ]; then
   # encrypt only unencrypted files
-  for fullfile in ./clusters/$CLUSTER/secrets/*.yaml; do
+  for fullfile in ./flux/clusters/$CLUSTER/secrets/*.yaml; do
     is_encrypted=$(cat $fullfile | egrep "^sops:$")
     if [ -z "$is_encrypted" ]; then
       printf "Encrypting $fullfile..."
@@ -123,7 +123,7 @@ if [ -z "$REENCRYPT_ALL" ]; then
   done
 else
   # now re-encrypt the files
-  for fullfile in ./clusters/$CLUSTER/secrets/*.yaml; do
+  for fullfile in ./flux/clusters/$CLUSTER/secrets/*.yaml; do
     printf "Re-encrypting $fullfile..."
 
     is_encrypted=$(cat $fullfile | egrep "^sops:$")

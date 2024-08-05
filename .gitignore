@@ -1,1 +1,7 @@
 *.log
+# Uncencrypted secrets should not be committed. This doesn't stop it but if people follow the docs it'll help
+flux/clusters/*/secrets/*.unc.yaml
+.iml
+.idea/
+.vscode/
+.DS_Store
