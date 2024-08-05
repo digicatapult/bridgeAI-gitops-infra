@@ -95,7 +95,7 @@ airflow:
   #     kind: secret
   #     name: ghcr-io
   #     key: .dockerconfigjson
-  variablesUpdate: true
+  variablesUpdate: false
 
   ## a list airflow pools to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-pools.md
