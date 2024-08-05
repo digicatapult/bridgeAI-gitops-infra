@@ -79,9 +79,17 @@ airflow:
     - key: "in_cluster"
       value: true
     - key: "model_training_configmap"
-      value: regression-model-training
+      value: "regression-model-training"
     - key: "data_ingestion_configmap"
-      value: data-ingest-config-volume
+      value: "data-ingest-config-volume"
+    - key: "github_secret"
+      value: "github-auth"
+    - key: "github_secret_username_key"
+      value: "username"
+    - key: "github_secret_password_key"
+      value: "password"
+    - key: "data_ingestion_pvc"
+      value: "data-ingestion-pvc"
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
