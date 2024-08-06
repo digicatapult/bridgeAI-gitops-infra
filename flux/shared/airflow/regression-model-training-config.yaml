@@ -28,10 +28,13 @@ data:
       expt_name: "expt-name"   # Experiment name under which the model trainings will be listed in MLFlow
     
     dvc:
-      remote_name: "regression-model-remote"  # The dvc remote name to pull data from
       git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
       git_branch: "feature/testing"   # The branch where the tagged data is available
       data_version: "data-v1.0.0"   # The git tag for the data version to be used
       train_data_path: "./artefacts/train_data.csv"  # Path of the train split of the data pulled from dvc
       test_data_path: "./artefacts/test_data.csv"   # Path of the test split of the data pulled from dvc
       val_data_path: "./artefacts/val_data.csv"   # Path of the validation split of the data pulled from dvc
+      dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+      dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+      dvc_endpoint_url: "http://minio.default.svc.cluster.local:80"   # minio endpoint url, not sure if needed for s3
+      dvc_region: "us-east-1"
