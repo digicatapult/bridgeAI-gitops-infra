@@ -22,7 +22,7 @@ data:
     
     dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
     dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
-    dvc_endpoint_url: "http://minio"  # "http://minio.default.svc.cluster.local:80"   # minio endpoint url, not sure if needed for s3
+    dvc_endpoint_url: "http://minio.default.svc.cluster.local:80"   # minio endpoint url, not sure if needed for s3
     dvc_region: "us-east-1"
     git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"    # data ingestion repo url
     git_repo_save_name: "local_repo"  # the directory name where the repo will be cloned to - needed this to be constant with what the data ingestion dag is accessing
