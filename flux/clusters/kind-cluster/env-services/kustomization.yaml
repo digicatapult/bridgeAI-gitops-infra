@@ -4,10 +4,12 @@ namespace: default
 resources:
   - sources.yaml
   - nfs-ganesha
+  - minio
 configMapGenerator:
   - name: env-values
     files:
       - nfs-values.yaml=nfs-ganesha/values.yaml
+      - minio-values.yaml=minio/values.yaml
 configurations:
   - kustomize-config.yaml
 generatorOptions:
