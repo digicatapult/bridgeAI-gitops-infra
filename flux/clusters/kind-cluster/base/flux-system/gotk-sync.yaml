@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: feature/add-minio
+    branch: test/data_ingestion
   url: https://github.com/digicatapult/bridgeai-gitops-infra.git
   secretRef:
     name: flux-system
