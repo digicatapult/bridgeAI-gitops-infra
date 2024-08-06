@@ -4,7 +4,7 @@ namespace: cert-manager
 resources:
   - source.yaml
   - release.yaml
-  - issue.yaml
+  - issuers.yaml
 configMapGenerator:
   - name: cert-manager-values
     files:
