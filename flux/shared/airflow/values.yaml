@@ -98,6 +98,8 @@ airflow:
       value: "admin"
     - key: "dvc_secret_access_key"
       value: "password"
+    - key: "data_version"
+      value: "data-v1.0.0"
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
