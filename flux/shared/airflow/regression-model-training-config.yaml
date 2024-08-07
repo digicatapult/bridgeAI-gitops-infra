@@ -24,7 +24,7 @@ data:
       use_gpu: True   # to use gpu or not. If no gpu found, will fall back to cpu with warning
     
     mlflow:  # for mlflow logging
-      tracking_uri: "http://localhost:8080"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
+      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
       expt_name: "expt-name"   # Experiment name under which the model trainings will be listed in MLFlow
     
     dvc:
@@ -36,5 +36,5 @@ data:
       val_data_path: "./artefacts/val_data.csv"   # Path of the validation split of the data pulled from dvc
       dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
       dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
-      dvc_endpoint_url: "http://minio.default.svc.cluster.local:80"   # minio endpoint url, not sure if needed for s3
-      dvc_region: "us-east-1"
+      dvc_endpoint_url: "http://minio"  # dvc endpoint url
+      dvc_region: "us-east-1"    # dvc region - used for s3, just a placeholder for minio

@@ -92,6 +92,10 @@ airflow:
       value: "data-ingestion-pvc"
     - key: "dvc_remote"
       value: "s3://artifacts"
+    - key: "dvc_access_key_id"
+      value: "admin"
+    - key: "dvc_secret_access_key"
+      value: "password"
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
