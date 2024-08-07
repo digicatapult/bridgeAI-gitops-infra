@@ -10,6 +10,13 @@ spec:
   dependsOn:
     - name: cert-manager-sync
       namespace: cert-manager
+  healthChecks:
+    - apiVersion: cert-manager.io/v1
+      kind: CustomResourceDefinition
+      name: challenges.acme.cert-manager.io
+    - apiVersion: cert-manager.io/v1
+      kind: CustomResourceDefinition
+      name: orders.acme.cert-manager.io
   sourceRef:
     kind: GitRepository
     name: flux-system
