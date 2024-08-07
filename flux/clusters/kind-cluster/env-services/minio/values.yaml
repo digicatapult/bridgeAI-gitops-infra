@@ -10,13 +10,3 @@ provisioning:
 auth:
   rootUser: admin
   rootPassword: admin
-readinessProbe:
-  enabled: true
-  initialDelaySeconds: 300
-  periodSeconds: 20
-  timeoutSeconds: 10
-  successThreshold: 1
-  failureThreshold: 6
-  httpGet:
-    path: /minio/health/ready
-    port: 9000
