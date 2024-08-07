@@ -90,6 +90,8 @@ airflow:
       value: "password"
     - key: "data_ingestion_pvc"
       value: "data-ingestion-pvc"
+    - key: "model_training_pvc"
+      value: "model-training-pvc"
     - key: "dvc_remote"
       value: "s3://artifacts"
     - key: "dvc_access_key_id"
