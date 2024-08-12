@@ -1,0 +1,12 @@
+defaultBuckets: "artifacts"
+service:
+  type: ClusterIP
+  loadBalancerIP: ""
+  ports:
+    api: 80
+provisioning:
+  enabled: true
+  extraCommands: ["mc anonymous set download provisioning/artifacts"]
+auth:
+  rootUser: admin
+  rootPassword: password

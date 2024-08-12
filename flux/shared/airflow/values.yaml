@@ -61,10 +61,14 @@ airflow:
   variables:
     - key: "data_path"
       value: "/data"
+    - key: "data_url"
+      value: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"
     - key: "namespace"
       value: "default"
-    - key: "base_image"
+    - key: "base_image_model_training"
       value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
+    - key: "base_image_data_ingestion"
+      value: "ghcr.io/digicatapult/bridgeai-regression-model-data-ingestion:latest"
     - key: "docker_reg_secret"
       #value: "${DOCKER_REG_SECRET}"
       value: "ghcr-io"
@@ -74,14 +78,34 @@ airflow:
       value: "local-k8s"
     - key: "in_cluster"
       value: true
-    - key: "config_map"
-      value: regression-model-training
+    - key: "model_training_configmap"
+      value: "model-training-configmap"
+    - key: "data_ingestion_configmap"
+      value: "data-ingest-configmap"
+    - key: "github_secret"
+      value: "github-auth"
+    - key: "github_secret_username_key"
+      value: "username"
+    - key: "github_secret_password_key"
+      value: "password"
+    - key: "data_ingestion_pvc"
+      value: "data-ingestion-pvc"
+    - key: "model_training_pvc"
+      value: "model-training-pvc"
+    - key: "dvc_remote"
+      value: "s3://artifacts"
+    - key: "dvc_access_key_id"
+      value: "admin"
+    - key: "dvc_secret_access_key"
+      value: "password"
+    - key: "data_version"
+      value: "data-v1.0.0"
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
   #     name: ghcr-io
   #     key: .dockerconfigjson
-  variablesUpdate: true
+  variablesUpdate: false
 
   ## a list airflow pools to create
   ## [FAQ] https://github.com/airflow-helm/charts/blob/main/charts/airflow/docs/faq/dags/airflow-pools.md

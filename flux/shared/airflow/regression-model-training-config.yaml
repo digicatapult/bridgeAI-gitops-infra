@@ -1,21 +1,17 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: regression-model-training
+  name: model-training-configmap
   namespace: default
 data:
   config.yaml: |-
     data:  # data related config
-      raw_data: "./artefacts/HousingData.csv"  # path to the input raw data used for the training process
-      train_data_save_path: "./artefacts/train_data.csv"  # save path of the train split of the data - used for training the model
-      test_data_save_path: "./artefacts/test_data.csv"   # save path of the test split of the data - used for testing the trained models performance
-      val_data_save_path: "./artefacts/val_data.csv"   # save path of the validation split of the data - used for hyperparameter tuning
       label_col: "price"   # column name of the predictor variable
       categorical_cols: ["mainroad", "guestroom", "basement", "hotwaterheating",  # categorical column names in the input data
-                      "airconditioning", "prefarea", "furnishingstatus"]
+                       "airconditioning", "prefarea", "furnishingstatus"]
       numeric_cols: ["area", "bedrooms", "bathrooms", "stories", "parking"]   # numerical column names in the input data
       preprocessor_path: "./artefacts/preprocessor.joblib"   # save path of the preprocessing transformations (parameters are learned from the train data)
-
+    
     model:   # model related parameters and hyperparameters
       model_name: "house_price-regression"   # The name with which the model should be saved or logged
       save_path: "./artefacts/"   # model save path
@@ -26,7 +22,20 @@ data:
       es_patience: 10   # early stopping patience - how many more training epochs will be attempted if there is no improvement in model observed
       es_delta: 0   # early stopping delta - what increment in model performance will be considered as improvement for early stopping
       use_gpu: True   # to use gpu or not. If no gpu found, will fall back to cpu with warning
-
+    
     mlflow:  # for mlflow logging
-      tracking_uri: "http://mlflow:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
-      expt_name: ""   # Experiment name under which the model trainings will be listed in MLFlow
+      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
+      expt_name: "expt-name"   # Experiment name under which the model trainings will be listed in MLFlow
+    
+    dvc:
+      git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
+      git_branch: "feature/testing"   # The branch where the tagged data is available
+      data_version: "data-v1.0.0"   # The git tag for the data version to be used
+      train_data_path: "./artefacts/train_data.csv"  # Path of the train split of the data pulled from dvc
+      test_data_path: "./artefacts/test_data.csv"   # Path of the test split of the data pulled from dvc
+      val_data_path: "./artefacts/val_data.csv"   # Path of the validation split of the data pulled from dvc
+      dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+      dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+      dvc_endpoint_url: "http://minio"  # dvc endpoint url
+      dvc_region: "us-east-1"    # dvc region - used for s3, just a placeholder for minio
+      data_version: "data-v1.0.0"   # data version to use - the tag used in the data ingestion to dvc repo
