@@ -1,0 +1,21 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager-sync
+  namespace: cert-manager
+spec:
+  interval: 1m
+  path: ./flux/clusters/bridgeai-prod/cert-manager
+  prune: true
+  healthChecks:
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: certificates.cert-manager.io
+    - apiVersion: apiextensions.k8s.io/v1
+      kind: CustomResourceDefinition
+      name: issuers.cert-manager.io
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system

@@ -1,0 +1,6 @@
+installCRDs: true
+metrics:
+  enabled: false
+  serviceMonitor:
+    enabled: false
+    namespace: cert-manager
