@@ -24,12 +24,16 @@ spec:
     - kind: Secret
       name: mlflow-secrets
       valuesKey: MLFLOW_TRACKING_USERNAME
+      targetPath: tracking.auth.username
     - kind: Secret
       name: mlflow-secrets
       valuesKey: MLFLOW_TRACKING_PASSWORD
+      targetPath: tracking.auth.password
     - kind: Secret
       name: postgres-secrets
       valuesKey: POSTGRES_DB_USERNAME
+      targetPath: postgresql.auth.username
     - kind: Secret
       name: postgres-secrets
       valuesKey: POSTGRES_DB_PASSWORD
+      targetPath: postgresql.auth.password

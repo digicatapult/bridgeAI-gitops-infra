@@ -13,8 +13,6 @@ tracking:
     timeoutSeconds: 5
   auth:
     enabled: true
-    username: MLFLOW_TRACKING_USERNAME
-    password: MLFLOW_TRACKING_PASSWORD
   service:
     type: LoadBalancer
     ports:
@@ -38,8 +36,6 @@ postgresql:
   enabled: true
   auth:
     database: bitnami_mlflow
-    username: POSTGRES_DB_USERNAME
-    password: POSTGRES_DB_PASSWORD
   architecture: standalone
   primary:
     service:
