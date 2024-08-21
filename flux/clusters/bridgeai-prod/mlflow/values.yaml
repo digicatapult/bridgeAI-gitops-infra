@@ -1,0 +1,47 @@
+tracking:
+  extraArgs:
+    - --static-prefix=/mlflow
+  customReadinessProbe:
+    failureThreshold: 5
+    httpGet:
+      path: /*
+      port: http
+      scheme: HTTP
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 5
+  auth:
+    enabled: true
+    username: MLFLOW_TRACKING_USERNAME
+    password: MLFLOW_TRACKING_PASSWORD
+  service:
+    type: LoadBalancer
+    ports:
+      http: 80
+      https: 443
+  ingress:
+    enabled: true
+    hostname: dc-mlops.co.uk
+    ingressClassName: alb
+    path: /*
+    tls: true
+    extraPaths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: mlflow-tracking
+            port:
+              name: http
+postgresql:
+  enabled: true
+  auth:
+    database: bitnami_mlflow
+    username: POSTGRES_DB_USERNAME
+    password: POSTGRES_DB_PASSWORD
+  architecture: standalone
+  primary:
+    service:
+      ports:
+        postgresql: 5432
