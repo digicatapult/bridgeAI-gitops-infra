@@ -4,6 +4,7 @@ namespace: mlflow
 resources:
   - source.yaml
   - release.yaml
+  - volumes.yaml
 configMapGenerator:
   - name: mlflow-values
     files:
