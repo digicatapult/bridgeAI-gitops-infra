@@ -41,3 +41,5 @@ postgresql:
     service:
       ports:
         postgresql: 5432
+minio:
+  enabled: false
