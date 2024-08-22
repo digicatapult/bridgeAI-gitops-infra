@@ -22,18 +22,18 @@ spec:
       name: mlflow-values
       valuesKey: mlflow-values.yaml
     - kind: Secret
-      name: mlflow-secrets
-      valuesKey: MLFLOW_TRACKING_USERNAME
+      name: mlflow-admin-credentials
+      valuesKey: username
       targetPath: tracking.auth.username
     - kind: Secret
-      name: mlflow-secrets
-      valuesKey: MLFLOW_TRACKING_PASSWORD
+      name: mlflow-admin-credentials
+      valuesKey: password
       targetPath: tracking.auth.password
     - kind: Secret
-      name: postgres-secrets
-      valuesKey: POSTGRES_DB_USERNAME
+      name: mlflow-postgres-admin-credentials
+      valuesKey: username
       targetPath: postgresql.auth.username
     - kind: Secret
-      name: postgres-secrets
-      valuesKey: POSTGRES_DB_PASSWORD
+      name: mlflow-postgres-admin-credentials
+      valuesKey: password
       targetPath: postgresql.auth.password
