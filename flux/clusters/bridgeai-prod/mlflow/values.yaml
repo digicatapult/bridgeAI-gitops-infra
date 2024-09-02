@@ -1,5 +1,7 @@
 global:
   defaultStorageClass: efs-sc
+image:
+  debug: true
 tracking:
   extraArgs:
     - --static-prefix=/mlflow
