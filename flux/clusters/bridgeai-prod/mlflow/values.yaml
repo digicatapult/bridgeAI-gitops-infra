@@ -34,6 +34,17 @@ tracking:
             name: mlflow-tracking
             port:
               name: http
+  persistence:
+    enabled: true
+    storageClass: efs-sc
+    accessModes:
+      - ReadWriteOnce
+run:
+  persistence:
+    enabled: true
+    storageClass: efs-sc
+    accessModes:
+      - ReadWriteOnce
 postgresql:
   enabled: true
   auth:
