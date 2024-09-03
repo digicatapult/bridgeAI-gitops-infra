@@ -38,10 +38,11 @@ postgresql:
   auth:
     database: bitnami_mlflow
   architecture: standalone
-  persistence:
-    enabled: true
-    storageClass: gp2
+  
   primary:
+    persistence:
+      enabled: true
+      storageClass: gp2
     service:
       ports:
         postgresql: 5432
