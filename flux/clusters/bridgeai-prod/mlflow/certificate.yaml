@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: mlflow_dc-mlops_co_uk
+  name: mlflow-dc-mlops-co-uk
   namespace: mlflow
 spec:
   # Secret names are always required.

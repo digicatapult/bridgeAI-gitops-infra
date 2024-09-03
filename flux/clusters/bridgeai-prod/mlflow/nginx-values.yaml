@@ -11,4 +11,4 @@ tolerations:
     key: node-role.kubernetes.io/master
     operator: Equal
 extraArgs:
-  default-ssl-certificate: "mlflow/mlflow_dc-mlops_co_uk-prod-tls"
+  default-ssl-certificate: "mlflow/mlflow-dc-mlops-co-uk-prod-tls"
