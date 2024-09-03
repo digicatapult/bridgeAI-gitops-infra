@@ -1,22 +1,6 @@
-global:
-  defaultStorageClass: efs-sc
 image:
   debug: true
-volumePermissions:
-  enabled: true
 tracking:
-  extraArgs:
-    - --static-prefix=/mlflow
-  customReadinessProbe:
-    failureThreshold: 5
-    httpGet:
-      path: /*
-      port: http
-      scheme: HTTP
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 5
   auth:
     enabled: true
   service:
@@ -25,7 +9,7 @@ tracking:
       http: 80
       https: 443
   ingress:
-    enabled: true
+    enabled: false
     hostname: dc-mlops.co.uk
     ingressClassName: alb
     path: /*
@@ -42,18 +26,21 @@ tracking:
     enabled: true
     storageClass: efs-sc
     accessModes:
-      - ReadWriteOnce
+      - ReadWriteMany
 run:
   persistence:
     enabled: true
     storageClass: efs-sc
     accessModes:
-      - ReadWriteOnce
+      - ReadWriteMany
 postgresql:
   enabled: true
   auth:
     database: bitnami_mlflow
   architecture: standalone
+  persistence:
+    enabled: true
+    storageClass: gp2
   primary:
     service:
       ports:
