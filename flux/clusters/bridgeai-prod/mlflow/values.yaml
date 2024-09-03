@@ -4,14 +4,14 @@ tracking:
   auth:
     enabled: true
   service:
-    type: LoadBalancer
+    type: ClusterIP
     ports:
       http: 80
       https: 443
   ingress:
     enabled: false
     hostname: dc-mlops.co.uk
-    ingressClassName: alb
+    ingressClassName: nginx
     path: /*
     tls: true
     extraPaths:
