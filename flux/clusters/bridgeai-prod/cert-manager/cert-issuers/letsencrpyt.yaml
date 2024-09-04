@@ -43,7 +43,7 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
     - selector:
-        dnsNames:
+        dnsZones:
         - dc-mlops.co.uk
       dns01:
         route53:
