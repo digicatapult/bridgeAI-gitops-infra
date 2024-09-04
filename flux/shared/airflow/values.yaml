@@ -100,6 +100,16 @@ airflow:
       value: "password"
     - key: "data_version"
       value: "data-v1.0.0"
+    - key: "base_image_drift_monitoring"
+      value: "ghcr.io/digicatapult/bridgeai-drift-monitoring:latest"
+    - key: "historical_data_version"
+      value: "data-v1.0.0"
+    - key: "new_data_version"
+      value: "data-v1.1.0"
+    - key: "drift_monitoring_configmap"
+      value: "drift-monitoring-configmap"
+    - key: "drift_monitoring_pvc"
+      value: "drift-monitoring-pvc"
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
