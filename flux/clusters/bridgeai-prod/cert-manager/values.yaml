@@ -4,3 +4,5 @@ metrics:
   serviceMonitor:
     enabled: false
     namespace: cert-manager
+extraArgs:
+  - "--issuer-ambient-credentials=true"
