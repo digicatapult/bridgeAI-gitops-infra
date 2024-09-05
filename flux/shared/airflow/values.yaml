@@ -110,6 +110,8 @@ airflow:
       value: "drift-monitoring-configmap"
     - key: "drift_monitoring_pvc"
       value: "drift-monitoring-pvc"
+    - key: "model_endpoint"
+      value: "http://host.docker.internal:5001/invocations"
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
