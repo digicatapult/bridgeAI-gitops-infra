@@ -10,7 +10,7 @@ TARGET_PASSWORD=
 ADMIN_STATUS="${ADMIN_STATUS:-false}"
 
 init_env() {
-    MLFLOW_API_URI="https://${MLFLOW_TRACKING_URI}/api/2.0/mlflow/"
+    MLFLOW_API_URI="https://${MLFLOW_TRACKING_URI}/api/2.0/mlflow"
 
     touch ${MLFLOW_CREDENTIALS_FILE}
 
