@@ -1,9 +1,13 @@
 installCRDs: true
+
 metrics:
   enabled: false
   serviceMonitor:
     enabled: false
     namespace: cert-manager
 controller:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/cert-manager-requests
   extraArgs:
     - "--issuer-ambient-credentials=true"
