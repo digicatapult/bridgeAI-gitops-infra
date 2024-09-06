@@ -9,19 +9,9 @@ tracking:
       http: 80
       https: 443
   ingress:
-    enabled: false
-    hostname: dc-mlops.co.uk
+    enabled: true
+    hostname: mlflow.dc-mlops.co.uk
     ingressClassName: nginx
-    path: /*
-    tls: true
-    extraPaths:
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: mlflow-tracking
-            port:
-              name: http
   persistence:
     enabled: true
     storageClass: efs-sc
