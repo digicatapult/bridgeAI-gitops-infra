@@ -28,11 +28,24 @@ CURL_EXTRA_ARGS=`echo \
 }
 
 post_new_user() {
-    curl -L "${MLFLOW_API_URI}/users/create" -X POST "${CURL_EXTRA_ARGS}"
+    curl -s -o /dev/null -w "%{HTTP_CODE} returned by server\n" \
+        -L "${MLFLOW_API_URI}/users/create" \
+        -X POST "${CURL_EXTRA_ARGS}" --fail-with-body
 }
 
 patch_new_admin() {
-    curl -L "${MLFLOW_API_URI}/users/update-admin" -X PATCH "${CURL_EXTRA_ARGS}"
+    curl -s -o /dev/null -w "%{HTTP_CODE} returned by server\n" \
+        -L "${MLFLOW_API_URI}/users/update-admin" \
+        -X PATCH "${CURL_EXTRA_ARGS}" --fail-with-body
+}
+
+err_msg() {
+    echo "error: $@"
+    exit 1
+}
+
+req_failed_msg() {
+    err_msg "request failed with HTTP code >= 400"
 }
 
 print_options() {
@@ -104,23 +117,22 @@ if [ -z "${MLFLOW_TRACKING_USERNAME}" ] || \
     else
         echo "warning: no MLFlow credentials were found in ~/.mlflow"
     fi
-    echo "error: no admin credentials were found; exiting"
-    exit 1
+    err_msg "no admin credentials were found; exiting"
 elif [ -z "${MLFLOW_TRACKING_URI}" ]; then
-    echo "error: no domain was found; exiting"
-    exit 1
+    err_msg "no domain was found; exiting"
 else
     echo "info: admin credentials found"
     if [ -n "${TARGET_USERNAME}" ] && [ -n "${TARGET_PASSWORD}" ]; then
         # Create the target
-        post_new_user
+        post_new_user || \
+            req_failed_msg
 
         if [ "${ADMIN_STATUS}" == "true" ]; then
             # Promote the target
-            patch_new_admin
+            patch_new_admin || \
+                req_failed_msg
         fi
     else
-        echo "error: no new user details were supplied; exiting"
-        exit 1
+        err_msg "no new user details were supplied; exiting"
     fi
 fi
