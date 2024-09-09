@@ -44,10 +44,6 @@ err_msg() {
     exit 1
 }
 
-req_failed_msg() {
-    err_msg "request failed with HTTP code >= 400"
-}
-
 print_options() {
 	echo "
 This script will create a new MLFlow user using any existing administrator credentials found either within the current shell or the default location for MLFlow credentials: ~/.mlflow/credentials.
@@ -125,12 +121,12 @@ else
     if [ -n "${TARGET_USERNAME}" ] && [ -n "${TARGET_PASSWORD}" ]; then
         # Create the target
         post_new_user || \
-            req_failed_msg
+            err_msg "post request failed with HTTP code >= 400"
 
         if [ "${ADMIN_STATUS}" == "true" ]; then
             # Promote the target
             patch_new_admin || \
-                req_failed_msg
+                err_msg "patch request failed with HTTP code >= 400"
         fi
     else
         err_msg "no new user details were supplied; exiting"
