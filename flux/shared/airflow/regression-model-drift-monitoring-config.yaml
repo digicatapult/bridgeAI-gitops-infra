@@ -6,8 +6,6 @@ metadata:
 data:
   config.yaml: |-
     model_endpoint: http://host.docker.internal:5001/invocations   # model prediction endpoint
-    data_repo: repo-path    # data repository url
-    repo_branch: data-branch-name   # the branch name in the data repo where versioned data are kept
     historical_data_version: v1.0.0    # historical data version from the above repo
     new_data_version: v1.1.0    # new data version from the above repo
     feature_columns: ["mainroad", "guestroom", "basement", "hotwaterheating",
