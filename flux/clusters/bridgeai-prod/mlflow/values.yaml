@@ -17,18 +17,23 @@ tracking:
     storageClass: efs-sc
     accessModes:
       - ReadWriteMany
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/mlflow-artifacts-requests
 run:
   persistence:
     enabled: true
     storageClass: efs-sc
     accessModes:
       - ReadWriteMany
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/mlflow-artifacts-requests
 postgresql:
   enabled: true
   auth:
     database: bitnami_mlflow
   architecture: standalone
-  
   primary:
     persistence:
       enabled: true
