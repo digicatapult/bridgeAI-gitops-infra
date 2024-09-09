@@ -94,6 +94,8 @@ airflow:
       value: "model-training-pvc"
     - key: "dvc_remote"
       value: "s3://artifacts"
+    - key: "dvc_endpoint_url"
+      value: "http://minio"
     - key: "dvc_access_key_id"
       value: "admin"
     - key: "dvc_secret_access_key"

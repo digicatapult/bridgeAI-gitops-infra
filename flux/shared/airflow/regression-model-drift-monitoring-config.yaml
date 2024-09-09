@@ -14,9 +14,9 @@ data:
                            "airconditioning", "prefarea", "furnishingstatus",
                            "area", "bedrooms", "bathrooms", "stories", "parking"]   # feature columns to be used form the data
     label_column: "price"   # label column name
-    report_save_path: ./artefacts/evidently_report.html    # evidently report save path
-    historical_data_save_path: ../artefacts/historical_data.csv   # local path where the pulled historical data is kept
-    new_data_save_path: ../artefacts/new_data.csv   # local path where the pulled new data is kept
+    report_save_path: "./artefacts/evidently_report.html"    # evidently report save path
+    historical_data_save_path: "./artefacts/historical_data.csv"   # local path where the pulled historical data is kept
+    new_data_save_path: "./artefacts/new_data.csv"   # local path where the pulled new data is kept
     dvc:
       git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
       git_branch: "feature/testing"   # The branch where the tagged data is available
