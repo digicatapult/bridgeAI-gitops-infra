@@ -26,4 +26,4 @@ spec:
   interval: 10m0s
   url: oci://ghcr.io/kserve/charts
   secretRef:
-      name: flux-system
+      name: ghcr-io

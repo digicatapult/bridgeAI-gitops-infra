@@ -16,4 +16,4 @@ spec:
         kind: OCIRepository
         name: kserve
       version: "${kserve_version}"
- interval: 10m0s
+  interval: 10m0s
