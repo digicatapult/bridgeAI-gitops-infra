@@ -8,10 +8,10 @@ spec:
   install:
     remediation:
       retries: -1
-  releaseName: kserve-resources
+  releaseName: kserve
   chart:
     spec:
-      chart: kserve-resources
+      chart: kserve
       sourceRef:
         kind: HelmRepository
         name: kserve
