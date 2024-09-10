@@ -13,7 +13,7 @@ spec:
     spec:
       chart: kserve-crd
       sourceRef:
-        kind: HelmRepository
+        kind: OCIRepository
         name: kserve
       version: "${kserve_version}"
   interval: 10m0s
