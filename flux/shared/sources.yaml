@@ -16,3 +16,12 @@ metadata:
 spec:
   interval: 10m0s
   url: https://airflow-helm.github.io/charts
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: kserve
+  namespace: default
+spec:
+  interval: 10m0s
+  url: https://github.com/kserve/charts

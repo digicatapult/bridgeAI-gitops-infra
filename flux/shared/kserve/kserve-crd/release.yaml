@@ -11,9 +11,9 @@ spec:
   releaseName: kserve-crd
   chart:
     spec:
-      chart: kserve/kserve-crd
+      chart: kserve-crd
       sourceRef:
         kind: HelmRepository
-        name: kserve-crd
+        name: kserve
       version: "${kserve_version}"
  interval: 10m0s
