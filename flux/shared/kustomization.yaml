@@ -6,7 +6,7 @@ resources:
   - airflow
   - mlflow
   - nginx
-  - kserve
+  - kserve-crd
 #  - kserve-resources
   - sources.yaml
 
