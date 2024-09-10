@@ -16,4 +16,4 @@ spec:
       airflow_version: "8.9.0"
       nginx_ingress_controller_version: "11.3.13"
       mlflow_version: "1.4.19"
-      kserve_version: "0.13.0"
+      kserve_version: "v0.13.0"
