@@ -1,0 +1,19 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kserve
+  namespace: default
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: kserve
+  chart:
+    spec:
+      chart: kserve/kserve-resources
+      sourceRef:
+        kind: HelmRepository
+        name: kserve-resources
+      version: "${kserve_version}"
+ interval: 10m0s
