@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 MLFLOW_CREDENTIALS_FILE="$HOME/.mlflow/credentials"
 MLFLOW_TRACKING_PASSWORD="${MLFLOW_TRACKING_PASSWORD:-}"
 MLFLOW_TRACKING_USERNAME="${MLFLOW_TRACKING_USERNAME:-}"
@@ -12,31 +13,35 @@ ADMIN_STATUS="${ADMIN_STATUS:-false}"
 init_env() {
     MLFLOW_API_URI="https://${MLFLOW_TRACKING_URI}/api/2.0/mlflow"
 
-    touch ${MLFLOW_CREDENTIALS_FILE}
+    # Ensure directory exists
+    mkdir -p $(dirname ${MLFLOW_CREDENTIALS_FILE})
 
+    # Create credentials file
     cat <<EOF > ${MLFLOW_CREDENTIALS_FILE}
 [mlflow]
 mlflow_tracking_username = ${MLFLOW_TRACKING_USERNAME}
 mlflow_tracking_password = ${MLFLOW_TRACKING_PASSWORD}
 EOF
 
-CURL_EXTRA_ARGS=`echo \
-    -u "${MLFLOW_TRACKING_USERNAME}:${MLFLOW_TRACKING_PASSWORD}" \
-    -H "Accept: application/json" \
-    -H "Content-Type: application/json" \
-    -d "{ \"username\": \"${TARGET_USERNAME}\", \"is_admin\": \"${ADMIN_STATUS}\" }"`
+    # Construct the curl arguments with the password included
+    CURL_EXTRA_ARGS=(
+        -u "${MLFLOW_TRACKING_USERNAME}:${MLFLOW_TRACKING_PASSWORD}"
+        -H "Accept: application/json"
+        -H "Content-Type: application/json"
+        -d "{\"username\":\"${TARGET_USERNAME}\",\"password\":\"${TARGET_PASSWORD}\",\"is_admin\":${ADMIN_STATUS}}"
+    )
 }
 
 post_new_user() {
-    curl -s -o /dev/null -w "%{HTTP_CODE} returned by server\n" \
+    curl -w "%{HTTP_CODE} returned by server\n" \
         -L "${MLFLOW_API_URI}/users/create" \
-        -X POST "${CURL_EXTRA_ARGS}" --fail-with-body
+        -X POST "${CURL_EXTRA_ARGS[@]}" --fail-with-body
 }
 
 patch_new_admin() {
     curl -s -o /dev/null -w "%{HTTP_CODE} returned by server\n" \
         -L "${MLFLOW_API_URI}/users/update-admin" \
-        -X PATCH "${CURL_EXTRA_ARGS}" --fail-with-body
+        -X PATCH "${CURL_EXTRA_ARGS[@]}" --fail-with-body
 }
 
 err_msg() {
@@ -45,7 +50,7 @@ err_msg() {
 }
 
 print_options() {
-	echo "
+    cat <<EOF
 This script will create a new MLFlow user using any existing administrator credentials found either within the current shell or the default location for MLFlow credentials: ~/.mlflow/credentials.
 
 MLFLOW_TRACKING_USERNAME and MLFLOW_TRACKING_PASSWORD are required variables, as mentioned above.
@@ -67,6 +72,7 @@ Options:
 
 Flags:
 -h    Print this help message."
+EOF
 }
 
 while getopts ":t:u:p:a:h" opt; do
@@ -101,15 +107,13 @@ init_env
 # Check the current shell
 if [ -z "${MLFLOW_TRACKING_USERNAME}" ] || \
     [ -z "${MLFLOW_TRACKING_PASSWORD}" ]; then
-        echo "warning: no MLFlow credentials were found in the shell"
+    echo "warning: no MLFlow credentials were found in the shell"
 
     # Check for existing INI files
     if [ -f "${MLFLOW_CREDENTIALS_FILE}" ]; then
-        credentials=`cat "${MLFLOW_CREDENTIALS_FILE}"`
-        MLFLOW_TRACKING_USERNAME=$(echo "${credentials}" | \
-            awk -F "=" '/mlflow_tracking_username/ {print $2}' -)
-        MLFLOW_TRACKING_PASSWORD=$(echo "${credentials}" | \
-            awk -F "=" '/mlflow_tracking_password/ {print $2}' -)
+        credentials=$(cat "${MLFLOW_CREDENTIALS_FILE}")
+        MLFLOW_TRACKING_USERNAME=$(echo "${credentials}" | awk -F "=" '/mlflow_tracking_username/ {print $2}' -)
+        MLFLOW_TRACKING_PASSWORD=$(echo "${credentials}" | awk -F "=" '/mlflow_tracking_password/ {print $2}' -)
     else
         echo "warning: no MLFlow credentials were found in ~/.mlflow"
     fi
