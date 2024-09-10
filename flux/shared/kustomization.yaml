@@ -6,7 +6,8 @@ resources:
   - airflow
   - mlflow
   - nginx
-  - kserve
+  - kserve-crd
+  - kserve-resources
   - sources.yaml
 
 configMapGenerator:
@@ -15,8 +16,8 @@ configMapGenerator:
       - airflow-values.yaml=airflow/values.yaml
       - mlflow-values.yaml=mlflow/values.yaml
       - nginx-values.yaml=nginx/values.yaml
-      - kserve-crd-values.yaml=kserve/kserve-crd/values.yaml
-      - kserve-resources-values.yaml=kserve/kserve-resources/values.yaml
+      - kserve-crd-values.yaml=kserve-crd/values.yaml
+      - kserve-resources-values.yaml=kserve-resources/values.yaml
 configurations:
   - kustomize-config.yaml
 generatorOptions:
