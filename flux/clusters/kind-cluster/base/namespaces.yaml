@@ -5,4 +5,4 @@ metadata:
   labels:
     app.kubernetes.io/instance: mlops
     app.kubernetes.io/version: latest
-  name: airflow
+  name: cert-manager
