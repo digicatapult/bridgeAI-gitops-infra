@@ -49,3 +49,4 @@ spec:
         route53:
           region: eu-west-2
           hostedZoneID: Z01314483R2T8C45SEYWE
+          role: arn:aws:iam::058264114863:role/cert-manager-requests
