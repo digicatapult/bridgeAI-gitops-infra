@@ -49,3 +49,7 @@ spec:
         route53:
           region: eu-west-2
           hostedZoneID: Z01314483R2T8C45SEYWE
+          auth:
+            kubernetes:
+              serviceAccountRef:
+                name: cert-manager-letsencrypt
