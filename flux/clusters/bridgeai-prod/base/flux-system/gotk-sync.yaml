@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: feature/eks_mlflow_standalone
+    branch: main
   secretRef:
     name: flux-system
   url: ssh://git@github.com/digicatapult/bridgeai-gitops-infra
