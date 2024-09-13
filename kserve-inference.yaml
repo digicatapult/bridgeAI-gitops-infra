@@ -7,7 +7,7 @@ spec:
     model:
       modelFormat:
         name: pytorch
-      storageUri: "s3://minio.default.svc.cluster.local:9001/test-bucket"
+      storageUri: "s3://minio.default.svc.cluster.local:9001/artifacts/1/ff98547a10064cb08b1781fd8dbe3326/artifacts/custom_pytorch_model"
       env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
