@@ -1,0 +1,45 @@
+image:
+  debug: true
+tracking:
+  auth:
+    enabled: true
+  service:
+    type: ClusterIP
+    ports:
+      http: 80
+      https: 443
+  ingress:
+    enabled: true
+    hostname: mlflow.dc-mlops.co.uk
+    ingressClassName: nginx
+  persistence:
+    enabled: true
+    storageClass: efs-sc
+    accessModes:
+      - ReadWriteMany
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/mlflow-artifacts-requests
+run:
+  persistence:
+    enabled: true
+    storageClass: efs-sc
+    accessModes:
+      - ReadWriteMany
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/mlflow-artifacts-requests
+postgresql:
+  enabled: true
+  auth:
+    database: bitnami_mlflow
+  architecture: standalone
+  primary:
+    persistence:
+      enabled: true
+      storageClass: gp2
+    service:
+      ports:
+        postgresql: 5432
+minio:
+  enabled: false

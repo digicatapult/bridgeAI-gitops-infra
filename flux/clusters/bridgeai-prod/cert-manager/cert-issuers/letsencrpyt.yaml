@@ -43,9 +43,9 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
     - selector:
-        dnsNames:
+        dnsZones:
         - dc-mlops.co.uk
       dns01:
         route53:
           region: eu-west-2
-          role: arn:aws:iam::058264114863:role/cert-manager-requests
+          hostedZoneID: Z01314483R2T8C45SEYWE
