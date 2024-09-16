@@ -23,3 +23,6 @@ spec:
     - kind: ConfigMap
       name: env-values
       valuesKey: minio-values.yaml
+  extraEnvVars:
+    - name: MINIO_BROWSER_LOGIN_ANIMATION
+      value: "off"
