@@ -7,15 +7,15 @@ spec:
     model:
       modelFormat:
         name: pytorch
-      storageUri: "s3://minio.default.svc.cluster.local:9001/artifacts/1/ff98547a10064cb08b1781fd8dbe3326/artifacts/custom_pytorch_model"
+      storageUri: s3://mlflow/1/2751aa38db1e4e918426ef16e021f477/artifacts/custom_pytorch_model
       env:
         - name: AWS_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: minio
+              name: mlflow-minio
               key: root-user
         - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: minio
+              name: mlflow-minio
               key: root-password
