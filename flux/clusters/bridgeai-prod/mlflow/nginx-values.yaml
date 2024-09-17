@@ -1,0 +1,12 @@
+service:
+  type: LoadBalancer
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: mlflow.dc-mlops.co.uk
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Equal
+extraArgs:
+  default-ssl-certificate: "mlflow/mlflow-dc-mlops-co-uk-prod-tls"

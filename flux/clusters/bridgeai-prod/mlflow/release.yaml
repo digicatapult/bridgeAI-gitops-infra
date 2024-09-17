@@ -1,0 +1,39 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: mlflow
+  namespace: mlflow
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: mlflow
+  chart:
+    spec:
+      chart: mlflow
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+  interval: 10m0s
+  # https://github.com/bitnami/charts/blob/master/bitnami/mlflow/values.yaml
+  valuesFrom:
+    - kind: ConfigMap
+      name: mlflow-values
+      valuesKey: mlflow-values.yaml
+    - kind: Secret
+      name: mlflow-admin-credentials
+      valuesKey: username
+      targetPath: tracking.auth.username
+    - kind: Secret
+      name: mlflow-admin-credentials
+      valuesKey: password
+      targetPath: tracking.auth.password
+    - kind: Secret
+      name: mlflow-postgres-admin-credentials
+      valuesKey: username
+      targetPath: postgresql.auth.username
+    - kind: Secret
+      name: mlflow-postgres-admin-credentials
+      valuesKey: password
+      targetPath: postgresql.auth.password
