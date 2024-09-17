@@ -28,3 +28,10 @@ tracking:
               name: http
   service:
     type: ClusterIP
+minio:
+  auth:
+    rootUser: admin
+    rootPassword: password
+  extraEnvVars:
+    - name: MINIO_BROWSER_LOGIN_ANIMATION
+      value: "off"
