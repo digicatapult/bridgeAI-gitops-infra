@@ -2,20 +2,12 @@ apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
   name: "house-price"
+  annotations:
+      serving.kserve.io/deploymentMode: RawDeployment
 spec:
   predictor:
+    serviceAccountName: sa
     model:
       modelFormat:
         name: pytorch
-      storageUri: s3://mlflow/1/2751aa38db1e4e918426ef16e021f477/artifacts/custom_pytorch_model
-      env:
-        - name: AWS_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: mlflow-minio
-              key: root-user
-        - name: AWS_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: mlflow-minio
-              key: root-password
+      storageUri: s3://mlflow-minio/mlflow/1/2751aa38db1e4e918426ef16e021f477/artifacts/custom_pytorch_model
