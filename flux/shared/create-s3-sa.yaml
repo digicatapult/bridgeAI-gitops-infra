@@ -5,7 +5,7 @@ metadata:
   annotations:
      serving.kserve.io/s3-endpoint: mlflow-minio # replace with your s3 endpoint e.g minio-service.kubeflow:9000
      serving.kserve.io/s3-usehttps: "0"
-     serving.kserve.io/s3-useanoncredential: "true" # omitting this is the same as false, if true will ignore provided credential and use anonymous credentials
+     serving.kserve.io/s3-useanoncredential: "false" # omitting this is the same as false, if true will ignore provided credential and use anonymous credentials
 type: Opaque
 stringData: # use `stringData` for raw credential string or `data` for base64 encoded string
   AWS_ACCESS_KEY_ID: admin
