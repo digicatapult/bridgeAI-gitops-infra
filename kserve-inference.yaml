@@ -4,6 +4,8 @@ metadata:
   name: "house-price"
   annotations:
       serving.kserve.io/deploymentMode: RawDeployment
+      serving.kserve.io/gateway-disableIngressCreation: "true"
+      serving.kserve.io/gateway-disableIstioVirtualHost: "true"
 spec:
   predictor:
     serviceAccountName: sa
