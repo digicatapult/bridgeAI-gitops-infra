@@ -10,7 +10,7 @@ resources:
   - kserve-resources
   - sources.yaml
   - create-s3-sa.yaml
-  - creaet-s3-secret.yaml
+  - create-s3-secret.yaml
 
 configMapGenerator:
   - name: shared-values
