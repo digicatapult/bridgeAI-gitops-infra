@@ -3,8 +3,8 @@ kind: "InferenceService"
 metadata:
   name: "house-price"
   annotations:
-      serving.kserve.io/deploymentMode: RawDeployment
-      serving.kserve.io/gateway-disableIngressCreation: "true"
+    serving.kserve.io/deploymentMode: RawDeployment
+    serving.kserve.io/disableIngressCreation: "true"
 spec:
   predictor:
     serviceAccountName: sa
