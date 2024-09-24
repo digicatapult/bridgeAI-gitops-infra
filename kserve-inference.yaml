@@ -5,7 +5,6 @@ metadata:
   annotations:
       serving.kserve.io/deploymentMode: RawDeployment
       serving.kserve.io/gateway-disableIngressCreation: "true"
-      serving.kserve.io/gateway-disableIstioVirtualHost: "true"
 spec:
   predictor:
     serviceAccountName: sa
@@ -13,4 +12,5 @@ spec:
       modelFormat:
         name: mlflow
       protocolVersion: v2
-      storageUri: s3://mlflow/1/2751aa38db1e4e918426ef16e021f477/artifacts/custom_pytorch_model
+      # storageUri: s3://mlflow/1/2751aa38db1e4e918426ef16e021f477/artifacts/custom_pytorch_model
+      storageUri: s3://mlflow/0/943842ea736046febb6e59e2b5474642/artifacts/model
