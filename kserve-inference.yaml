@@ -1,7 +1,7 @@
 apiVersion: "serving.kserve.io/v1beta1"
 kind: "InferenceService"
 metadata:
-  name: "house-price"
+  name: "model"
   annotations:
     serving.kserve.io/deploymentMode: RawDeployment
     serving.kserve.io/disableIngressCreation: "true"
