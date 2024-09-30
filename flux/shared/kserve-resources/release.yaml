@@ -17,3 +17,8 @@ spec:
         name: kserve
       version: "${kserve_version}"
   interval: 10m0s
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
+    - name: kserve-crd
+      namespace: default

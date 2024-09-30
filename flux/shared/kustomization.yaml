@@ -9,8 +9,6 @@ resources:
   - kserve-crd
   - kserve-resources
   - sources.yaml
-  - create-s3-sa.yaml
-  - create-s3-secret.yaml
 
 configMapGenerator:
   - name: shared-values
@@ -18,7 +16,6 @@ configMapGenerator:
       - airflow-values.yaml=airflow/values.yaml
       - mlflow-values.yaml=mlflow/values.yaml
       - nginx-values.yaml=nginx/values.yaml
-      - kserve-crd-values.yaml=kserve-crd/values.yaml
       - kserve-resources-values.yaml=kserve-resources/values.yaml
 configurations:
   - kustomize-config.yaml
