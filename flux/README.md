@@ -32,7 +32,7 @@ You can access the MLFlow UI on http://localhost:3080/mlflow
 No authentication required.
 You can set the MLFLOW_TRACKING_URI clientside as http://localhost:3080/ Airflow has a variable set to locate the mlflow_tracking_uri
 
-### MinIO
+#### MinIO
 
 MinIO is used as the storage backend to store MLFlow's artifacts
 
@@ -40,34 +40,61 @@ To access MinIO UI perform port forwarding on the pod:
 
     kubectl port-forward pod/<<podname>> 9000 9090 -n <<namespace>>
 
-Reference:
-https://min.io/docs/minio/kubernetes/upstream/index.html
+Access MinIO UI on: http://127.0.0.1:9001
 
 Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
 
-## KServe
+### KServe
 
 
-### Setup & Testing steps:
+#### Create inference service
 
-4. Check if the Kserve inference service is in "Ready" state.
+1. create an inference yaml file
 
+
+        apiVersion: "serving.kserve.io/v1beta1"
+        kind: "InferenceService"
+        metadata:
+        name: "house-price" # name of the inference service
+        annotations:
+            serving.kserve.io/deploymentMode: RawDeployment # deployment mode for production installation
+            serving.kserve.io/disableIngressCreation: "true" # disable ingress creation for this service
+        spec:
+        predictor:
+            serviceAccountName: inference-sa # service account to be used to access the model in a bucket, eg: MinIO
+            model:
+            modelFormat:
+                name: mlflow # specifies the model format as mlflow
+            protocolVersion: v2  # specifies the protocol version to use
+            storageUri: s3://mlflow/0/1f5d520bc53a4e6ca119d333e80fad69/artifacts/model # S3 storage URI for the model in the bucket, e.g. MinIO
+
+2. apply the inference yaml file
+
+        kubectl apply -f <<filename>>.yaml
+
+
+3. Check if the Kserve inference service is in "Ready" state.
+    
         kubectl get svc <<kserve-servicename>> -n <<namespace>>
 
-        kubectl describe svc <<kserve-servicename>> -n <<namespace>>
+#### Test the inference service
 
-5. Test the inference service.
+1. Prepare input json file (check references section on how to prepare)
 
-    5.1 Prepare input json file (check references section on how to prepare)
+2. Port forward on the inference pod
 
-    5.2 Pass inference request
+        kubectl port-forward pods/<<podname>> 8081:8080
+
+2. Pass inference request from terminal
 
         SERVICE_HOSTNAME=$(kubectl get inferenceservice <<inference-servicename>> -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
 
         curl -v \  	-H "Host: ${SERVICE_HOSTNAME}" \  	-H "Content-Type: application/json" \  	-d @./<<input-filename>>.json \  	http://127.0.0.1:8081/v2/models/<<inference-servicename>>/infer
 
+References: 
+https://kserve.github.io/website/0.10/modelserving/v1beta1/mlflow/v2/#deploy-with-inferenceservice
 
 ### Cleanup
 
@@ -78,3 +105,6 @@ To delete a cluster
 Verify if cluster is deleted
 
     kubectl config get-contexts
+
+
+flux create source git --branch feature/kserve-installation --namespace flux-system --secret-ref flux-system --url https://github.com/digicatapult/bridgeAI-gitops-infra.git flux-system
