@@ -13,4 +13,4 @@ spec:
         name: mlflow # specifies the model format as mlflow
       protocolVersion: v2  # specifies the protocol version to use
       # storageUri: s3://mlflow/1/2751aa38db1e4e918426ef16e021f477/artifacts/custom_pytorch_model
-      storageUri: s3://mlflow/0/1f5d520bc53a4e6ca119d333e80fad69/artifacts/model S3 # storage URI for the model in the bucket
+      storageUri: s3://mlflow/0/1f5d520bc53a4e6ca119d333e80fad69/artifacts/model # S3 storage URI for the model in the bucket
