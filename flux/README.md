@@ -36,11 +36,13 @@ You can set the MLFLOW_TRACKING_URI clientside as http://localhost:3080/ Airflow
 
 MinIO is used as the storage backend to store MLFlow's artifacts
 
-To access MinIO UI perform port forwarding on the pod:
+To access MinIO UI perform port forwarding on the svc:
 
     kubectl port-forward svc/mlflow-minio 9001 -n default
 
 Access MinIO UI on: http://127.0.0.1:9001
+Username: admin
+Password: password
 
 Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
@@ -55,7 +57,7 @@ Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
 #### Create inference service
 
-1. create an inference yaml file
+1. create an inference.yaml file
 
 
         apiVersion: "serving.kserve.io/v1beta1"
@@ -73,12 +75,12 @@ Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
 2. apply the inference.yaml file
 
-        kubectl apply -f <<file-name>>.yaml
+        kubectl apply -f inference.yaml
 
 
 3. Check if the inference service is in "Ready" state.
     
-        kubectl get svc <<inference-service-name>> -n <<namespace>>
+        kubectl get inferenceservice house-price -n default
 
 #### Test the inference service
 
@@ -90,10 +92,10 @@ Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
 2. Pass inference request from terminal
 
-        SERVICE_HOSTNAME=$(kubectl get inferenceservice <<inference-service-name>> -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+        SERVICE_HOSTNAME=$(kubectl get inferenceservice house-price -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
 
-        curl -v \  	-H "Content-Type: application/json" \  	-d @./<<input-filename>>.json \  	http://127.0.0.1:8081/v2/models/<<inference-service-name>>/infer
+        curl -v \  	-H "Content-Type: application/json" \  	-d @./<<input-filename>>.json \  	http://127.0.0.1:8081/v2/models/house-price/infer
 
 References: 
 https://kserve.github.io/website/0.10/modelserving/v1beta1/mlflow/v2/#deploy-with-inferenceservice
