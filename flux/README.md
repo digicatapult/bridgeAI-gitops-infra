@@ -38,7 +38,7 @@ MinIO is used as the storage backend to store MLFlow's artifacts
 
 To access MinIO UI perform port forwarding on the pod:
 
-    kubectl port-forward pod/<<pod-name>> 9001 -n <<namespace>>
+    kubectl port-forward svc/mlflow-minio 9001 -n default
 
 Access MinIO UI on: http://127.0.0.1:9001
 
