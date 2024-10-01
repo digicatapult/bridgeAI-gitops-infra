@@ -38,7 +38,7 @@ MinIO is used as the storage backend to store MLFlow's artifacts
 
 To access MinIO UI perform port forwarding on the pod:
 
-    kubectl port-forward pod/<<podname>> 9000 9090 -n <<namespace>>
+    kubectl port-forward pod/<<pod-name>> 9001 -n <<namespace>>
 
 Access MinIO UI on: http://127.0.0.1:9001
 
@@ -46,6 +46,11 @@ Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
 
 ### KServe
+
+1. Before creating the inference service, Airflow DAGs needs to be run and a model should be available in MLFlow.
+2. These DAGs in Airflow (data_ingestion_dag, model_training_dag) needs to run in sequence. Start the 2nd DAG only when 1st DAG is completed. 
+3. Once the DAG run is completed an experiment will be created in MLFlow. An experiment contains a model file. Get the URI of the model and this URI needs to be added to the inference.yaml file. e.g of URI - mlflow-artifacts:/0/e7750463f06145d39a085ad7d9a55cb9/artifacts/model
+4. Part of the URI after "mlflow-artifacts:/" is to be updated in the inference.yaml file.
 
 
 #### Create inference service
@@ -56,27 +61,24 @@ Note: We use MLFLow's MinIO and not a separate instance of MinIO
         apiVersion: "serving.kserve.io/v1beta1"
         kind: "InferenceService"
         metadata:
-        name: "house-price" # name of the inference service
-        annotations:
-            serving.kserve.io/deploymentMode: RawDeployment # deployment mode for production installation
-            serving.kserve.io/disableIngressCreation: "true" # disable ingress creation for this service
+            name: "house-price" # name of the inference service
         spec:
-        predictor:
-            serviceAccountName: inference-sa # service account to be used to access the model in a bucket, eg: MinIO
-            model:
-            modelFormat:
-                name: mlflow # specifies the model format as mlflow
-            protocolVersion: v2  # specifies the protocol version to use
-            storageUri: s3://mlflow/0/1f5d520bc53a4e6ca119d333e80fad69/artifacts/model # S3 storage URI for the model in the bucket, e.g. MinIO
+            predictor:
+                serviceAccountName: inference-sa # service account to be used to access the model in a bucket, eg: MinIO
+                model:
+                    modelFormat:
+                        name: mlflow # specifies the model format as mlflow
+                    protocolVersion: v2  # specifies the protocol version to use
+                    storageUri: s3://mlflow/0/e7750463f06145d39a085ad7d9a55cb9/artifacts/model # S3 storage URI for the model in the bucket, e.g. MinIO
 
-2. apply the inference yaml file
+2. apply the inference.yaml file
 
-        kubectl apply -f <<filename>>.yaml
+        kubectl apply -f <<file-name>>.yaml
 
 
-3. Check if the Kserve inference service is in "Ready" state.
+3. Check if the inference service is in "Ready" state.
     
-        kubectl get svc <<kserve-servicename>> -n <<namespace>>
+        kubectl get svc <<inference-service-name>> -n <<namespace>>
 
 #### Test the inference service
 
@@ -88,10 +90,10 @@ Note: We use MLFLow's MinIO and not a separate instance of MinIO
 
 2. Pass inference request from terminal
 
-        SERVICE_HOSTNAME=$(kubectl get inferenceservice <<inference-servicename>> -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
+        SERVICE_HOSTNAME=$(kubectl get inferenceservice <<inference-service-name>> -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
 
 
-        curl -v \  	-H "Host: ${SERVICE_HOSTNAME}" \  	-H "Content-Type: application/json" \  	-d @./<<input-filename>>.json \  	http://127.0.0.1:8081/v2/models/<<inference-servicename>>/infer
+        curl -v \  	-H "Content-Type: application/json" \  	-d @./<<input-filename>>.json \  	http://127.0.0.1:8081/v2/models/<<inference-service-name>>/infer
 
 References: 
 https://kserve.github.io/website/0.10/modelserving/v1beta1/mlflow/v2/#deploy-with-inferenceservice
@@ -100,7 +102,7 @@ https://kserve.github.io/website/0.10/modelserving/v1beta1/mlflow/v2/#deploy-wit
 
 To delete a cluster
 
-    kind delete clusters clustername
+    kind delete clusters bridgeai-gitops-infra
 
 Verify if cluster is deleted
 
