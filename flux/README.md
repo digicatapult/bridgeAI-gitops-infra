@@ -105,6 +105,3 @@ To delete a cluster
 Verify if cluster is deleted
 
     kubectl config get-contexts
-
-
-flux create source git --branch feature/kserve-installation --namespace flux-system --secret-ref flux-system --url https://github.com/digicatapult/bridgeAI-gitops-infra.git flux-system
