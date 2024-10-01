@@ -1,5 +1,7 @@
 *.log
 # Uncencrypted secrets should not be committed. This doesn't stop it but if people follow the docs it'll help
+flux/auth
+flux/certs/kind/kind-registry.*
 flux/clusters/*/secrets/*.unc.yaml
 .iml
 .idea/
