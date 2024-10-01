@@ -4,5 +4,3 @@ kind: Kustomization
 namespace: default
 resources:
   - release.yaml
-  - secret.yaml
-  - service-account.yaml
