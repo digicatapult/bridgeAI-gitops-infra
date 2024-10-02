@@ -4,7 +4,8 @@ namespace: default
 resources:
   - shared-sync.yaml
   - env-services
-
+  - secret.yaml
+  - service-account.yaml
 configMapGenerator:
   - name: shared-env-values
     files:

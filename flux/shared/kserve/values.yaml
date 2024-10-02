@@ -1,0 +1,8 @@
+kserve:
+  version: &defaultVersion v0.13.1
+  controller:
+    # -- KServe deployment mode: "Serverless", "RawDeployment".
+    deploymentMode: "RawDeployment"
+    gateway:
+      # -- Whether to disable ingress creation for RawDeployment mode.
+      disableIngressCreation: true

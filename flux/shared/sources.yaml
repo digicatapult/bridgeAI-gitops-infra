@@ -16,3 +16,15 @@ metadata:
 spec:
   interval: 10m0s
   url: https://airflow-helm.github.io/charts
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: kserve
+  namespace: default
+spec:
+  type: oci
+  interval: 10m0s
+  url: oci://ghcr.io/kserve/charts
+  secretRef:
+      name: ghcr-io
