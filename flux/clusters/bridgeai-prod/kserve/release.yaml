@@ -15,6 +15,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kserve
+      version: "${kserve_version}"
   interval: 10m0s
   dependsOn:
     - name: cert-manager
@@ -38,4 +39,5 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: kserve
+      version: "${kserve_version}"
   interval: 10m0s
