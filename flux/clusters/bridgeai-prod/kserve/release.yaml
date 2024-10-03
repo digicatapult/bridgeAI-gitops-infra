@@ -22,6 +22,10 @@ spec:
       namespace: cert-manager
     - name: kserve-crd
       namespace: kserve
+  valuesFrom:
+    - kind: ConfigMap
+      name: kserve-values
+      valuesKey: kserve-values.yaml
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
@@ -41,3 +45,7 @@ spec:
         name: kserve
       version: "${kserve_version}"
   interval: 10m0s
+  valuesFrom:
+    - kind: ConfigMap
+      name: kserve-values
+      valuesKey: kserve-crd-values.yaml

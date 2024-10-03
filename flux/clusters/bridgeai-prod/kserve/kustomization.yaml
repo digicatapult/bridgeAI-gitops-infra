@@ -9,5 +9,6 @@ configMapGenerator:
   - name: kserve-values
     files:
       - kserve-values.yaml=values.yaml
+      - kserve-crd-values.yaml=crd-values.yaml
 generatorOptions:
   disableNameSuffixHash: true
