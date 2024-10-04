@@ -52,3 +52,6 @@ spec:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
+  postBuild:
+    substitute:
+      kserve_version: "v0.13.1"

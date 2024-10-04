@@ -1,6 +1,0 @@
-kserve:
-  version: &defaultVersion v0.13.1
-  controller:
-    deploymentMode: "RawDeployment"
-    gateway:
-      disableIngressCreation: true
