@@ -24,7 +24,7 @@ spec:
     namespace: flux-system
   postBuild:
     substitute:
-      cert_manager_version: "1.0.0"
+      cert_manager_version: "1.x.x"
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
@@ -43,7 +43,7 @@ spec:
   postBuild:
     substitute:
       mlflow_version: "2.0.0"
-      nginx_version: "11.0.0"
+      nginx_version: "11.x.x"
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
