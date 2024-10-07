@@ -5,5 +5,3 @@ namespace: kserve
 resources:
   - source.yaml
   - release.yaml
-generatorOptions:
-  disableNameSuffixHash: true
