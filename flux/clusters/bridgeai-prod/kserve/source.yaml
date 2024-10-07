@@ -1,0 +1,12 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: kserve
+  namespace: kserve
+spec:
+  type: oci
+  interval: 10m0s
+  url: oci://ghcr.io/kserve/charts
+  secretRef:
+      name: ghcr-io

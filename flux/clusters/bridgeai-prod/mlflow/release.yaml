@@ -15,6 +15,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: bitnami
+      version: "${mlflow_version}"
   interval: 10m0s
   # https://github.com/bitnami/charts/blob/master/bitnami/mlflow/values.yaml
   valuesFrom:

@@ -1,0 +1,43 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kserve
+  namespace: kserve
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: kserve
+  chart:
+    spec:
+      chart: kserve
+      sourceRef:
+        kind: HelmRepository
+        name: kserve
+      version: "${kserve_version}"
+  interval: 10m0s
+  dependsOn:
+    - name: cert-manager
+      namespace: cert-manager
+    - name: kserve-crd
+      namespace: kserve
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: kserve-crd
+  namespace: kserve
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: kserve-crd
+  chart:
+    spec:
+      chart: kserve-crd
+      sourceRef:
+        kind: HelmRepository
+        name: kserve
+      version: "${kserve_version}"
+  interval: 10m0s
