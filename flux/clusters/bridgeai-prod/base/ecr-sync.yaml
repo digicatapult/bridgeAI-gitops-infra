@@ -49,6 +49,9 @@ spec:
     spec:
       template:
         spec:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
           serviceAccountName: ecr-credentials-sync
           restartPolicy: Never
           volumes:
