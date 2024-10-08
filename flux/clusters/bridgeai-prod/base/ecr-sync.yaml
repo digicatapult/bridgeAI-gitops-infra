@@ -55,25 +55,13 @@ spec:
           - name: token
             emptyDir:
               medium: Memory
-          initContainers:
+          containers:
           - image: amazon/aws-cli
-            name: get-token
+            name: create-secret
             imagePullPolicy: IfNotPresent
             env:
             - name: REGION
               value: eu-west-2
-            volumeMounts:
-            - mountPath: /token
-              name: token
-            command:
-            - /bin/sh
-            - -ce
-            - aws ecr get-login-password --region ${REGION} > /token/ecr-token
-          containers:
-          - image: ghcr.io/fluxcd/flux-cli:v0.25.2
-            name: create-secret
-            imagePullPolicy: IfNotPresent
-            env:
             - name: SECRET_NAME
               value: ecr-credentials
             - name: ECR_REGISTRY
@@ -89,5 +77,5 @@ spec:
                 --dry-run=client \
                 --docker-server="$ECR_REGISTRY" \
                 --docker-username=AWS \
-                --docker-password="$(cat /token/ecr-token)" \
+                --docker-password="$(aws ecr get-login-password --region ${REGION})" \
                 -o yaml | kubectl apply -f -
