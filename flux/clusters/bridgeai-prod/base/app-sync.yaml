@@ -62,3 +62,21 @@ spec:
   postBuild:
     substitute:
       kserve_version: "v0.13.1"
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: airflow-sync
+  namespace: airflow
+spec:
+  interval: 1m
+  path: ./flux/clusters/bridgeai-prod/airflow
+  prune: true
+  # healthChecks: TODO
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      airflow_version: "8.9.0"
