@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: inference-sa
+  namespace: kserve
+  annotation:
+    eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/inference-sa-role
+secrets:
+- name: ecr-credentials

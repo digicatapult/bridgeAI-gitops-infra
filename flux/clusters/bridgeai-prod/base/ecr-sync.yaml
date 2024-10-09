@@ -1,0 +1,100 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ecr-credentials-sync
+  namespace: flux-system
+  annotation:
+    eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/ecr-credentials-sync-role
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ecr-credentials-sync
+  namespace: flux-system
+rules:
+- apiGroups: [""]
+  resources:
+  - secrets
+  verbs:
+  - get
+  - create
+  - patch
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ecr-credentials-sync
+  namespace: flux-system
+subjects:
+- kind: ServiceAccount
+  name: ecr-credentials-sync
+roleRef:
+  kind: Role
+  name: ecr-credentials-sync
+  apiGroup: ""
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ecr-credentials-sync
+  namespace: flux-system
+spec:
+  suspend: false
+  # Schedule it every six hours to avoid ECR's 12-hour expiration window
+  schedule: 0 */6 * * *
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: RuntimeDefault
+          serviceAccountName: ecr-credentials-sync
+          restartPolicy: Never
+          volumes:
+          - name: token
+            emptyDir:
+              medium: Memory
+          initContainers:
+          - image: amazon/aws-cli
+            name: get-token
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: REGION
+              value: eu-west-2
+            volumeMounts:
+            - mountPath: /token
+              name: token
+            command:
+            - /bin/sh
+            - -ce
+            - aws ecr get-login-password --region ${REGION} > /token/ecr-token
+          containers:
+          - image: ghcr.io/fluxcd/flux-cli:v0.25.2
+            name: create-secret
+            imagePullPolicy: IfNotPresent
+            env:
+            - name: SECRET_NAME
+              value: ecr-credentials
+            - name: ECR_REGISTRY
+              value: 058264114863.dkr.ecr.eu-west-2.amazonaws.com
+            volumeMounts:
+            - mountPath: /token
+              name: token
+            command:
+            - /bin/sh
+            - -ce
+            - |-
+              kubectl create secret docker-registry $SECRET_NAME \
+                --dry-run=client \
+                --namespace=default \
+                --docker-server="$ECR_REGISTRY" \
+                --docker-username=AWS \
+                --docker-password="$(cat /token/ecr-token)" \
+                -o yaml | kubectl apply -f -
