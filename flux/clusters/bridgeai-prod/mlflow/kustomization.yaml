@@ -12,6 +12,5 @@ configMapGenerator:
     files:
       - mlflow-values.yaml=values.yaml
       - nginx-values.yaml=nginx-values.yaml
-
 generatorOptions:
   disableNameSuffixHash: true

@@ -1,1 +1,199 @@
-# FIXME
+airflow:
+  legacyCommands: false
+  image:
+    repository: apache/airflow
+    tag: 2.8.4-python3.9
+  executor: KubernetesExecutor
+  extraEnv:
+    - name: AIRFLOW__CORE__FERNET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: airflow-fernet-key
+          key: value
+    - name: AIRFLOW__WEBSERVER__SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: airflow-webserver-secret-key
+          key: value
+  config:
+    AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+    AIRFLOW__WEBSERVER__BASE_URL: "https://airflow.dc-mlops.co.uk"
+  sync:
+    affinity: *affinity
+  users:
+    - username: admin
+      password: ${ADMIN_PASSWORD}
+      role: Admin
+      firstName: admin
+      lastName: admin
+    - username: airflow-prod-user
+      password: ${USER_PASSWORD}
+      role: User
+      firstName: user
+      lastName: user
+  usersTemplates:
+    ADMIN_PASSWORD:
+      kind: secret
+      name: airflow-admin-credentials
+      key: password
+    USER_PASSWORD:
+      kind: secret
+      name: airflow-prod-user-credentials
+      key: password
+  usersUpdate: true
+  connections:
+    - id: aws_eks
+      type: aws
+      extra: |
+        {
+          "region_name": "eu-west-2"
+        }
+  connectionsUpdate: true
+  variables:
+    - key: "data_path"
+      value: "/data"
+    - key: "data_url"
+      # value: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"
+    - key: "namespace"
+      value: "default"
+    - key: "base_image_model_training"
+      value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
+    - key: "base_image_data_ingestion"
+      value: "ghcr.io/digicatapult/bridgeai-regression-model-data-ingestion:latest"
+    # - key: "docker_reg_secret"
+      #value: "${DOCKER_REG_SECRET}"
+      # value: "ghcr-io"
+    - key: "mlflow_tracking_uri"
+      value: "https://mlflow.dc-mlops.co.uk"
+    - key: "connection_id"
+      value: "aws_eks"
+    - key: "in_cluster"
+      value: true
+    # - key: "model_training_configmap"
+    #   value: "model-training-configmap"
+    # - key: "data_ingestion_configmap"
+    #   value: "data-ingest-configmap"
+    # - key: "github_secret"
+    #   value: "github-auth"
+    # - key: "github_secret_username_key"
+    #   value: "username"
+    # - key: "github_secret_password_key"
+    #   value: "password"
+    # - key: "data_ingestion_pvc"
+    #   value: "data-ingestion-pvc"
+    # - key: "model_training_pvc"
+    #   value: "model-training-pvc"
+    - key: "dvc_remote"
+      value: "s3://bridgeai-model-artifacts"
+    # - key: "dvc_endpoint_url"
+    #   value: "https://bridgeai-model-artifacts.s3-website.eu-west-2.amazonaws.com"
+    # - key: "dvc_access_key_id"
+    #   value: "admin"
+    # - key: "dvc_secret_access_key"
+    #   value: "password"
+    - key: "data_version"
+      value: "data-v1.0.0"
+    - key: "base_image_drift_monitoring"
+      value: "ghcr.io/digicatapult/bridgeai-drift-monitoring:latest"
+    - key: "data_repo"
+      value: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"
+    - key: "historical_data_version"
+      value: "data-v1.0.0"
+    - key: "new_data_version"
+      value: "data-v1.1.0"
+    # - key: "drift_monitoring_configmap"
+    #   value: "drift-monitoring-configmap"
+    # - key: "drift_monitoring_pvc"
+    #   value: "drift-monitoring-pvc"
+    - key: "drift_report_bucket"
+      value: "bridgeai-evidently-reports"
+    # - key: "model_endpoint"
+    #   value: "http://host.docker.internal:5001/invocations"
+
+# Logs
+scheduler:
+  replicas: 1
+  logCleanup:
+    enabled: false
+    retentionMinutes: 21600
+  livenessProbe:
+    enabled: true
+    taskCreationCheck:
+      enabled: false
+      thresholdSeconds: 300
+      schedulerAgeBeforeCheck: 180
+workers:
+  logCleanup:
+    enabled: false
+logs:
+  path: /opt/airflow/logs
+  persistence:
+    enabled: true
+    storageClass: "efs-sc"
+    accessMode: ReadWriteMany
+
+# DAGs
+dags:
+  path: /opt/airflow/dags
+  persistence:
+    enabled: false
+  gitSync:
+    enabled: false
+
+# Triggerer
+triggerer:
+  enabled: true
+  replicas: 1
+  capacity: 1000
+
+# Service ingress
+ingress:
+  enabled: true
+  apiVersion: networking.k8s.io/v1
+web:
+  replicas: 1
+  host: "dc-mlops.co.uk"
+  path: "/"
+  ingressClassName: "nginx"
+flower:
+  enabled: false
+# flower:
+#   annotations: {}
+#   host: "dc-mlops.co.uk"
+#   path: "/flower"
+#   ingressClassName: "nginx"
+
+# Identities
+serviceAccount:
+  create: true
+  name: "airflow"
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::058264114863:role/airflow-access-role"
+
+# Database(s)
+pgbouncer:
+  enabled: true
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "1Gi"
+      cpu: "1000m"
+  affinity: *affinity
+# [WARNING] the embedded Postgres is NOT SUITABLE for production deployments of Airflow
+postgresql:
+  enabled: false
+# [WARNING] consider using an external database with `externalDatabase.*`
+externalDatabase:
+  type: postgres
+  host: "postgres.dc-mlops.co.uk"
+  port: "5432"
+  database: "airflow_postgresdb"
+  userSecret: "airflow-postgres-admin-credentials"
+  userSecretKey: "username"
+  passwordSecret: "airflow-postgres-admin-credentials"
+  passwordSecretKey: "password"
+redis:
+  enabled: false
