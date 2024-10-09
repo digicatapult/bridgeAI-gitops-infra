@@ -93,6 +93,7 @@ spec:
             - |-
               kubectl create secret docker-registry $SECRET_NAME \
                 --dry-run=client \
+                --namespace=default \
                 --docker-server="$ECR_REGISTRY" \
                 --docker-username=AWS \
                 --docker-password="$(cat /token/ecr-token)" \
