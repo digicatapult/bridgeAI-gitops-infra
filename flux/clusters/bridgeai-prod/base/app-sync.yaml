@@ -80,3 +80,4 @@ spec:
   postBuild:
     substitute:
       airflow_version: "8.9.0"
+      nginx_version: "11.x.x"

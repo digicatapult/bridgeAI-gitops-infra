@@ -43,11 +43,13 @@ airflow:
       key: password
   usersUpdate: true
   connections:
-    - id: aws_eks
-      type: aws
+    - id: local-k8s
+      type: kubernetes
       extra: |
         {
-          "region_name": "eu-west-2"
+          "in_cluster": true,
+          "namespace": "default",
+          "disable_verify_ssl": true
         }
   connectionsUpdate: true
   variables:
@@ -85,9 +87,9 @@ airflow:
     # - key: "model_training_pvc"
     #   value: "model-training-pvc"
     - key: "dvc_remote"
-      value: "s3://bridgeai-model-artifacts"
-    # - key: "dvc_endpoint_url"
-    #   value: "https://bridgeai-model-artifacts.s3-website.eu-west-2.amazonaws.com"
+      value: "s3://bridgeai-dvc-remote"
+    - key: "dvc_endpoint_url"
+      value: "https://bridgeai-model-artifacts.s3-website.eu-west-2.amazonaws.com"
     # - key: "dvc_access_key_id"
     #   value: "admin"
     # - key: "dvc_secret_access_key"
@@ -151,18 +153,22 @@ triggerer:
 ingress:
   enabled: true
   apiVersion: networking.k8s.io/v1
-web:
-  replicas: 1
-  host: "dc-mlops.co.uk"
-  path: "/"
-  ingressClassName: "nginx"
-flower:
-  enabled: false
-# flower:
-#   annotations: {}
-#   host: "dc-mlops.co.uk"
-#   path: "/flower"
-#   ingressClassName: "nginx"
+  web:
+    enabled: true
+    replicas: 1
+    hosts: "airflow.dc-mlops.co.uk"
+    path: "/"
+    ingressClassName: "nginx"
+    tls:
+      enabled: true
+      secretName: airflow-dc-mlops-co-uk-prod-tls
+  flower:
+    enabled: false
+  # flower:
+  #   annotations: {}
+  #   hosts: "dc-mlops.co.uk"
+  #   path: "/flower"
+  #   ingressClassName: "nginx"
 
 # Identities
 serviceAccount:
