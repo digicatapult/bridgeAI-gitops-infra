@@ -104,9 +104,9 @@ scheduler:
       thresholdSeconds: 300
       schedulerAgeBeforeCheck: 180
 workers:
-  enabled: false
   logCleanup:
     enabled: false
+  safeToEvict: false
 logs:
   path: /opt/airflow/logs
   persistence:
