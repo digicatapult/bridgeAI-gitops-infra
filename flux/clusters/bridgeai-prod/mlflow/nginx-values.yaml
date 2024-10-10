@@ -3,6 +3,7 @@ service:
   annotations:
     external-dns.alpha.kubernetes.io/access: public
     external-dns.alpha.kubernetes.io/hostname: mlflow.dc-mlops.co.uk
+    external-dns.alpha.kubernetes.io/target: k8s-mlflow-nginxngi-6f5311183d-b8fc8fc4557118b3.elb.eu-west-2.amazonaws.com
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 tolerations:
