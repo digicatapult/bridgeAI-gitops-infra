@@ -10,26 +10,15 @@ airflow:
     AIRFLOW__WEBSERVER__BASE_URL: "https://airflow.dc-mlops.co.uk"
   users:
     - username: admin
-      password: ${ADMIN_PASSWORD}
       role: Admin
       email: blah@blah.com
       firstName: admin
       lastName: admin
     - username: airflow-prod-user
-      password: ${USER_PASSWORD}
       email: blah2@blah.com
       role: User
       firstName: user
       lastName: user
-  usersTemplates:
-    ADMIN_PASSWORD:
-      kind: secret
-      name: airflow-admin-credentials
-      key: password
-    USER_PASSWORD:
-      kind: secret
-      name: airflow-prod-user-credentials
-      key: password
   usersUpdate: true
   connections:
     - id: local-k8s
