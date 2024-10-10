@@ -187,16 +187,12 @@ pgbouncer:
       cpu: "1000m"
 # [WARNING] the embedded Postgres is NOT SUITABLE for production deployments of Airflow
 postgresql:
-  enabled: false
+  enabled: true
+  existingSecret: "airflow-postgres-admin-credentials"
+  existingSecretKey: "password"
+  persistence:
+    enabled: true
+    storageClass: "gp2"
 # [WARNING] consider using an external database with `externalDatabase.*`
-externalDatabase:
-  type: postgres
-  host: "postgres.dc-mlops.co.uk"
-  port: "5432"
-  database: "airflow_postgresdb"
-  userSecret: "airflow-postgres-admin-credentials"
-  userSecretKey: "username"
-  passwordSecret: "airflow-postgres-admin-credentials"
-  passwordSecretKey: "password"
 redis:
   enabled: false
