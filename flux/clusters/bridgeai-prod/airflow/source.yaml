@@ -7,3 +7,12 @@ metadata:
 spec:
   interval: 10m0s
   url: https://airflow-helm.github.io/charts
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: bitnami
+  namespace: mlflow
+spec:
+  interval: 10m0s
+  url: https://charts.bitnami.com/bitnami
