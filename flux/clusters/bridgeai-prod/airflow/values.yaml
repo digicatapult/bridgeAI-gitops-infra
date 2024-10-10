@@ -12,10 +12,12 @@ airflow:
     - username: admin
       password: ${ADMIN_PASSWORD}
       role: Admin
+      email: blah@blah.com
       firstName: admin
       lastName: admin
     - username: airflow-prod-user
       password: ${USER_PASSWORD}
+      email: blah2@blah.com
       role: User
       firstName: user
       lastName: user
