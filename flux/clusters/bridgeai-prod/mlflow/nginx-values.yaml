@@ -1,5 +1,6 @@
 service:
   type: LoadBalancer
+  externalTrafficPolicy: "Local"
   annotations:
     external-dns.alpha.kubernetes.io/access: public
     external-dns.alpha.kubernetes.io/hostname: mlflow.dc-mlops.co.uk
