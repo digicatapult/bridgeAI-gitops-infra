@@ -23,9 +23,3 @@ spec:
     - kind: ConfigMap
       name: airflow-values
       valuesKey: airflow-values.yaml
-    - kind: Secret
-      name: airflow-fernet-key
-      valuesKey: value
-    - kind: Secret
-      name: airflow-webserver-secret-key
-      valuesKey: value
