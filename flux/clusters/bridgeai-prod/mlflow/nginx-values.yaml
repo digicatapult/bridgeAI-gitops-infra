@@ -11,3 +11,9 @@ tolerations:
     operator: Equal
 extraArgs:
   default-ssl-certificate: "mlflow/mlflow-dc-mlops-co-uk-prod-tls"
+watchIngressWithoutClass: true
+scope:
+  enabled: true
+ingressClassResource:
+  name: nginx-mlflow
+  default: false
