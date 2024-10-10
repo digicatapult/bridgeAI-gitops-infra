@@ -104,6 +104,7 @@ scheduler:
       thresholdSeconds: 300
       schedulerAgeBeforeCheck: 180
 workers:
+  enabled: false
   logCleanup:
     enabled: false
 logs:
