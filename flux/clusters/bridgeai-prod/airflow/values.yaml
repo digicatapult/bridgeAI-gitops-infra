@@ -4,17 +4,6 @@ airflow:
     repository: apache/airflow
     tag: 2.8.4-python3.9
   executor: KubernetesExecutor
-  extraEnv:
-    - name: AIRFLOW__CORE__FERNET_KEY
-      valueFrom:
-        secretKeyRef:
-          name: airflow-fernet-key
-          key: value
-    - name: AIRFLOW__WEBSERVER__SECRET_KEY
-      valueFrom:
-        secretKeyRef:
-          name: airflow-webserver-secret-key
-          key: value
   config:
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
     AIRFLOW__CORE__LOAD_EXAMPLES: "False"
@@ -54,16 +43,16 @@ airflow:
     - key: "data_path"
       value: "/data"
     - key: "data_url"
-      # value: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"
+      value: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"
     - key: "namespace"
       value: "default"
     - key: "base_image_model_training"
       value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
     - key: "base_image_data_ingestion"
       value: "ghcr.io/digicatapult/bridgeai-regression-model-data-ingestion:latest"
-    # - key: "docker_reg_secret"
+    - key: "docker_reg_secret"
       #value: "${DOCKER_REG_SECRET}"
-      # value: "ghcr-io"
+      value: "ghcr-io"
     - key: "mlflow_tracking_uri"
       value: "https://mlflow.dc-mlops.co.uk"
     - key: "connection_id"
@@ -156,17 +145,12 @@ ingress:
     replicas: 1
     hosts: "airflow.dc-mlops.co.uk"
     path: "/"
-    ingressClassName: "nginx"
+    ingressClassName: "nginx-airflow"
     tls:
       enabled: true
       secretName: airflow-dc-mlops-co-uk-prod-tls
   flower:
     enabled: false
-  # flower:
-  #   annotations: {}
-  #   hosts: "dc-mlops.co.uk"
-  #   path: "/flower"
-  #   ingressClassName: "nginx"
 
 # Identities
 serviceAccount:
