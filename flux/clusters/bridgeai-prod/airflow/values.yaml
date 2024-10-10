@@ -19,8 +19,6 @@ airflow:
     AIRFLOW__WEBSERVER__EXPOSE_CONFIG: "False"
     AIRFLOW__CORE__LOAD_EXAMPLES: "False"
     AIRFLOW__WEBSERVER__BASE_URL: "https://airflow.dc-mlops.co.uk"
-  sync:
-    affinity: *affinity
   users:
     - username: admin
       password: ${ADMIN_PASSWORD}
@@ -187,7 +185,6 @@ pgbouncer:
     limits:
       memory: "1Gi"
       cpu: "1000m"
-  affinity: *affinity
 # [WARNING] the embedded Postgres is NOT SUITABLE for production deployments of Airflow
 postgresql:
   enabled: false
