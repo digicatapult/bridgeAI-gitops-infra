@@ -15,5 +15,5 @@ watchIngressWithoutClass: true
 scope:
   enabled: true
 ingressClassResource:
-  name: nginx-mlflow
+  name: nginx-airflow
   default: false
