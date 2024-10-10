@@ -25,11 +25,9 @@ spec:
       valuesKey: airflow-values.yaml
     - kind: Secret
       name: airflow-fernet-key
-      namespace: default
       valuesKey: value
       targetPath: airflow.extraEnv.AIRFLOW__CORE__FERNET_KEY
     - kind: Secret
       name: airflow-webserver-secret-key
-      namespace: default
       valuesKey: value
       targetPath: airflow.extraEnv.AIRFLOW__WEBSERVER__SECRET_KEY
