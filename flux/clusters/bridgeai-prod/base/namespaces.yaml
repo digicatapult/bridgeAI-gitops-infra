@@ -22,3 +22,11 @@ metadata:
     app.kubernetes.io/instance: mlops
     app.kubernetes.io/version: latest
   name: kserve
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/instance: mlops
+    app.kubernetes.io/version: latest
+  name: airflow
