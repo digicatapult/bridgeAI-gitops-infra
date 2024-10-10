@@ -38,8 +38,8 @@ spec:
     - kind: Secret
       name: "airflow-admin-credentials"
       valuesKey: password
-      targetPath: airflow.users.[0].password
+      targetPath: airflow.users[0].password
     - kind: Secret
       name: airflow-prod-user-credentials
       valuesKey: password
-      targetPath: airflow.users.[1].password
+      targetPath: airflow.users[1].password
