@@ -121,7 +121,7 @@ dags:
   persistence:
     enabled: false
   gitSync:
-    enabled: true
+    enabled: false
 
 # Triggerer
 triggerer:
