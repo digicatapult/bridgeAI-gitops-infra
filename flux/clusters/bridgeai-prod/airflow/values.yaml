@@ -137,8 +137,8 @@ ingress:
     enabled: true
     replicas: 1
     hosts: "airflow.dc-mlops.co.uk"
-    path: "/"
     ingressClassName: "nginx-airflow"
+    path: "/airflow"
     tls:
       enabled: true
       secretName: airflow-dc-mlops-co-uk-prod-tls
