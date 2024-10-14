@@ -11,11 +11,11 @@ airflow:
   users:
     - username: admin
       role: Admin
-      email: declined@digicatapult.org.uk
+      email: declined_admin@digicatapult.org.uk
       firstName: admin
       lastName: admin
     - username: airflow-prod-user
-      email: declined@digicatapult.org.uk
+      email: declined_user@digicatapult.org.uk
       role: User
       firstName: user
       lastName: user
