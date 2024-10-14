@@ -158,7 +158,7 @@ pgbouncer:
 postgresql:
   enabled: true
   existingSecret: "airflow-postgres-admin-credentials"
-  existingSecretKey: "password"
+  existingSecretKey: "postgresql-password"
   persistence:
     enabled: true
     storageClass: "gp2"
