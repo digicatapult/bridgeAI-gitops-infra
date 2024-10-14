@@ -157,8 +157,8 @@ pgbouncer:
 # [WARNING] the embedded Postgres is NOT SUITABLE for production deployments of Airflow
 postgresql:
   enabled: true
-  existingSecret: "airflow-postgres-admin-credentials"
-  existingSecretKey: "password"
+  # existingSecret: "airflow-postgres-admin-credentials"
+  # existingSecretKey: "password"
   persistence:
     enabled: true
     storageClass: "gp2"
