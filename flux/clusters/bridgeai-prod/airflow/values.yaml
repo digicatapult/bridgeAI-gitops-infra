@@ -11,11 +11,11 @@ airflow:
   users:
     - username: admin
       role: Admin
-      email: blah@blah.com
+      email: declined@digicatapult.org.uk
       firstName: admin
       lastName: admin
     - username: airflow-prod-user
-      email: blah2@blah.com
+      email: declined@digicatapult.org.uk
       role: User
       firstName: user
       lastName: user
@@ -98,11 +98,7 @@ scheduler:
     enabled: false
     retentionMinutes: 21600
   livenessProbe:
-    enabled: true
-    taskCreationCheck:
-      enabled: false
-      thresholdSeconds: 300
-      schedulerAgeBeforeCheck: 180
+    enabled: false
 workers:
   enabled: false
   logCleanup:
@@ -136,14 +132,15 @@ ingress:
   web:
     enabled: true
     replicas: 1
-    hosts: "airflow.dc-mlops.co.uk"
+    hosts: ["airflow.dc-mlops.co.uk"]
     ingressClassName: "nginx-airflow"
-    # path: "/home"
+    path: "/"
+    pathType: "ImplementationSpecific"
     tls:
       enabled: true
       secretName: airflow-dc-mlops-co-uk-prod-tls
-flower:
-  enabled: false
+  flower:
+    enabled: false
 
 # Identities
 serviceAccount:
