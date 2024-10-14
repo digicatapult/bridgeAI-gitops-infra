@@ -146,7 +146,7 @@ serviceAccount:
 
 # Database(s)
 pgbouncer:
-  enabled: true
+  enabled: false
   resources:
     requests:
       memory: "128Mi"
