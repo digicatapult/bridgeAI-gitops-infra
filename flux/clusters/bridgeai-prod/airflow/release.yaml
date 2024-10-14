@@ -33,7 +33,7 @@ spec:
       targetPath: webserverSecretKey
     - kind: Secret
       name: "airflow-postgres-admin-credentials"
-      valuesKey: postgresql-password
+      valuesKey: password
       targetPath: postgresql.existingSecretKey
     - kind: Secret
       name: "airflow-admin-credentials"
