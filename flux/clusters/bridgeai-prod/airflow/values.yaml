@@ -47,7 +47,7 @@ airflow:
     - key: "mlflow_tracking_uri"
       value: "https://mlflow.dc-mlops.co.uk"
     - key: "connection_id"
-      value: "aws_eks"
+      value: "local-k8s"
     - key: "in_cluster"
       value: true
     # - key: "model_training_configmap"
