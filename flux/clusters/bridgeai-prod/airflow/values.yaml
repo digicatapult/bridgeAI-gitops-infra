@@ -139,8 +139,8 @@ ingress:
     tls:
       enabled: true
       secretName: airflow-dc-mlops-co-uk-prod-tls
-  flower:
-    enabled: false
+flower:
+  enabled: false
 
 # Identities
 serviceAccount:
