@@ -134,10 +134,6 @@ ingress:
     replicas: 1
     hosts: ["airflow.dc-mlops.co.uk"]
     ingressClassName: "nginx-airflow"
-    tls:
-      enabled: true
-      hosts: ["airflow.dc-mlops.co.uk"]
-      secretName: airflow-dc-mlops-co-uk-prod-tls
 flower:
   enabled: false
 
