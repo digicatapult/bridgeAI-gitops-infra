@@ -132,7 +132,7 @@ ingress:
   web:
     enabled: true
     replicas: 1
-    hosts: ["airflow.dc-mlops.co.uk"]
+    host: "airflow.dc-mlops.co.uk"
     ingressClassName: "nginx-airflow"
 flower:
   enabled: false
