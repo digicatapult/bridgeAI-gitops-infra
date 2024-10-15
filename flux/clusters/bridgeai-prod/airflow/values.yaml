@@ -117,7 +117,13 @@ dags:
   persistence:
     enabled: false
   gitSync:
-    enabled: false
+    enabled: true
+    repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
+    repoSubPath: "dags/"
+    branch: main
+    httpSecret: "github-auth"
+    httpSecretUsernameKey: "username"
+    httpSecretPasswordKey: "password"
 
 # Triggerer
 triggerer:
