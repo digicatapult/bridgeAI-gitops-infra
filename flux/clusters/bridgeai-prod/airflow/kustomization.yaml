@@ -4,8 +4,10 @@ namespace: airflow
 resources:
   - certificate.yaml
   - source.yaml
+  - regression-model-configmaps.yaml
   - release.yaml
   - release-nginx.yaml
+  - volumes.yaml
 configMapGenerator:
   - name: airflow-values
     files:

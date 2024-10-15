@@ -26,7 +26,7 @@ airflow:
       extra: |
         {
           "in_cluster": true,
-          "namespace": "default",
+          "namespace": "airflow",
           "disable_verify_ssl": true
         }
   connectionsUpdate: true
@@ -36,7 +36,7 @@ airflow:
     - key: "data_url"
       value: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"
     - key: "namespace"
-      value: "default"
+      value: "airflow"
     - key: "base_image_model_training"
       value: "ghcr.io/digicatapult/bridgeai-regression-model-training:latest"
     - key: "base_image_data_ingestion"
@@ -50,28 +50,28 @@ airflow:
       value: "local-k8s"
     - key: "in_cluster"
       value: true
-    # - key: "model_training_configmap"
-    #   value: "model-training-configmap"
-    # - key: "data_ingestion_configmap"
-    #   value: "data-ingest-configmap"
-    # - key: "github_secret"
-    #   value: "github-auth"
-    # - key: "github_secret_username_key"
-    #   value: "username"
-    # - key: "github_secret_password_key"
-    #   value: "password"
-    # - key: "data_ingestion_pvc"
-    #   value: "data-ingestion-pvc"
-    # - key: "model_training_pvc"
-    #   value: "model-training-pvc"
+    - key: "model_training_configmap"
+      value: "model-training-configmap"
+    - key: "data_ingestion_configmap"
+      value: "data-ingest-configmap"
+    - key: "github_secret"
+      value: "github-auth"
+    - key: "github_secret_username_key"
+      value: "username"
+    - key: "github_secret_password_key"
+      value: "password"
+    - key: "data_ingestion_pvc"
+      value: "data-ingestion-pvc"
+    - key: "model_training_pvc"
+      value: "model-training-pvc"
     - key: "dvc_remote"
       value: "s3://bridgeai-dvc-remote"
     - key: "dvc_endpoint_url"
-      value: "https://bridgeai-model-artifacts.s3-website.eu-west-2.amazonaws.com"
-    # - key: "dvc_access_key_id"
-    #   value: "admin"
-    # - key: "dvc_secret_access_key"
-    #   value: "password"
+      value: "https://bridgeai-dvc-remote.s3-website.eu-west-2.amazonaws.com"
+    - key: "dvc_access_key_id"
+      value: "admin"
+    - key: "dvc_secret_access_key"
+      value: "password"
     - key: "data_version"
       value: "data-v1.0.0"
     - key: "base_image_drift_monitoring"
@@ -82,14 +82,14 @@ airflow:
       value: "data-v1.0.0"
     - key: "new_data_version"
       value: "data-v1.1.0"
-    # - key: "drift_monitoring_configmap"
-    #   value: "drift-monitoring-configmap"
-    # - key: "drift_monitoring_pvc"
-    #   value: "drift-monitoring-pvc"
+    - key: "drift_monitoring_configmap"
+      value: "drift-monitoring-configmap"
+    - key: "drift_monitoring_pvc"
+      value: "drift-monitoring-pvc"
     - key: "drift_report_bucket"
       value: "bridgeai-evidently-reports"
-    # - key: "model_endpoint"
-    #   value: "http://host.docker.internal:5001/invocations"
+    - key: "model_endpoint"
+      value: "http://host.docker.internal:5001/invocations"
 
 # Logs
 scheduler:
@@ -157,8 +157,6 @@ pgbouncer:
 # [WARNING] the embedded Postgres is NOT SUITABLE for production deployments of Airflow
 postgresql:
   enabled: true
-  # existingSecret: "airflow-postgres-admin-credentials"
-  # existingSecretKey: "password"
   persistence:
     enabled: true
     storageClass: "gp2"
