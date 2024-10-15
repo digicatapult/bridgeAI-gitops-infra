@@ -94,7 +94,7 @@ airflow:
 # Logs
 scheduler:
   nodeSelector:
-    node.kubernetes.io/instance-type: "t3.medium"
+    node.kubernetes.io/instance-type=t3.medium
   replicas: 1
   logCleanup:
     enabled: false
@@ -116,7 +116,7 @@ logs:
 # DAGs
 dags:
   nodeSelector:
-    node.kubernetes.io/instance-type: "t3.medium"
+    node.kubernetes.io/instance-type=t3.medium
   path: /opt/airflow/dags
   persistence:
     enabled: false
@@ -132,7 +132,7 @@ dags:
 # Triggerer
 triggerer:
   nodeSelector:
-    node.kubernetes.io/instance-type: "t3.medium"
+    node.kubernetes.io/instance-type=t3.medium
   enabled: true
   replicas: 1
   capacity: 1000
