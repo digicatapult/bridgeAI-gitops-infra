@@ -117,7 +117,7 @@ dags:
   nodeSelector: {"node.kubernetes.io/instance-type=t3.medium"}
   path: /opt/airflow/dags
   persistence:
-    enabled: false
+    enabled: true
   gitSync:
     enabled: true
     repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
