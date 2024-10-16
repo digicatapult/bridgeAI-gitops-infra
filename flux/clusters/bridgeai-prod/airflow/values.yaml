@@ -169,7 +169,7 @@ dags:
     enabled: true
     repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
     repoSubPath: "dags/"
-    branch: feature/drift_monitoring
+    branch: main
     httpSecret: "github-auth"
     httpSecretUsernameKey: "username"
     httpSecretPasswordKey: "password"
