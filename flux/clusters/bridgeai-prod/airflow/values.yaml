@@ -30,31 +30,6 @@ airflow:
           "disable_verify_ssl": true
         }
   connectionsUpdate: true
-  variablesTemplates:
-    MLFLOW_PROD_USERNAME:
-      kind: Secret
-      name: mlflow-prod-user-credentials
-      key: username
-    MLFLOW_PROD_PASSWORD:
-      kind: Secret
-      name: mlflow-prod-user-credentials
-      key: password
-    DOCKER_REG_SECRET:
-      kind: Secret
-      name: ghcr-io
-      key: .dockerconfigjson
-    ECR_CREDENTIALS_SECRET:
-      kind: Secret
-      name: ecr-credentials
-      key: .dockerconfigjson
-    GITHUB_USERNAME:
-      kind: Secret
-      name: github-auth
-      key: username
-    GITHUB_PASSWORD:
-      kind: Secret
-      name: github-auth
-      key: password
   variables:
     - key: "data_path"
       value: "/data"
@@ -82,14 +57,6 @@ airflow:
       value: "latest"
     - key: "docker_registry_for_model_image"
       value: "058264114863.dkr.ecr.eu-west-2.amazonaws.com"
-    - key: "mlflow_tracking_username"
-      value: "${MLFLOW_PROD_USERNAME}"
-    - key: "mlflow_tracking_password"
-      value: "${MLFLOW_PROD_PASSWORD}"
-    - key: "docker_reg_secret"
-      value: "${DOCKER_REG_SECRET}"
-    # - key: "model_docker_push_secret"
-    #   value: "${ECR_CREDENTIALS_SECRET}"
     - key: "mlflow_tracking_uri"
       value: "https://mlflow.dc-mlops.co.uk"
     - key: "connection_id"
@@ -102,10 +69,6 @@ airflow:
       value: "data-ingest-configmap"
     - key: "github_secret"
       value: "github-auth"
-    - key: "github_secret_username_key"
-      value: "${GITHUB_USERNAME}"
-    - key: "github_secret_password_key"
-      value: "${GITHUB_PASSWORD}"
     - key: "data_ingestion_pvc"
       value: "data-ingestion-pvc"
     - key: "model_training_pvc"
@@ -137,6 +100,37 @@ airflow:
     - key: "model_endpoint"
       value: "http://host.docker.internal:5001/invocations"
   variablesUpdate: true
+  extraEnv:
+    - name: mlflow_tracking_username
+      valueFrom:
+        secretKeyRef:
+          name: mlflow-prod-user-credentials
+          key: username
+    - name: mlflow_tracking_password
+      valueFrom:
+        secretKeyRef:
+          name: mlflow-prod-user-credentials
+          key: password
+    - name: docker_reg_secret
+      valueFrom:
+        secretKeyRef:
+          name: ghcr-io
+          key: .dockerconfigjson
+    - name: model_docker_push_secret
+      valueFrom:
+        secretKeyRef:
+          name: ecr-credentials
+          key: .dockerconfigjson
+    - name: github_secret_password_key
+      valueFrom:
+        secretKeyRef:
+          name: github-auth
+          key: username
+    - name: github_secret_username_key
+      valueFrom:
+        secretKeyRef:
+          name: github-auth
+          key: password
 
 # Logs
 scheduler:
