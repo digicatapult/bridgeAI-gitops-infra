@@ -34,22 +34,27 @@ airflow:
     MLFLOW_PROD_USERNAME:
       kind: Secret
       name: mlflow-prod-user-credentials
+      namespace: mlflow
       key: username
     MLFLOW_PROD_PASSWORD:
       kind: Secret
       name: mlflow-prod-user-credentials
+      namespace: mlflow
       key: password
     DOCKER_REG_SECRET:
       kind: Secret
       name: ghcr-io
+      namespace: airflow
       key: .dockerconfigjson
     GITHUB_USERNAME:
       kind: Secret
       name: github-auth
+      namespace: airflow
       key: username
     GITHUB_PASSWORD:
       kind: Secret
       name: github-auth
+      namespace: airflow
       key: password
   variables:
     - key: "data_path"
