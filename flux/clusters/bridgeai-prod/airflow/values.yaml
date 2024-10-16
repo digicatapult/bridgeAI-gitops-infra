@@ -138,6 +138,8 @@ airflow:
 
 # Logs
 scheduler:
+  nodeSelector:
+    node.kubernetes.io/instance-type: "t3.large"
   replicas: 1
   logCleanup:
     enabled: false
@@ -158,6 +160,8 @@ logs:
 
 # DAGs
 dags:
+  nodeSelector:
+    node.kubernetes.io/instance-type: "t3.large"
   path: /opt/airflow/dags
   persistence:
     enabled: false
@@ -172,6 +176,8 @@ dags:
 
 # Triggerer
 triggerer:
+  nodeSelector:
+    node.kubernetes.io/instance-type: "t3.large"
   enabled: true
   replicas: 1
   capacity: 1000
@@ -192,6 +198,8 @@ webserver:
   resources:
     limits:
       memory: 512Mi
+    requests:
+      memory: 128Mi
 
 # Identities
 serviceAccount:
