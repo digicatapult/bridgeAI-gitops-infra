@@ -43,6 +43,10 @@ airflow:
       kind: Secret
       name: ghcr-io
       key: .dockerconfigjson
+    ECR_CREDENTIALS_SECRET:
+      kind: Secret
+      name: ecr-credentials
+      key: .dockerconfigjson
     GITHUB_USERNAME:
       kind: Secret
       name: github-auth
@@ -78,12 +82,14 @@ airflow:
       value: "latest"
     - key: "docker_registry_for_model_image"
       value: "058264114863.dkr.ecr.eu-west-2.amazonaws.com"
-    # - key: "mlflow_tracking_username"
-    #   value: "${MLFLOW_PROD_USERNAME}"
-    # - key: "mlflow_tracking_password"
-    #   value: "${MLFLOW_PROD_PASSWORD}"
-    # - key: "docker_reg_secret"
-    #   value: "${DOCKER_REG_SECRET}"
+    - key: "mlflow_tracking_username"
+      value: "${MLFLOW_PROD_USERNAME}"
+    - key: "mlflow_tracking_password"
+      value: "${MLFLOW_PROD_PASSWORD}"
+    - key: "docker_reg_secret"
+      value: "${DOCKER_REG_SECRET}"
+    # - key: "model_docker_push_secret"
+    #   value: "${ECR_CREDENTIALS_SECRET}"
     - key: "mlflow_tracking_uri"
       value: "https://mlflow.dc-mlops.co.uk"
     - key: "connection_id"
@@ -96,10 +102,10 @@ airflow:
       value: "data-ingest-configmap"
     - key: "github_secret"
       value: "github-auth"
-    # - key: "github_secret_username_key"
-    #   value: "${GITHUB_USERNAME}"
-    # - key: "github_secret_password_key"
-    #   value: "${GITHUB_PASSWORD}"
+    - key: "github_secret_username_key"
+      value: "${GITHUB_USERNAME}"
+    - key: "github_secret_password_key"
+      value: "${GITHUB_PASSWORD}"
     - key: "data_ingestion_pvc"
       value: "data-ingestion-pvc"
     - key: "model_training_pvc"
@@ -130,6 +136,7 @@ airflow:
       value: "bridgeai-evidently-reports"
     - key: "model_endpoint"
       value: "http://host.docker.internal:5001/invocations"
+  variablesUpdate: true
 
 # Logs
 scheduler:
