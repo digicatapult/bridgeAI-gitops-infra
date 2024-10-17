@@ -99,6 +99,19 @@ airflow:
       value: "bridgeai-evidently-reports"
     - key: "model_endpoint"
       value: "http://host.docker.internal:5001/invocations"
+    # Secret variables need populating here. Assignment is done using extraEnv.
+    - key: "mlflow_tracking_username"
+      value: "mlflow-prod-user-credentials.username"
+    - key: "mlflow_tracking_password"
+      value: "mlflow-prod-user-credentials.password"
+    - key: "docker_reg_secret"
+      value: "ghcr-io"
+    - key: "model_docker_push_secret"
+      value: "ecr-credentials"
+    - key: "github_secret_username_key"
+      value: "username"
+    - key: "github_secret_password_key"
+      value: "password"
   variablesUpdate: true
   extraEnv:
     - name: mlflow_tracking_username
