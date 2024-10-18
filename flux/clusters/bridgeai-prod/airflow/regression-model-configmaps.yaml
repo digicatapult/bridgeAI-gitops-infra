@@ -1,0 +1,100 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-ingest-configmap
+  namespace: airflow
+data:
+  config.yaml: |-
+    data_url: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"   # URL from where we can download the data
+
+    data_split:
+      raw_data_save_path: "./artefacts/raw_data.csv"    # the filename for raw downloaded data
+      cleansed_data_save_path: "./artefacts/cleansed_data.csv"    # the filename for cleansed data
+      train_data_save_path: "./artefacts/train_data.csv"  # save path of the train split of the data - used for training the model
+      test_data_save_path: "./artefacts/test_data.csv"   # save path of the test split of the data - used for testing the trained models performance
+      val_data_save_path: "./artefacts/val_data.csv"   # save path of the validation split of the data - used for hyperparameter tuning
+      seed: 42    # set a seed for random data split
+      test_frac: 0.2   # the fraction of data kept for testing - "train_and_val_frac = 1 - test_frac"
+      val_frac: 0.2   # the fraction of data from the remaining 1-test_frac that should be kept for validation, the rest will be used for training
+      label_col: "price"   # column name of the predictor variable - used for splitting data in a proportionate way
+      categorical_cols: [ "mainroad", "guestroom", "basement", "hotwaterheating",  # categorical column names in the input data
+                          "airconditioning", "prefarea", "furnishingstatus" ]
+      numeric_cols: [ "area", "bedrooms", "bathrooms", "stories", "parking" ]   # numerical column names in the input data
+
+    dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+    dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+    dvc_endpoint_url: "http://minio"  # dvc endpoint url
+    dvc_region: "eu-west-2"
+    git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"    # data ingestion repo url
+    git_repo_save_name: "local_repo"  # the directory name where the repo will be cloned to - needed this to be constant with what the data ingestion dag is accessing
+    git_branch: "feature/testing"   # name of the git branch where we want to push the committed data
+    commit_message: "update dvc data"   # git commit message
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: drift-monitoring-configmap
+  namespace: airflow
+data:
+  config.yaml: |-
+    model_endpoint: http://host.docker.internal:5001/invocations   # model prediction endpoint
+    historical_data_version: v1.0.0    # historical data version from the above repo
+    new_data_version: v1.1.0    # new data version from the above repo
+    feature_columns: ["mainroad", "guestroom", "basement", "hotwaterheating",
+                           "airconditioning", "prefarea", "furnishingstatus",
+                           "area", "bedrooms", "bathrooms", "stories", "parking"]   # feature columns to be used form the data
+    label_column: "price"   # label column name
+    report_save_path: "./artefacts/evidently_report.html"    # evidently report save path
+    historical_data_save_path: "./artefacts/historical_data.csv"   # local path where the pulled historical data is kept
+    new_data_save_path: "./artefacts/new_data.csv"   # local path where the pulled new data is kept
+    dvc:
+      git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
+      git_branch: "feature/testing"   # The branch where the tagged data is available
+      data_path: "./artefacts"   # Path of the data splits dvc files
+      dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+      dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+      dvc_endpoint_url: "http://minio"  # dvc endpoint url
+      dvc_region: "eu-west-2"    # dvc region - used for s3, just a placeholder for minio
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: model-training-configmap
+  namespace: airflow
+data:
+  config.yaml: |-
+    data:  # data related config
+      label_col: "price"   # column name of the predictor variable
+      categorical_cols: ["mainroad", "guestroom", "basement", "hotwaterheating",  # categorical column names in the input data
+                       "airconditioning", "prefarea", "furnishingstatus"]
+      numeric_cols: ["area", "bedrooms", "bathrooms", "stories", "parking"]   # numerical column names in the input data
+      preprocessor_path: "./artefacts/preprocessor.joblib"   # save path of the preprocessing transformations (parameters are learned from the train data)
+
+    model:   # model related parameters and hyperparameters
+      model_name: "house_price-regression"   # The name with which the model should be saved or logged
+      save_path: "./artefacts/"   # model save path
+      train_batch_size: 64    # model training batch size (number of data point in single training step/pass through the model)
+      test_batch_size: 64   # model test/val batch size (number of data points in a single pass through the model)
+      n_epochs: 1000    # number of epochs - how many times the model should pass through the entire training split of the data
+      learning_rate: 0.01   # learning rate of the model optimiser
+      es_patience: 10   # early stopping patience - how many more training epochs will be attempted if there is no improvement in model observed
+      es_delta: 0   # early stopping delta - what increment in model performance will be considered as improvement for early stopping
+      use_gpu: True   # to use gpu or not. If no gpu found, will fall back to cpu with warning
+
+    mlflow:  # for mlflow logging
+      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
+      expt_name: "expt-name"   # Experiment name under which the model trainings will be listed in MLFlow
+
+    dvc:
+      git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
+      git_branch: "feature/testing"   # The branch where the tagged data is available
+      data_version: "data-v1.0.0"   # The git tag for the data version to be used
+      train_data_path: "./artefacts/train_data.csv"  # Path of the train split of the data pulled from dvc
+      test_data_path: "./artefacts/test_data.csv"   # Path of the test split of the data pulled from dvc
+      val_data_path: "./artefacts/val_data.csv"   # Path of the validation split of the data pulled from dvc
+      dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+      dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+      dvc_endpoint_url: "http://minio"  # dvc endpoint url
+      dvc_region: "eu-west-2"    # dvc region - used for s3, just a placeholder for minio
+      data_version: "data-v1.0.0"   # data version to use - the tag used in the data ingestion to dvc repo

@@ -11,7 +11,7 @@ tracking:
   ingress:
     enabled: true
     hostname: mlflow.dc-mlops.co.uk
-    ingressClassName: nginx
+    ingressClassName: nginx-mlflow
   persistence:
     enabled: true
     storageClass: efs-sc

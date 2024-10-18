@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: airflow-dc-mlops-co-uk
+  namespace: airflow
+spec:
+  # Secret names are always required.
+  secretName: airflow-dc-mlops-co-uk-prod-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+     - Digital Catapult
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 4096
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - airflow.dc-mlops.co.uk
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

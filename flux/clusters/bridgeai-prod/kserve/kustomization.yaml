@@ -5,3 +5,4 @@ namespace: kserve
 resources:
   - source.yaml
   - release.yaml
+  - account.yaml

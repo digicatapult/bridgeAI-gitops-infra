@@ -2,7 +2,7 @@ service:
   type: LoadBalancer
   externalTrafficPolicy: "Local"
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: mlflow.dc-mlops.co.uk
+    external-dns.alpha.kubernetes.io/hostname: airflow.dc-mlops.co.uk
     service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
     service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
 tolerations:
@@ -10,10 +10,10 @@ tolerations:
     key: node-role.kubernetes.io/master
     operator: Equal
 extraArgs:
-  default-ssl-certificate: "mlflow/mlflow-dc-mlops-co-uk-prod-tls"
+  default-ssl-certificate: "airflow/airflow-dc-mlops-co-uk-prod-tls"
 watchIngressWithoutClass: true
 scope:
   enabled: true
 ingressClassResource:
-  name: nginx-mlflow
+  name: nginx-airflow
   default: false

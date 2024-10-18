@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: ecr-credentials-sync
-  namespace: flux-system
+  namespace: airflow
   annotation:
     eks.amazonaws.com/role-arn: arn:aws:iam::058264114863:role/ecr-credentials-sync-role
 ---
@@ -11,7 +11,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: ecr-credentials-sync
-  namespace: flux-system
+  namespace: airflow
 rules:
 - apiGroups: [""]
   resources:
@@ -25,7 +25,7 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: ecr-credentials-sync
-  namespace: flux-system
+  namespace: airflow
 subjects:
 - kind: ServiceAccount
   name: ecr-credentials-sync
@@ -38,7 +38,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: ecr-credentials-sync
-  namespace: flux-system
+  namespace: airflow
 spec:
   suspend: false
   # Schedule it every six hours to avoid ECR's 12-hour expiration window
@@ -93,8 +93,7 @@ spec:
             - |-
               kubectl create secret docker-registry $SECRET_NAME \
                 --dry-run=client \
-                --namespace=default \
                 --docker-server="$ECR_REGISTRY" \
                 --docker-username=AWS \
                 --docker-password="$(cat /token/ecr-token)" \
-                -o yaml | kubectl apply -f -
+                -o yaml | kubectl apply --namespace=airflow -f -
