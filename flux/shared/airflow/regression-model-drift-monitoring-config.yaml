@@ -13,6 +13,7 @@ data:
                            "area", "bedrooms", "bathrooms", "stories", "parking"]   # feature columns to be used form the data
     label_column: "price"   # label column name
     report_save_path: "./artefacts/evidently_report.html"    # evidently report save path
+    report_save_bucket: "evidently-reports"    # s3 bucket name to save evidently report
     historical_data_save_path: "./artefacts/historical_data.csv"   # local path where the pulled historical data is kept
     new_data_save_path: "./artefacts/new_data.csv"   # local path where the pulled new data is kept
     dvc:
