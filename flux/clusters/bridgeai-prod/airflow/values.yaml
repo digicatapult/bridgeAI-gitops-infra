@@ -99,6 +99,8 @@ airflow:
       value: "bridgeai-evidently-reports"
     - key: "model_endpoint"
       value: "http://host.docker.internal:5001/invocations"
+    - key: "docker_build_pod_resource_limits_enabled"
+      value: "True"
     # Resource variables ensure that nodes have sufficient resources
     - key: "docker_build_pod_request_memory"
       value: "4Gi"
