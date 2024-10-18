@@ -117,7 +117,7 @@ airflow:
     - key: "drift_monitoring_pvc"
       value: "drift-monitoring-pvc"
     - key: "drift_report_bucket"
-      value: "bridgeai-evidently-reports"
+      value: "evidently-reports"
     - key: "model_endpoint"
       value: "http://host.docker.internal:5001/invocations"
     - key: "model_docker_build_context_pvc"
