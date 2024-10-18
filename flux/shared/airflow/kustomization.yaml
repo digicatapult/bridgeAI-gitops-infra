@@ -10,3 +10,4 @@ resources:
   - regression-model-data-ingestion-pvc.yaml
   - regression-model-drift-monitoring-config.yaml
   - regression-model-drift-monitoring-pvc.yaml
+  - model-docker-build-context-pvc.yaml
