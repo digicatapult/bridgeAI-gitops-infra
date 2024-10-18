@@ -110,8 +110,6 @@ airflow:
       value: "6Gi"
     - key: "docker_build_pod_limit_cpu"
       value: "1"
-    - key: "docker_build_pod_limit_eph_storage"
-      value: "8Gi"
     # Secret variables need populating here. Assignment is done using extraEnv.
     - key: "mlflow_tracking_username"
       value: "mlflow-prod-user-credentials.username"
