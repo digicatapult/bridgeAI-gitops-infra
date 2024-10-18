@@ -1,4 +1,4 @@
-defaultBuckets: "artifacts", "evidently-reports"
+defaultBuckets: "artifacts, evidently-reports"
 service:
   type: ClusterIP
   loadBalancerIP: ""
