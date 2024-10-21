@@ -143,7 +143,7 @@ airflow:
     - key: "docker_build_pod_request_cpu"
       value: "2"
     - key: "docker_build_pod_request_eph_storage"
-      value: "8Gi"
+      value: "20Gi"
     - key: "docker_build_pod_request_memory"
       value: "4Gi"
   # variablesTemplates:
