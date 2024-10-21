@@ -146,6 +146,11 @@ airflow:
       value: "20Gi"
     - key: "docker_build_pod_request_memory"
       value: "4Gi"
+    # Node label selection
+    - key: "docker_build_pod_node_label_enabled"
+      value: "True"
+    - key: "docker_build_pod_node_label"
+      value: '["t3.2xlarge"]'
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret

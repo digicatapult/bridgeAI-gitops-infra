@@ -112,6 +112,11 @@ airflow:
       value: "20Gi"
     - key: "docker_build_pod_request_memory"
       value: "4Gi"
+    # Node label selection
+    - key: "docker_build_pod_node_label_enabled"
+      value: "True"
+    - key: "docker_build_pod_node_label"
+      value: '["t3.2xlarge"]'
     # Secret variables need populating here. Assignment is done using extraEnv.
     - key: "mlflow_tracking_username"
       value: "mlflow-prod-user-credentials.username"
