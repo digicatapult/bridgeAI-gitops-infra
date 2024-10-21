@@ -191,7 +191,7 @@ dags:
     enabled: true
     repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
     repoSubPath: "dags/"
-    branch: main
+    branch: feature/node_label_selection
     httpSecret: "github-auth"
     httpSecretUsernameKey: "username"
     httpSecretPasswordKey: "password"
