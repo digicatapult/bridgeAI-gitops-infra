@@ -1,0 +1,7 @@
+serviceAccount:
+  annotations:
+    kubernetes.io/service-account.namespace: prediction-service
+  name: "prediction-service-sa"
+ingress:
+  enabled: true
+  className: nginx-prediction-service

@@ -1,0 +1,19 @@
+service:
+  type: LoadBalancer
+  externalTrafficPolicy: "Local"
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: predict.dc-mlops.co.uk
+    service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
+    service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Equal
+extraArgs:
+  default-ssl-certificate: "prediction-service/predict-dc-mlops-co-uk-prod-tls"
+watchIngressWithoutClass: true
+scope:
+  enabled: true
+ingressClassResource:
+  name: nginx-prediction-service
+  default: false
