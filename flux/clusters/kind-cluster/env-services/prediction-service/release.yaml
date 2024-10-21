@@ -1,0 +1,25 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: prediction-service
+  namespace: default
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: prediction-service
+  chart:
+    spec:
+      chart: bridgeai-prediction-service
+      sourceRef:
+        kind: HelmRepository
+        name: digicatapult
+      version: 0.2.6
+  interval: 10m0s
+  # Default values
+  # https://github.com/digicatapult/helm-charts/blob/main/charts/bridgeai-prediction-service/values.yaml
+  valuesFrom:
+    - kind: ConfigMap
+      name: env-values
+      valuesKey: prediction-values.yaml
