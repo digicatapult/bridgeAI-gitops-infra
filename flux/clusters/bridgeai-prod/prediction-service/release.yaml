@@ -24,10 +24,10 @@ spec:
       name: prediction-values
       valuesKey: prediction-values.yaml
     - kind: Secret
-      name: prediction-serivce-admin-credentials
+      name: prediction-service-admin-credentials
       valuesKey: username
       targetPath: postgresql.auth.username
     - kind: Secret
-      name: prediction-serivce-admin-credentials
+      name: prediction-service-admin-credentials
       valuesKey: password
       targetPath: postgresql.auth.password
