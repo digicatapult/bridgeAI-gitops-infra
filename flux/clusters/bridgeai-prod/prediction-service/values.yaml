@@ -1,7 +1,7 @@
 serviceAccount:
   annotations:
     kubernetes.io/service-account.namespace: prediction-service
-  name: "prediction-service-sa"
+  name: prediction-service-sa
 postgresql:
   primary:
     persistence:
@@ -10,3 +10,5 @@ postgresql:
 ingress:
   enabled: true
   className: nginx-prediction-service
+  hosts:
+    - host: predict.dc-mlops.co.uk
