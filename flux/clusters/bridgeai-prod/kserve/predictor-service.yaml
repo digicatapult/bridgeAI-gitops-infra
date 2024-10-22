@@ -2,15 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: house-price-predictor
-  namespace: kserve
 spec:
-  ports:
-    - port: 8080
-      protocol: TCP
-      targetPort: 8080
   selector:
     app: isvc.house-price-predictor
     component: predictor
     serving.kserve.io/inferenceservice: house-price
-  sessionAffinity: None
-  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
