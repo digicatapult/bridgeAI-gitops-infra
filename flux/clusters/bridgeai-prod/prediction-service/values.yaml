@@ -1,4 +1,4 @@
-modelPredictionEndpoint: http://house-price-predictor.kserve.svc.cluster.local/v2/models/house-price/infer
+modelPredictionEndpoint: http://house-price-predictor.kserve.svc.cluster.local/v2/models/house_price_prediction_prod/infer
 postgresql:
   primary:
     persistence:
