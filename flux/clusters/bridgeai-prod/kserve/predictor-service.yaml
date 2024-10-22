@@ -9,5 +9,6 @@ spec:
     serving.kserve.io/inferenceservice: house-price
   ports:
     - protocol: TCP
+      name: http
       port: 8080
       targetPort: 8080
