@@ -2,6 +2,11 @@ serviceAccount:
   annotations:
     kubernetes.io/service-account.namespace: prediction-service
   name: "prediction-service-sa"
+postgresql:
+  primary:
+    persistence:
+      enabled: true
+      storageClass: gp2
 ingress:
   enabled: true
   className: nginx-prediction-service
