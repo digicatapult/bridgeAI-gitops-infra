@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: prediction-service
 resources:
   - certificate.yaml
-  - source.yaml
   - release.yaml
   - release-nginx.yaml
 configMapGenerator:
