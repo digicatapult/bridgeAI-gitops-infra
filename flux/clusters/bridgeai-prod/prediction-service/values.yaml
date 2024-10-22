@@ -12,3 +12,12 @@ ingress:
   className: nginx-prediction-service
   hosts:
     - host: predict.dc-mlops.co.uk
+      paths:
+        - path: /predict
+          pathType: Prefix
+        - path: /data
+          pathType: Prefix
+        - path: /swagger
+          pathType: Prefix
+        - path: /api-docs
+          pathType: Prefix
