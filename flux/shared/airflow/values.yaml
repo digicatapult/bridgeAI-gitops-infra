@@ -148,7 +148,7 @@ airflow:
       value: "4Gi"
     # Node label selection
     - key: "docker_build_pod_node_label_enabled"
-      value: "True"
+      value: "False"
     - key: "docker_build_pod_node_label"
       value: '["t3.2xlarge"]'
   # variablesTemplates:
