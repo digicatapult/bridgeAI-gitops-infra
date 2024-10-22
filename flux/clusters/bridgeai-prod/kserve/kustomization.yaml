@@ -6,4 +6,3 @@ resources:
   - source.yaml
   - release.yaml
   - account.yaml
-  - predictor-service.yaml
