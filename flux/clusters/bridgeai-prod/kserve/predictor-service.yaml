@@ -5,8 +5,7 @@ metadata:
   namespace: kserve
 spec:
   ports:
-  - appProtocol: http
-    name: http
+  - name: http
     port: 8080
     protocol: TCP
     targetPort: 8080
