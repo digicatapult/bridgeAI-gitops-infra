@@ -1,7 +1,4 @@
-serviceAccount:
-  annotations:
-    kubernetes.io/service-account.namespace: prediction-service
-  name: prediction-service-sa
+modelPredictionEndpoint: http://house-price-predictor.kserve.svc.cluster.local/v2/models/house-price/infer
 postgresql:
   primary:
     persistence:
