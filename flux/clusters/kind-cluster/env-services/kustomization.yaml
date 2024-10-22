@@ -5,13 +5,11 @@ resources:
   - sources.yaml
   - nfs-ganesha
   - minio
-  - prediction-service
 configMapGenerator:
   - name: env-values
     files:
       - nfs-values.yaml=nfs-ganesha/values.yaml
       - minio-values.yaml=minio/values.yaml
-      - prediction-values.yaml=prediction-service/values.yaml
 configurations:
   - kustomize-config.yaml
 generatorOptions:

@@ -7,8 +7,8 @@ resources:
   - mlflow
   - nginx
   - kserve
+  - prediction-service
   - sources.yaml
-
 configMapGenerator:
   - name: shared-values
     files:
@@ -16,6 +16,7 @@ configMapGenerator:
       - mlflow-values.yaml=mlflow/values.yaml
       - nginx-values.yaml=nginx/values.yaml
       - kserve-values.yaml=kserve/values.yaml
+      - prediction-values.yaml=prediction-service/values.yaml
 configurations:
   - kustomize-config.yaml
 generatorOptions:
