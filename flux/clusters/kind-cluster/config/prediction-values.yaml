@@ -1,10 +1,12 @@
 serviceAccount:
   annotations:
     kubernetes.io/service-account.namespace: default
-  name: "prediction-service-sa"
+  name: prediction-service-sa
 postgresql:
   auth:
     password: password
 ingress:
   enabled: true
   className: nginx
+  hosts:
+    - host: localhost
