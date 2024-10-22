@@ -6,6 +6,7 @@ resources:
   - certificate.yaml
   - release.yaml
   - release-nginx.yaml
+  - source.yaml
 configMapGenerator:
   - name: prediction-values
     files:
