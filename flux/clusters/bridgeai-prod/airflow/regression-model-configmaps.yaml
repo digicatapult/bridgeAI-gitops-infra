@@ -46,6 +46,7 @@ data:
                            "area", "bedrooms", "bathrooms", "stories", "parking"]   # feature columns to be used form the data
     label_column: "price"   # label column name
     report_save_path: "./artefacts/evidently_report.html"    # evidently report save path
+    report_save_bucket: "bridgeai-evidently-reports"    # s3 bucket name to save evidently report
     historical_data_save_path: "./artefacts/historical_data.csv"   # local path where the pulled historical data is kept
     new_data_save_path: "./artefacts/new_data.csv"   # local path where the pulled new data is kept
     dvc:
@@ -84,7 +85,7 @@ data:
 
     mlflow:  # for mlflow logging
       tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
-      expt_name: "expt-name"   # Experiment name under which the model trainings will be listed in MLFlow
+      expt_name: "bridgeai-house-price-nn"   # Experiment name under which the model trainings will be listed in MLFlow
 
     dvc:
       git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present

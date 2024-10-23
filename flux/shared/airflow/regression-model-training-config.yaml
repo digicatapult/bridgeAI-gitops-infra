@@ -24,8 +24,8 @@ data:
       use_gpu: True   # to use gpu or not. If no gpu found, will fall back to cpu with warning
     
     mlflow:  # for mlflow logging
-      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
-      expt_name: "expt-name"   # Experiment name under which the model trainings will be listed in MLFlow
+      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container port 5000
+      expt_name: "bridgeai-house-price-nn"   # Experiment name under which the model trainings will be listed in MLFlow
     
     dvc:
       git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present

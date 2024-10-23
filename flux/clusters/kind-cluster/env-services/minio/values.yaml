@@ -1,4 +1,4 @@
-defaultBuckets: "artifacts"
+defaultBuckets: "artifacts, evidently-reports"
 service:
   type: ClusterIP
   loadBalancerIP: ""
@@ -6,7 +6,7 @@ service:
     api: 80
 provisioning:
   enabled: true
-  extraCommands: ["mc anonymous set download provisioning/artifacts"]
+  extraCommands: ["mc anonymous set download provisioning/artifacts", "mc anonymous set download provisioning/evidently-reports"]
 auth:
   rootUser: admin
   rootPassword: password
