@@ -17,3 +17,5 @@ ingress:
           pathType: Prefix
         - path: /swagger
           pathType: Prefix
+        - path: /openapi.json
+          pathType: Prefix
