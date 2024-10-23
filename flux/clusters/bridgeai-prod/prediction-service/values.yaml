@@ -4,8 +4,6 @@ postgresql:
     persistence:
       enabled: true
       storageClass: gp2
-image:
-  tag: v0.3.3
 ingress:
   enabled: true
   className: nginx-prediction-service
