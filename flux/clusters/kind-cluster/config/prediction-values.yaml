@@ -1,4 +1,4 @@
-modelPredictionEndpoint: http://house-price-predictor.kserve.svc.cluster.local/v2/models/house_price_prediction_prod/infer
+modelPredictionEndpoint: http://house-price-predictor.default.svc.cluster.local/v2/models/house_price_prediction_prod/infer
 postgresql:
   auth:
     password: password
