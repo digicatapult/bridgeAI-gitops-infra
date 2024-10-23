@@ -21,5 +21,8 @@ spec:
   # https://github.com/digicatapult/helm-charts/blob/main/charts/bridgeai-prediction-service/values.yaml
   valuesFrom:
     - kind: ConfigMap
-      name: env-values
+      name: shared-values
+      valuesKey: prediction-values.yaml
+    - kind: ConfigMap
+      name: shared-env-values
       valuesKey: prediction-values.yaml
