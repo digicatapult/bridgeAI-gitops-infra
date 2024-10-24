@@ -80,7 +80,7 @@ airflow:
     - key: "dvc_remote"
       value: "s3://bridgeai-dvc-remote"
     - key: "dvc_endpoint_url"
-      value: "https://bridgeai-dvc-remote.s3-website.eu-west-2.amazonaws.com"
+      value: "https://bridgeai-dvc-remote.s3.eu-west-2.amazonaws.com"
     - key: "dvc_access_key_id"
       value: "admin"
     - key: "dvc_secret_access_key"
@@ -107,7 +107,7 @@ airflow:
     - key: "docker_build_pod_limit_cpu"
       value: "1"
     - key: "docker_build_pod_limit_memory"
-      value: "30Gi"
+      value: "12Gi"
     - key: "docker_build_pod_request_cpu"
       value: "2"
     - key: "docker_build_pod_request_eph_storage"
@@ -132,7 +132,7 @@ airflow:
       value: "username"
     - key: "github_secret_password_key"
       value: "password"
-  variablesUpdate: true
+  variablesUpdate: false
   extraEnv:
     - name: mlflow_tracking_username
       valueFrom:
