@@ -1,0 +1,18 @@
+modelPredictionEndpoint: http://house-price-predictor.default.svc.cluster.local/v2/models/house_price_prediction_prod/infer
+postgresql:
+  auth:
+    password: password
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    - host: localhost
+      paths:
+        - path: /predict
+          pathType: Prefix
+        - path: /data
+          pathType: Prefix
+        - path: /swagger
+          pathType: Prefix
+        - path: /openapi.json
+          pathType: Prefix

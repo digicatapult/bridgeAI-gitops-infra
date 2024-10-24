@@ -1,0 +1,26 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: predict-dc-mlops-co-uk
+  namespace: prediction-service
+spec:
+  # Secret names are always required.
+  secretName: predict-dc-mlops-co-uk-prod-tls
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+     - Digital Catapult
+  isCA: false
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS1
+    size: 4096
+  usages:
+    - server auth
+    - client auth
+  dnsNames:
+    - predict.dc-mlops.co.uk
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

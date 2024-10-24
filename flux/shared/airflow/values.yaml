@@ -74,7 +74,7 @@ airflow:
     - key: "base_image_drift_monitoring"
       value: "digicatapult/bridgeai-drift-monitoring:latest"
     - key: "is_base_image_authenticated"
-    - value: "False"
+      value: "False"
     - key: "docker_reg_secret"
       value: "ghcr-io"
     - key: "mlflow_tracking_uri"

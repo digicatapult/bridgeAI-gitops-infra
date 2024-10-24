@@ -81,3 +81,21 @@ spec:
     substitute:
       airflow_version: "8.9.0"
       nginx_version: "11.x.x"
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: prediction-service-sync
+  namespace: prediction-service
+spec:
+  interval: 1m
+  path: ./flux/clusters/bridgeai-prod/prediction-service
+  prune: true
+  # healthChecks: TODO
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  postBuild:
+    substitute:
+      nginx_version: "11.x.x"
