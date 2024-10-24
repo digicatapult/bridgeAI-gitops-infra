@@ -1,4 +1,4 @@
-# Creating a new cluster
+# Creating a new production cluster
 
 ## Quickstart
 
@@ -68,7 +68,7 @@ rm -rf id_rsa*
 
 Now that we have flux installed and a key that we can use to get the repository we need to make some changes to the source files to build your cluster.
 
-Navigate to `clusters/<your-cluster>/base/flux-system/` and edit `gotk-sync.yaml` to update
+Navigate to `flux/clusters/<your-cluster>/base/flux-system/` and edit `gotk-sync.yaml` to update
 
 - `spec.url` to match your repo ssh location.
 - `spec.ref.branch` to match the branch you are pushing to.
@@ -76,7 +76,7 @@ Navigate to `clusters/<your-cluster>/base/flux-system/` and edit `gotk-sync.yaml
 
 Once these changes have been made go ahead and commit them to git.
 
-You'll now need to edit or remove the following kustomizations in `clusters/<your-cluster>/base/`:
+You'll now need to edit or remove the following kustomizations in `flux/clusters/<your-cluster>/base/`:
 
 - app-sync.yaml - Required - change `spec.path`
 - namespaces.yaml - Required - no changes

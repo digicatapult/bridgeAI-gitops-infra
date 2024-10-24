@@ -15,7 +15,7 @@ kubectl create secret generic <secret-name> \
 --namespace=<secret-namespace> \
 --from-literal=<keyname>=<keydata>
 --dry-run=client \
---output=yaml > ./clusters/inteli-stage/secrets/<secret-name>.unc.yaml
+--output=yaml > ./flux/clusters/bridgeai-prod/secrets/<secret-name>.unc.yaml
 ```
 
 Replacing tags with appropriate values:
@@ -25,7 +25,7 @@ Replacing tags with appropriate values:
 * `<keyname>` is the name of the key we will store this data as
 * `<keydata>` is the data that will be the secret.
 
-This will generate the secret at the path `./clusters/inteli-stage/secrets/<secret-name>.unc.yaml` which should look something like
+This will generate the secret at the path `./flux/clusters/bridgeai-prod/secrets/<secret-name>.unc.yaml` which should look something like
 
 ```yaml
 apiVersion: v1
@@ -42,7 +42,7 @@ type: Opaque
 Next we will need to encrypt the secret with SOPs. This can be done using the script `encrypt-secrets.sh` with the cluster to update as follows:
 
 ```sh
-./scripts/encrypt-secrets.sh inteli-stage
+./scripts/encrypt-secrets.sh bridgeai-prod
 ```
 
 This will ensure any unencrypted secrets in the cluster specific `secrets` directory are encrypted with all public keys configured for that cluster.

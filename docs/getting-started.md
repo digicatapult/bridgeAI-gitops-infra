@@ -154,13 +154,13 @@ These resources may be defined in the same file or may be defined separately. Yo
 
 To test your changes you will need to push them to a feature branch and instruct flux in your local cluster to sync from that branch. This must be done in two steps:
 
-1. Modify the `spec->ref->branch` property of the `GitRepository` resource in [/clusters/kind-cluster/base/flux-system/gotk-sync.yaml](`../clusters/kind-cluster/base/flux-system/gotk-sync.yaml) to match your feature branch and push that change to your branch. Not doing this will cause flux to revert to syncing to `main` once it updates itself!
+1. Modify the `spec->ref->branch` property of the `GitRepository` resource in [/flux/clusters/kind-cluster/base/flux-system/gotk-sync.yaml](`../flux/clusters/kind-cluster/base/flux-system/gotk-sync.yaml) to match your feature branch and push that change to your branch. Not doing this will cause flux to revert to syncing to `main` once it updates itself!
 2. Update your local flux `GitRepository` resource to match the above. This is most easily done with the `flux` command line tool (substituting `{BRANCH_NAME}` appropriately):
 
 ```sh
-flux create source git --branch {BRANCH_NAME} --namespace flux-system --secret-ref flux-system --url https://github.com/digicatapult/bridgeAI-gitops-infra.git flux-system
+flux create source git --branch {BRANCH_NAME} --namespace flux-system --url https://github.com/digicatapult/bridgeAI-gitops-infra.git flux-system
 ```
 
 `flux` will now reconcile the changes with the existing deployment. The `flux` command line tool can also be used to check the status of syncing of different resources, pause/resume reconciliation (very helpful when debugging changes made locally) and forcing a sync (for those too impatient for polling `flux` does).
 
-Once tested make sure the `branch` change in [/clusters/kind-cluster/base/flux-system/gotk-sync.yaml](`../clusters/kind-cluster/base/flux-system/gotk-sync.yaml) is reverted prior to merging to `main`.
+Once tested make sure the `branch` change in [/flux/clusters/kind-cluster/base/flux-system/gotk-sync.yaml](`../flux/clusters/kind-cluster/base/flux-system/gotk-sync.yaml) is reverted prior to merging to `main`.
