@@ -104,7 +104,7 @@ spec:
         kubectl get inferenceservice house-price -n default
 
 #### Test the inference service
-TODO: Remove and replace with swagger UI.
+# TODO: Remove and replace with swagger UI.
 1. Prepare input json file (check references section on how to prepare)
 
 2. Port forward on the inference pod
