@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: feature/install_prediction_service
+    branch: main
   secretRef:
     name: flux-system
   url: ssh://git@github.com/digicatapult/bridgeai-gitops-infra
