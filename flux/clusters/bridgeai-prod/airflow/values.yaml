@@ -46,7 +46,7 @@ airflow:
     - key: "base_image_drift_monitoring"
       value: "digicatapult/bridgeai-drift-monitoring:latest"
     - key: "is_base_image_authenticated"
-    - value: "False"
+      value: "False"
     - key: "model_docker_build_context_pvc"
       value: "model-docker-build-context-pvc"
     - key: "deploy_model_name"
