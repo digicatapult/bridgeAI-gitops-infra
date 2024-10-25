@@ -1,0 +1,18 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: digicatapult
+  namespace: prediction-service
+spec:
+  interval: 10m
+  url: https://digicatapult.github.io/helm-charts
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: bitnami
+  namespace: prediction-service
+spec:
+  interval: 10m0s
+  url: https://charts.bitnami.com/bitnami

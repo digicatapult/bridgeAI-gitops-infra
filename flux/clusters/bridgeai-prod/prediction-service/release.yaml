@@ -1,0 +1,33 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: prediction-service
+  namespace: prediction-service
+spec:
+  install:
+    remediation:
+      retries: -1
+  releaseName: prediction-service
+  chart:
+    spec:
+      chart: bridgeai-prediction-service
+      sourceRef:
+        kind: HelmRepository
+        name: digicatapult
+      version: 0.2.14
+  interval: 10m0s
+  # Default values
+  # https://github.com/digicatapult/helm-charts/blob/main/charts/bridgeai-prediction-service/values.yaml
+  valuesFrom:
+    - kind: ConfigMap
+      name: prediction-values
+      valuesKey: prediction-values.yaml
+    - kind: Secret
+      name: prediction-service-admin-credentials
+      valuesKey: username
+      targetPath: postgresql.auth.username
+    - kind: Secret
+      name: prediction-service-admin-credentials
+      valuesKey: password
+      targetPath: postgresql.auth.password
