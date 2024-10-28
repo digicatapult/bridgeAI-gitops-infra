@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: bug/mlflow-local-vars
   url: https://github.com/digicatapult/bridgeai-gitops-infra.git
   secretRef:
     name: flux-system
