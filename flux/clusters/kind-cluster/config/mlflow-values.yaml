@@ -12,6 +12,7 @@ tracking:
     successThreshold: 1
     timeoutSeconds: 5
   auth:
+    enabled: true
     username: admin
     password: password
   ingress:
