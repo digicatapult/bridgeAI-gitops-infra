@@ -12,7 +12,8 @@ tracking:
     successThreshold: 1
     timeoutSeconds: 5
   auth:
-    enabled: false
+    user: admin
+    password: password
   ingress:
     enabled: true
     hostname: localhost
