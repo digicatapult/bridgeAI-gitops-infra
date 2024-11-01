@@ -22,7 +22,13 @@ Note that you can monitor the tasks in the DAG, view logs, etc, from the UI whil
 
 2. After the model training completes, the experiment should be available in the MLFlow UI.
 
-3. Use the MLFlow UI to register and promote the model. For further details, refer to the demo recordings.
+3. Use the MLFlow UI to register and promote the model.
+    * Browse to the [MLFlow experiment registry](http://localhost:3080/mlflow/#/experiments)
+    * Select on the experiment that you wish to promote and click `Register Model`
+    * Register the model with the name `house_price_prediction_prod`
+    * Browse to the [MLFlow Models registry](http://localhost:3080/mlflow/#/models)
+    * Click on the registered model named `house_price_prediction_prod`
+    * Add the alias `champion` to the selected model version
 
 ## Model Image creation
 
