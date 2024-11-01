@@ -60,7 +60,7 @@ spec:
     maxReplicas: 1
     containers:
       - name: "house-price"
-        image: "digicatapult/bridgeai-mlops-image:latest" #The location of wherever you push the container to in the 
+        image: "digicatapult/bridgeai-mlops-image:latest" #The location of the container created in Model Image creation step
         ports:
           - containerPort: 8080
             protocol: TCP
