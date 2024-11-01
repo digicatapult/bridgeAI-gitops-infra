@@ -1,18 +1,10 @@
 tracking:
   extraArgs:
     - --static-prefix=/mlflow
-  customReadinessProbe:
-    failureThreshold: 5
-    httpGet:
-      path: /mlflow
-      port: http
-      scheme: HTTP
-    initialDelaySeconds: 5
-    periodSeconds: 10
-    successThreshold: 1
-    timeoutSeconds: 5
   auth:
-    enabled: false
+    enabled: true
+    username: admin
+    password: password
   ingress:
     enabled: true
     hostname: localhost

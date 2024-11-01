@@ -17,26 +17,33 @@ flux/
     certs/ # contains public keys for each environment
         bridageai-prod/
             sops.asc
+    shared/ # Contains shared infra components
 docs/ # contains documentation references
 scripts/ # contains scripts for spinning up a local kind cluster and encrypting secrets
 ```
+## flux
+Contains all of the flux glue code for the various clusters
 
-## clusters
+### clusters
 
 Contains per cluster configuration details and deployment `Kustomizations`. These are first broken down by environment (for example `kind-cluster`) and then into the `base` install and the application `secrets`.
 
-### base
+#### base
 
 The `base` section describes the flux-system components and allows for the loading of secrets and cluster applications.
 
-### secrets
+#### secrets
 
 Contains SOPs encrypted secrets which will be loaded into the cluster and decrypted from within the cluster. See [secrets](./managing-secrets) for how to create new secrets for an environment.
 
-## certs
+### certs
 
 Contains public PGP certificates (keys) used to encrypt new secrets organised by the environments in which the corresponding private keys are deployed.
 
 ## docs
 
 Contains documentation for the repository
+
+## scripts
+
+Contains scripts for encrypting secrets and spinning up kind clusters.
