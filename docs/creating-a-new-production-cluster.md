@@ -4,9 +4,7 @@
 
 ### Prerequisites
 
-- A Kubernetes cluster
-  - [external-dns](https://github.com/kubernetes-sigs/external-dns) installed and configured to your choice of DNS provider
-  - The ability to create `loadBalancer` in your PaaS of choice
+- A Kubernetes cluster - It is recommended that you setup this cluster using terraform as described [here](https://github.com/digicatapult/bridgeAI-tf-infra)
 - openssl or some other method of creating rsa keys (Github Deploy key is fine).
 
 ### Procedure
@@ -168,7 +166,3 @@ Now delete the tmp dir we used to create the key
 ```
 rm -rf .sqnc-cluster-gpg
 ```
-
-#### Creating additional secrets
-
-Work in progress

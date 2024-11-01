@@ -1,36 +1,4 @@
-# Getting started
-
-This quickstart will help you to setup the application into a local Kind cluster.
-
-## Dependencies
-
-<!-- TODO: Improve dependency documentation and how to install -->
-
-Before getting started make sure you have the following installed:
-
-- docker
-- kind >= 0.11.1
-- kubectl >= 1.21.1
-- git
-- flux >= 0.29.5
-
-## Setting up Kind and Flux
-
-Run
-
-```console
-./scripts/add-kind-cluster.sh
-```
-
-This will setup our kind cluster and also provision a local docker registry that is [accessible from within the kind cluster](https://kind.sigs.k8s.io/docs/user/local-registry/#using-the-registry).
-
-Run
-
-```console
-./scripts/install-flux.sh
-```
-
-Once this has completed you will have a functioning flux cluster.
+# Flux Usage
 
 ## Suspending/resuming flux
 
@@ -89,7 +57,7 @@ First is the `HelmRepository` resource describing where the helm chart for the s
 
 ```yaml
 ---
-apiVersion: source.toolkit.fluxcd.io/v1beta1
+apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: demo-api

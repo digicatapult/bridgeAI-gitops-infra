@@ -2,7 +2,12 @@
 
 ## Prerequisities
 
+A Linux or OSX Based computer with at least 16GB of RAM.
+
+### Dependencies
+
 Ensure you have the following installed:
+* Docker
 * kind
 * kubectl
 * flux
@@ -10,119 +15,112 @@ Ensure you have the following installed:
 * [jq](https://jqlang.github.io/jq/) this one or the brew formula
 * github cli
 
+Ensure you have the following accounts:
+* Github
+* Dockerhub
+
+You will need to setup a CLASSIC github personal access token that has `repo` and `package:read` permissions.  It will need to be set as an ENVAR that the CLI tools can access, we recommend either setting it in the terminal or as a part of your shell profile.
+
 ```
-brew install kind kubectl fluxcd/tap/flux gnupg jq gh
+export GITHUB_TOKEN=<token>
 ```
+
+You will also need a DockerHub account with a public repository setup that we can push containers to via an access token.
+
+#### OSX
+Install using homebrew:
+
+```
+brew install kind kubectl fluxcd/tap/flux@2.3 gnupg jq gh
+```
+
+You should install docker desktop from the Docker website.
+
+#### Linux
+Install the listed dependencies using a package manager of your choice.
+
+### Useful Knowledge
+
+Having an understanding of the following subjects will useful:
+* Python
+* Kubernetes
+* Git
+* Docker
 
 ## Getting started
 
-Run the `./scripts/add-kind-cluster.sh` script.
+Clone the repository.
+```
+git clone https://github.com/digicatapult/bridgeAI-gitops-infra.git
+```
 
-You will need to setup a CLASSIC github personal access token that has `repo` and `package:read` permissions.
+Ensure that the Docker engine has at least 12GB of RAM resourced to it and several GB of swap.
+
+Run the `./scripts/add-kind-cluster.sh` script.
 
 Select the GitOps branch you wish to track and run `./scripts/install-flux.sh -b <branch>`
 
 This will bring up a kind cluster with flux installed and will automatically install nginx and airflow
 
+Verify that all the helm charts have successfully installed
+```
+flux get helmreleases -A
+```
 
-### Airflow
+### Local Workflow usage
+
+See [local workflow](./docs/local-workflow.md) document for running the localised demonstrator.
+
+
+### Local Application Instances
+
+#### Airflow
 
 You can access the airflow UI on http://localhost:3080/airflow
 Username: admin
 Password: admin
 
-### MLFlow
+#### MLFlow
 
 You can access the MLFlow UI on http://localhost:3080/mlflow
 Username: admin
 Password: password
 You can set the MLFLOW_TRACKING_URI clientside as http://localhost:3080/ if you wish to use the mlflow binary clientside. Airflow has a variable set to locate the mlflow_tracking_uri
 
-#### MinIO
+##### MLFlow MinIO
 
 MinIO is used as the storage backend to store MLFlow's artifacts
 
 To access MinIO UI perform port forwarding on the svc:
-
-    kubectl port-forward svc/mlflow-minio 9001 -n default
-
+```
+kubectl port-forward svc/mlflow-minio 9001 -n default
+```
 Access MinIO UI on: http://127.0.0.1:9001
 Username: admin
 Password: password
 
-Note: We use MLFLow's MinIO and not a separate instance of MinIO
+#### DVC and Evidently
 
+We use a separate instance of MinIO as the storage backends for DVC data and Evidently reports.
 
-### Prediction Service
+To access this instance of MinIO UI perform port forwarding on the svc:
+
+```
+kubectl port-forward svc/minio 9002:9001 -n default
+```
+Access MinIO UI on: http://127.0.0.1:9002
+Username: admin
+Password: password
+
+#### KServe
+
+KServe is used as our model serving and inference framework.  We are using it in `rawDeployment` mode which means a container is spawned for running the model application.  This a Kubernetes `CRD` and can only be queried using kubectl commands.  You can see which CRDs can be queried using the `kubectl get crd |grep kserve` command.  We typically only make use of the `inferenceservices` CRD in this demonstrator.
+
+#### Prediction Service
 
 The Prediction service is a REST API for interfacing with the house-price prediction inference service. It is presented as a swagger UI and is available at http://localhost:3080/swagger
 
-### KServe
-
-1. Before creating the inference service, Airflow DAGs needs to be run and a model should be available in MLFlow.
-2. These DAGs in Airflow (data_ingestion_dag, model_training_dag) needs to run in sequence. Start the 2nd DAG only when 1st DAG is completed. 
-3. Once the DAG run is completed an experiment will be created in MLFlow. An experiment contains a model file. Get the URI of the model and this URI needs to be added to the inference.yaml file. e.g of URI - mlflow-artifacts:/0/e7750463f06145d39a085ad7d9a55cb9/artifacts/model
-4. Part of the URI after "mlflow-artifacts:/" is to be updated in the inference.yaml file.
-
-
-#### Create inference service
-
-1. create an inference.yaml file similar to below, you may need to update the image to be specific to whatever registry you pushed to.
-
-```yaml
-apiVersion: "serving.kserve.io/v1beta1"
-kind: "InferenceService"
-metadata:
-  name: "house-price"
-  namespace: "default"
-  annotations:
-      serving.kserve.io/deploymentMode: RawDeployment
-      serving.kserve.io/disableIngressCreation: "true"
-      serving.kserve.io/disableIstioVirtualHost: "true"
-spec:
-  predictor:
-    serviceAccountName: "inference-sa" #We use a specific SA so that we can attach secrets for retrieving the ECR container
-    minReplicas: 1
-    maxReplicas: 1
-    containers:
-      - name: "house-price"
-        image: "058264114863.dkr.ecr.eu-west-2.amazonaws.com/bridgeai-mlops:latest" #The location of wherever you push the container to from airflow.
-        ports:
-          - containerPort: 8080
-            protocol: TCP
-        env:
-          - name: PROTOCOL
-            value: "v2"
-```
-
-2. apply the inference.yaml file
-
-        kubectl apply -f inference.yaml
-
-
-3. Check if the inference service is in "Ready" state.
-    
-        kubectl get inferenceservice house-price -n default
-
-#### Test the inference service
-# TODO: Remove and replace with swagger UI.
-1. Prepare input json file (check references section on how to prepare)
-
-2. Port forward on the inference pod
-
-        kubectl port-forward pods/<<podname>> 8081:8080
-
-2. Pass inference request from terminal
-
-        SERVICE_HOSTNAME=$(kubectl get inferenceservice house-price -n default -o jsonpath='{.status.url}' | cut -d "/" -f 3)
-
-
-        curl -v \  	-H "Content-Type: application/json" \  	-d @./<<input-filename>>.json \  	http://127.0.0.1:8081/v2/models/house-price/infer
-
-References: 
-https://kserve.github.io/website/0.10/modelserving/v1beta1/mlflow/v2/#deploy-with-inferenceservice
-
-### Cleanup
+## Cleanup
 
 To delete a cluster
 
