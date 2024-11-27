@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: main
+    branch: feature/auto_model_poromote
   url: https://github.com/digicatapult/bridgeai-gitops-infra.git
   secretRef:
     name: flux-system
