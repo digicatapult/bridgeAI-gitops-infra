@@ -156,6 +156,10 @@ airflow:
       value: "False"
     - key: "docker_build_pod_node_label"
       value: '["t3.2xlarge"]'
+    # Deploy as code flag
+    - key: "deploy_as_code"
+      value: "False"
+
   # variablesTemplates:
   #   DOCKER_REG_SECRET:
   #     kind: secret
