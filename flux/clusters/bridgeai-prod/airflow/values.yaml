@@ -119,6 +119,9 @@ airflow:
       value: "True"
     - key: "docker_build_pod_node_label"
       value: '["t3.2xlarge"]'
+    # Deploy as code flag
+    - key: "deploy_as_code"
+      value: "False"
     # Secret variables need populating here. Assignment is done using extraEnv.
     - key: "mlflow_tracking_username"
       value: "mlflow-prod-user-credentials.username"

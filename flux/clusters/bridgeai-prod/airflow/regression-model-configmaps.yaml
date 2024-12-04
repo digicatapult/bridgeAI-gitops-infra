@@ -86,6 +86,7 @@ data:
     mlflow:  # for mlflow logging
       tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
       expt_name: "bridgeai-house-price-nn"   # Experiment name under which the model trainings will be listed in MLFlow
+      deploy_as_code: False   # Enable or disable deploy as code (automatic model registration and add alias for the new model that is ready to deploy)
 
     dvc:
       git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
