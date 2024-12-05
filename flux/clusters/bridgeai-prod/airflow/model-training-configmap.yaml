@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: model-training-configmap
-  namespace: default
+  namespace: airflow
 data:
   config.yaml: |-
     data:  # data related config
@@ -24,11 +24,12 @@ data:
       use_gpu: True   # to use gpu or not. If no gpu found, will fall back to cpu with warning
 
     mlflow:  # for mlflow logging
-      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container port 5000
+      tracking_uri: "http://localhost:5000"   # MLFlow tracking uri. Use http://host.docker.internal:5000 if the MLFlow is running in a docker container
       expt_name: "bridgeai-house-price-prediction"   # Experiment name under which the model trainings will be listed in MLFlow
       deploy_as_code: False   # Enable or disable deploy as code (automatic model registration and add alias for the new model that is ready to deploy)
       model_register_name: "house_price_prediction"    # Name with which model will be registered in MLFLow for deploy-as-code
       model_alias: "champion"   # The alias for the registered model that is ready for deployment
+
 
     dvc:
       git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
@@ -40,5 +41,5 @@ data:
       dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
       dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
       dvc_endpoint_url: "http://minio"  # dvc endpoint url
-      dvc_region: "us-east-1"    # dvc region - used for s3, just a placeholder for minio
+      dvc_region: "eu-west-2"    # dvc region - used for s3, just a placeholder for minio
       data_version: "data-v1.0.0"   # data version to use - the tag used in the data ingestion to dvc repo
