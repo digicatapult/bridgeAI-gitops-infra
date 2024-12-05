@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: drift-monitoring-configmap
+  namespace: airflow
+data:
+  config.yaml: |-
+    model_endpoint: http://host.docker.internal:5001/invocations   # model prediction endpoint
+    historical_data_version: v1.0.0    # historical data version from the above repo
+    new_data_version: v1.1.0    # new data version from the above repo
+    feature_columns: ["mainroad", "guestroom", "basement", "hotwaterheating",
+                           "airconditioning", "prefarea", "furnishingstatus",
+                           "area", "bedrooms", "bathrooms", "stories", "parking"]   # feature columns to be used form the data
+    label_column: "price"   # label column name
+    report_save_path: "./artefacts/evidently_report.html"    # evidently report save path
+    report_save_bucket: "bridgeai-evidently-reports"    # s3 bucket name to save evidently report
+    historical_data_save_path: "./artefacts/historical_data.csv"   # local path where the pulled historical data is kept
+    new_data_save_path: "./artefacts/new_data.csv"   # local path where the pulled new data is kept
+    dvc:
+      git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"  # The repo where the data is present
+      git_branch: "feature/testing"   # The branch where the tagged data is available
+      data_path: "./artefacts"   # Path of the data splits dvc files
+      dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+      dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+      dvc_endpoint_url: "http://minio"  # dvc endpoint url
+      dvc_region: "eu-west-2"    # dvc region - used for s3, just a placeholder for minio

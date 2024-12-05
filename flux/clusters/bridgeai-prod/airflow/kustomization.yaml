@@ -4,7 +4,9 @@ namespace: airflow
 resources:
   - certificate.yaml
   - source.yaml
-  - regression-model-configmaps.yaml
+  - data-ingest-configmap.yaml
+  - drift-monitoring-configmap.yaml
+  - model-training-configmap.yaml
   - release.yaml
   - release-nginx.yaml
   - volumes.yaml

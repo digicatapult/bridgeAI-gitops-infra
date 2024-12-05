@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: data-ingest-configmap
+  namespace: airflow
+data:
+  config.yaml: |-
+    data_url: "https://raw.githubusercontent.com/renjith-digicat/random_file_shares/main/HousingData.csv"   # URL from where we can download the data
+
+    data_split:
+      raw_data_save_path: "./artefacts/raw_data.csv"    # the filename for raw downloaded data
+      cleansed_data_save_path: "./artefacts/cleansed_data.csv"    # the filename for cleansed data
+      train_data_save_path: "./artefacts/train_data.csv"  # save path of the train split of the data - used for training the model
+      test_data_save_path: "./artefacts/test_data.csv"   # save path of the test split of the data - used for testing the trained models performance
+      val_data_save_path: "./artefacts/val_data.csv"   # save path of the validation split of the data - used for hyperparameter tuning
+      seed: 42    # set a seed for random data split
+      test_frac: 0.2   # the fraction of data kept for testing - "train_and_val_frac = 1 - test_frac"
+      val_frac: 0.2   # the fraction of data from the remaining 1-test_frac that should be kept for validation, the rest will be used for training
+      label_col: "price"   # column name of the predictor variable - used for splitting data in a proportionate way
+      categorical_cols: [ "mainroad", "guestroom", "basement", "hotwaterheating",
+                          "airconditioning", "prefarea", "furnishingstatus" ]   # categorical column names in the input data
+      numeric_cols: [ "area", "bedrooms", "bathrooms", "stories", "parking" ]   # numerical column names in the input data
+
+    dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data
+    dvc_remote_name: "regression-model-remote"    # a name assigned to the remote
+    dvc_endpoint_url: "http://minio"  # dvc endpoint url
+    dvc_region: "eu-west-2"
+    git_repo_url: "https://github.com/digicatapult/bridgeAI-regression-model-data-ingestion.git"    # data ingestion repo url
+    git_repo_save_name: "local_repo"  # the directory name where the repo will be cloned to - needed this to be constant with what the data ingestion dag is accessing
+    git_branch: "feature/testing"   # name of the git branch where we want to push the committed data
+    commit_message: "update dvc data"   # git commit message
