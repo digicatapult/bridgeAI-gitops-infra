@@ -17,8 +17,8 @@ data:
       test_frac: 0.2   # the fraction of data kept for testing - "train_and_val_frac = 1 - test_frac"
       val_frac: 0.2   # the fraction of data from the remaining 1-test_frac that should be kept for validation, the rest will be used for training
       label_col: "price"   # column name of the predictor variable - used for splitting data in a proportionate way
-      categorical_cols: [ "mainroad", "guestroom", "basement", "hotwaterheating",  # categorical column names in the input data
-                          "airconditioning", "prefarea", "furnishingstatus" ]
+      categorical_cols: [ "mainroad", "guestroom", "basement", "hotwaterheating",
+                          "airconditioning", "prefarea", "furnishingstatus" ]   # categorical column names in the input data
       numeric_cols: [ "area", "bedrooms", "bathrooms", "stories", "parking" ]   # numerical column names in the input data
     
     dvc_remote: "s3://artifacts"   # remote s3 bucket path for dvc to push and store data

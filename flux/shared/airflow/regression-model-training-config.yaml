@@ -7,8 +7,8 @@ data:
   config.yaml: |-
     data:  # data related config
       label_col: "price"   # column name of the predictor variable
-      categorical_cols: ["mainroad", "guestroom", "basement", "hotwaterheating",  # categorical column names in the input data
-                       "airconditioning", "prefarea", "furnishingstatus"]
+      categorical_cols: ["mainroad", "guestroom", "basement", "hotwaterheating",
+                       "airconditioning", "prefarea", "furnishingstatus"]   # categorical column names in the input data
       numeric_cols: ["area", "bedrooms", "bathrooms", "stories", "parking"]   # numerical column names in the input data
       preprocessor_path: "./artefacts/preprocessor.joblib"   # save path of the preprocessing transformations (parameters are learned from the train data)
     
