@@ -43,3 +43,10 @@ postgresql:
         postgresql: 5432
 minio:
   enabled: false
+externalS3:
+  host: s3.eu-west-2.amazonaws.com
+  port: 443
+  bucket: bridgeai-model-artefacts
+  existingSecret: mlflow-s3
+  existingSecretAccessKeyIDKey: access_key_id
+  existingSecretKeySecretKey: secret_access_key
