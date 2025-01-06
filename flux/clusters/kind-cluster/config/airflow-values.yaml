@@ -3,7 +3,7 @@ dags:
     enabled: true
     repo: https://github.com/digicatapult/bridgeAI-airflow-DAGs.git
     repoSubPath: "dags/"
-    branch: feature/dvc_with_aws_conn
+    branch: feature/automated_dag_trigger
     httpSecret: "github-auth"
     httpSecretUsernameKey: "username"
     httpSecretPasswordKey: "password"
