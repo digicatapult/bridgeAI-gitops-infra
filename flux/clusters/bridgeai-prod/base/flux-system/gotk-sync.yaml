@@ -9,6 +9,8 @@ spec:
   interval: 1m0s
   ref:
     branch: bug/fix_upstream_bitnami_uri_protocol
+  secretRef:
+    name: flux-system
   url: ssh://git@github.com/digicatapult/bridgeai-gitops-infra
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
