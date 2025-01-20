@@ -29,6 +29,13 @@ airflow:
           "namespace": "airflow",
           "disable_verify_ssl": true
         }
+    - id: aws_default
+      type: aws
+      extra: |
+        {
+          "region_name": "eu-west-2",
+          "role_arn": "arn:aws:iam::058264114863:role/airflow-access-role"
+        }
   connectionsUpdate: true
   variables:
     - key: "data_path"
