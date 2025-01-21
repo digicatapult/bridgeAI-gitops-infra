@@ -72,6 +72,8 @@ airflow:
       value: "https://mlflow.dc-mlops.co.uk"
     - key: "connection_id"
       value: "local-k8s"
+    - key: "aws_conn_name"
+      value: "aws_default"
     - key: "in_cluster"
       value: true
     - key: "model_training_configmap"
