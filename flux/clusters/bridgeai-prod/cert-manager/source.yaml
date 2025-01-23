@@ -6,4 +6,5 @@ metadata:
   namespace: cert-manager
 spec:
   interval: 10m
-  url: https://charts.bitnami.com/bitnami
+  type: "oci"
+  url: oci://registry-1.docker.io/bitnamicharts
